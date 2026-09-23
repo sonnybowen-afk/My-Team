@@ -58,6 +58,7 @@ AGENTS = {
     "rules": [
       ("Fails a message for", ["A wrong or missing price in a first pitch (must be £595 to build and £50 a month)", "Any mention of reviews, ratings or stars", "Made-up facts, over-promising or fake urgency"]),
       ("Flags", ["Anything that sounds like AI or like a sales template", "Salesy tone, more than one question, or too long for the channel", "Messages so generic they could go to anyone"]),
+      ("Code review and security", ["Code is simple and readable, with no duplication", "No passwords, API keys or private details left in the code", "Forms check input, block spam and never post to unknown addresses", "Feedback in three levels: Must fix, Should fix and Could improve, each with the exact fix"]),
       ("For sites, in Claude Code", ["Looks at phone and desktop screenshots", "Checks spelling, that every fact matches the brief, all 7 days of hours, links and contrast", "Gives Must fix and Should fix lists with line numbers, plus questions to send the client"]),
     ],
     "claude_code": [
@@ -69,7 +70,7 @@ AGENTS = {
     "key": "pm", "c": "#b98bff", "eye": "#f0e6ff", "role": "The master: plans every job and runs the pipeline", "master": True,
     "intro": "Your pipeline, live. Ask what to do today and it gives you who to chase with messages ready to send. Log anything that happens here and your Claude Code team records it.",
     "rules": [
-      ("Runs things", ["Plans every job: which agents work on it, in what order, and with what", "Keeps clients/pipeline.md: Pitched → Replied → In progress → Delivered → Maintenance → Closed", "Logs pitches that got replies into the playbook, so idea-creator learns what works for you"]),
+      ("Runs things", ["Plans every job: which agents work on it, in what order, and with what", "Sends every change to a site's code to critique for review, even one-line fixes", "Keeps clients/pipeline.md: Pitched → Replied → In progress → Delivered → Maintenance → Closed", "Logs pitches that got replies into the playbook, so idea-creator learns what works for you"]),
       ("When to chase", ["No reply to a pitch: after 4 days, then 7 days later. After 2 follow-ups it suggests closing them", "Replied but the next step is unclear: after 2 days. Waiting on client info: after 3 days", "£595 build fee: due 7 days after delivery. £50 maintenance: flagged 3 days before it's due"]),
       ("Never", ["Deletes a client, invents details, or sends anything itself"]),
     ],
