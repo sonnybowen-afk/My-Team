@@ -242,7 +242,7 @@
       </div>
       <div class="acts"><span class="big">/boss</span><button class="btn" type="button" data-copy-text="/boss ">Copy</button></div>
     </div>
-    <p>Type <code>/boss</code> and say what you want in plain words. project-manager checks your pipeline, decides which agents to use and in what order, and Claude runs them. When the work's done, project-manager updates the pipeline and tells you what happens next. With nothing after it, <code>/boss</code> means "what should I do today?"</p>
+    <p>Type <code>/boss</code> and say what you want in plain words. boss checks your pipeline, decides which agents to use and in what order, and Claude runs them. When the work's done, boss updates the pipeline and tells you what happens next. With nothing after it, <code>/boss</code> means "what should I do today?"</p>
     <div class="asks">
       <span class="chip">/boss</span>
       <span class="chip">/boss find work in Telford</span>
@@ -258,12 +258,12 @@
       <table>
         <thead><tr><th>Type</th><th>What happens</th><th>Example</th></tr></thead>
         <tbody>
-          <tr><td><span class="chip">/boss</span></td><td>project-manager plans the job, the agents it picks do the work, then it updates the pipeline<small>project-manager → whoever it picks → project-manager</small></td><td><code>/boss find work in Telford</code></td></tr>
+          <tr><td><span class="chip">/boss</span></td><td>boss plans the job, the agents it picks do the work, then it updates the pipeline<small>boss → whoever it picks → boss</small></td><td><code>/boss find work in Telford</code></td></tr>
           <tr><td><span class="chip">/find-leads</span></td><td>Finds businesses with no website and writes pitches. critique checks each one, and email pitches are saved as Gmail drafts<small>idea-creator → critique</small></td><td><code>/find-leads Shrewsbury nail salons</code></td></tr>
-          <tr><td><span class="chip">/build-site</span></td><td>Builds the site, reviews it, fixes it (up to 2 rounds) and tracks it. Ends with one message asking the client for what's missing<small>web-builder → critique → web-builder → critique → project-manager</small></td><td><code>/build-site Annie's Nails</code></td></tr>
+          <tr><td><span class="chip">/build-site</span></td><td>Builds the site, reviews it, fixes it (up to 2 rounds) and tracks it. Ends with one message asking the client for what's missing<small>web-builder → critique → web-builder → critique → boss</small></td><td><code>/build-site Annie's Nails</code></td></tr>
           <tr><td><span class="chip">/review</span></td><td>critique's verdict on any message, leads file or site<small>critique</small></td><td><code>/review sites/annies-nails</code></td></tr>
-          <tr><td><span class="chip">/pipeline</span></td><td>Tell project-manager what happened: sent, replied, said yes, delivered, paid or not interested<small>project-manager</small></td><td><code>/pipeline Annie's Nails paid</code></td></tr>
-          <tr><td><span class="chip">/status</span></td><td>Who to chase today and what money is due, with messages critique has checked. Email chasers are saved as Gmail drafts<small>project-manager → critique</small></td><td><code>/status</code></td></tr>
+          <tr><td><span class="chip">/pipeline</span></td><td>Tell boss what happened: sent, replied, said yes, delivered, paid or not interested<small>boss</small></td><td><code>/pipeline Annie's Nails paid</code></td></tr>
+          <tr><td><span class="chip">/status</span></td><td>Who to chase today and what money is due, with messages critique has checked. Email chasers are saved as Gmail drafts<small>boss → critique</small></td><td><code>/status</code></td></tr>
           <tr><td><span class="chip">/train</span></td><td>Teaches an agent a new rule or preference. Every future job uses it<small>updates the agent's file or playbook.md</small></td><td><code>/train critique flag messages over 40 words</code></td></tr>
           <tr><td><span class="chip">/email-drafts</span></td><td>Saves checked email messages from a leads file as Gmail drafts. Never sends anything<small>critique → Gmail</small></td><td><code>/email-drafts leads/&lt;file&gt;.md</code></td></tr>
         </tbody>
@@ -275,8 +275,8 @@
     <h2 id="team-h">The team</h2>
     <p class="sub">Each agent is a file in <code>.claude/agents/</code>, and every one reads <code>business.md</code> first. Each one has its own page where it can do its job, learn new rules, and give you instructions to paste into Claude Code. Tap a name to open it.</p>
     <div class="team">
-      <article class="card" id="card-project-manager" style="--c: var(--pm)">
-        <div class="card-head"><span data-avatar="pm"></span><div><h3><a href="https://claude.ai/artifact/Qperj1e8cxMEMgtFKV55M5" target="_blank" rel="noopener" style="color:inherit">project-manager ↗</a></h3><span><span class="crown">MASTER</span> · plans every job, runs the pipeline</span></div></div>
+      <article class="card" id="card-boss" style="--c: var(--pm)">
+        <div class="card-head"><span data-avatar="pm"></span><div><h3><a href="https://claude.ai/artifact/Qperj1e8cxMEMgtFKV55M5" target="_blank" rel="noopener" style="color:inherit">boss ↗</a></h3><span><span class="crown">MASTER</span> · plans every job, runs the pipeline</span></div></div>
         <dl class="kv">
           <div><dt>Job</dt><dd>Decides which agents work on each job and in what order, keeps <code>clients/pipeline.md</code> up to date, and tells you who to chase, with messages ready to send.</dd></div>
           <div><dt>Say</dt><dd class="say">"What should I do today?" · "Annie paid today, start maintenance." · "Who do I need to chase?"</dd></div>
@@ -392,25 +392,25 @@
 
   <section class="block" aria-labelledby="flow-h">
     <h2 id="flow-h">The workflow</h2>
-    <p class="sub">project-manager hands out each job, and the work always goes through critique before it reaches you. The agents can't message each other directly, so Claude passes each one's work along the links.</p>
+    <p class="sub">boss hands out each job, and the work always goes through critique before it reaches you. The agents can't message each other directly, so Claude passes each one's work along the links.</p>
     <div class="lanes">
       <div class="lane">
         <h3>Win the client</h3>
         <ol class="steps">
-          <li style="--c: var(--pm)"><b>project-manager</b><span>Plans it and checks who's already been pitched</span></li>
+          <li style="--c: var(--pm)"><b>boss</b><span>Plans it and checks who's already been pitched</span></li>
           <li style="--c: var(--idea)"><b>idea-creator</b><span>Finds leads and writes the pitches</span></li>
           <li style="--c: var(--crit)"><b>critique</b><span>Checks and fixes every pitch</span></li>
           <li style="--c: var(--text)"><b>You</b><span>Send them. The email ones are waiting in Gmail drafts</span></li>
-          <li style="--c: var(--pm)"><b>project-manager</b><span>Logs them and sets the follow-up dates</span></li>
+          <li style="--c: var(--pm)"><b>boss</b><span>Logs them and sets the follow-up dates</span></li>
         </ol>
       </div>
       <div class="lane">
         <h3>Build it and get paid</h3>
         <ol class="steps">
-          <li style="--c: var(--pm)"><b>project-manager</b><span>Plans the build from the brief</span></li>
+          <li style="--c: var(--pm)"><b>boss</b><span>Plans the build from the brief</span></li>
           <li style="--c: var(--web)"><b>web-builder</b><span>Builds the site</span></li>
           <li style="--c: var(--crit)"><b>critique</b><span>Reviews it, and web-builder fixes it (2 rounds max)</span></li>
-          <li style="--c: var(--pm)"><b>project-manager</b><span>Moves it to In progress, then Delivered, then Paid, then £50 a month</span></li>
+          <li style="--c: var(--pm)"><b>boss</b><span>Moves it to In progress, then Delivered, then Paid, then £50 a month</span></li>
         </ol>
       </div>
     </div>
@@ -430,15 +430,15 @@
 2. critique: review sites/annies-nails/index.html.
 3. web-builder: apply every "Must fix" and "Should fix".
 4. critique: re-check. Repeat until READY (max 2 rounds).
-5. project-manager: move Annie's Nails to In progress,
+5. boss: move Annie's Nails to In progress,
    waiting on client for any placeholders critique listed.</pre>
       </div>
       <div class="prompt">
         <div class="prompt-head">Keeping the pipeline up to date<button class="btn" type="button" data-copy="p3">Copy</button></div>
-        <pre id="p3">project-manager: I sent pitches to leads 1, 3 and 5 today.
-project-manager: Annie's site delivered today, invoice sent.
-project-manager: Annie paid, start maintenance from today.
-project-manager: who do I need to chase?</pre>
+        <pre id="p3">boss: I sent pitches to leads 1, 3 and 5 today.
+boss: Annie's site delivered today, invoice sent.
+boss: Annie paid, start maintenance from today.
+boss: who do I need to chase?</pre>
       </div>
     </details>
   </section>
@@ -458,7 +458,7 @@ project-manager: who do I need to chase?</pre>
       </div>
       <div class="panel">
         <h3>2 · Let results teach them</h3>
-        <p>When you tell project-manager someone replied, it saves the exact pitch you sent to the playbook. It also notes the pitches that got no reply. idea-creator then writes new pitches in the style that works for you, and client feedback on sites goes in there too.</p>
+        <p>When you tell boss someone replied, it saves the exact pitch you sent to the playbook. It also notes the pitches that got no reply. idea-creator then writes new pitches in the style that works for you, and client feedback on sites goes in there too.</p>
       </div>
       <div class="panel">
         <h3>3 · Edit them directly</h3>
@@ -483,7 +483,7 @@ project-manager: who do I need to chase?</pre>
       <h3>Good to know</h3>
       <ul>
         <li><b>Nothing is sent without you.</b> Texts, DMs and emails all go out by your hand. Instagram and LinkedIn stay manual</li>
-        <li>The pipeline above updates every time project-manager changes it. It's only as current as what you tell project-manager</li>
+        <li>The pipeline above updates every time boss changes it. It's only as current as what you tell boss</li>
         <li>Agents load when a session starts. In a new My-Team session, type <code>/agents</code> or <code>@</code> to see them</li>
         <li>When an agent is working, a block with its name appears in the chat. Tap it to watch</li>
       </ul>
@@ -496,7 +496,7 @@ project-manager: who do I need to chase?</pre>
 <script>
 (() => {
   const AGENTS = [
-    { key: "pm", url: "https://claude.ai/artifact/Qperj1e8cxMEMgtFKV55M5", id: "project-manager", role: "★ MASTER", c: "#b98bff", eye: "#f0e6ff", master: true,
+    { key: "pm", url: "https://claude.ai/artifact/Qperj1e8cxMEMgtFKV55M5", id: "boss", role: "★ MASTER", c: "#b98bff", eye: "#f0e6ff", master: true,
       pos: { d: [50, 60], m: [50, 60] }, dur: "4.2s",
       tagline: "The master. Plans every job, picks the agents, keeps the pipeline and tells you who to chase.", cmd: "/boss" },
     { key: "idea", url: "https://claude.ai/artifact/A4Kdm6smnkdZeEgEkP3wyN", id: "idea-creator", role: "finds leads · writes pitches", c: "#3ddc97", eye: "#d4ffe9",

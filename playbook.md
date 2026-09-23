@@ -4,7 +4,7 @@ This is how the agents learn from real results. They read this file before they 
 - **idea-creator** writes new pitches in the style of the ones that got replies, and avoids what didn't work
 - **critique** treats Sonny's preferences here as extra rules
 - **web-builder** follows the site preferences
-- **project-manager** adds entries automatically when a business replies or goes quiet
+- **boss** adds entries automatically when a business replies or goes quiet
 
 Add to it yourself any time with `/train`. Keep at most 20 entries under each heading. When a list is full, remove the oldest entry.
 

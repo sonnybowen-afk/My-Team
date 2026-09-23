@@ -2,7 +2,7 @@
 description: Update the client pipeline (sent, replied, said yes, delivered, paid, not interested)
 argument-hint: <what happened, e.g. "sent 1,3,5 from leads/stockport-barbers-2026-09-23.md" or "Dave's Barbers paid">
 ---
-Use the **project-manager** subagent to update `clients/pipeline.md` with: $ARGUMENTS
+Use the **boss** subagent to update `clients/pipeline.md` with: $ARGUMENTS
 
 If a business has said yes to a site, also:
 1. Create `clients/briefs/<slug>.md` from `templates/client-brief.md` and fill in everything already known from the pipeline and the leads files.

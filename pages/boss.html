@@ -1,4 +1,4 @@
-<title>Project Manager</title>
+<title>Boss</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=IBM+Plex+Sans:wght@400;600&family=JetBrains+Mono:wght@500&display=swap">
@@ -98,7 +98,7 @@ details.rules[open] summary { margin-bottom: 8px; }
 .rulegrid h3 { font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
 .rulegrid ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 15px; }
 
-/* pipeline (project-manager) */
+/* pipeline (boss) */
 .money { display: grid; gap: 10px; grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .tile { background: var(--panel-2); border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; }
 .tile span { display: block; font-size: 13px; color: var(--muted); }
@@ -126,8 +126,8 @@ footer { color: var(--muted); font-size: 13px; text-align: center; }
   <header class="hero">
     <div class="art" id="art"></div>
     <div>
-      <h1>project-manager<span class="badge">MASTER</span></h1>
-      <p class="role">The master: plans every job and runs the pipeline</p>
+      <h1>boss<span class="badge">MASTER</span></h1>
+      <p class="role">The master: runs every job and the pipeline</p>
       <p class="intro">Your pipeline, live. Ask what to do today and it gives you who to chase with messages ready to send. Log anything that happens here and your Claude Code team records it.</p>
     </div>
   </header>
@@ -162,7 +162,7 @@ footer { color: var(--muted); font-size: 13px; text-align: center; }
 
 
   <section class="panel" aria-labelledby="train-h">
-    <h2 id="train-h">Teach project-manager</h2>
+    <h2 id="train-h">Teach boss</h2>
     <p class="sub">Write a rule, a preference or an example in plain English. This page uses it straight away. Your Claude Code team picks it up the next time you say <b>"check my agent pages"</b> in a Claude Code session on My-Team.</p>
     <form id="trainForm" class="grid">
       <div class="field full"><label for="lesson">New lesson</label><textarea id="lesson" required placeholder="e.g. Chase unpaid build fees after 5 days, not 7"></textarea></div>
@@ -172,15 +172,15 @@ footer { color: var(--muted); font-size: 13px; text-align: center; }
   </section>
 
   <section class="panel" aria-labelledby="cc-h">
-    <h2 id="cc-h">Use project-manager in Claude Code</h2>
+    <h2 id="cc-h">Use boss in Claude Code</h2>
     <p class="sub">Open a Claude Code session on <b>sonnybowen-afk/My-Team</b> (at claude.ai/code or in the Code tab of the Claude app), paste one of these and press send. No slash commands needed.</p>
     <div class="cc" id="cc"></div>
   </section>
 
   <section class="panel">
     <details class="rules">
-      <summary>How project-manager works</summary>
-      <div class="rulegrid"><div><h3>Runs things</h3><ul><li>Plans every job: which agents work on it, in what order, and with what</li><li>Sends every change to a site's code to critique for review, even one-line fixes</li><li>Knows every agent's rules, your prices and your playbook, so it can answer most questions itself</li><li>Keeps clients/pipeline.md: Pitched → Replied → In progress → Delivered → Maintenance → Closed</li><li>Logs pitches that got replies into the playbook, so idea-creator learns what works for you</li></ul></div><div><h3>When to chase</h3><ul><li>No reply to a pitch: after 4 days, then 7 days later. After 2 follow-ups it suggests closing them</li><li>Replied but the next step is unclear: after 2 days. Waiting on client info: after 3 days</li><li>£595 build fee: due 7 days after delivery. £50 maintenance: flagged 3 days before it's due</li></ul></div><div><h3>Never</h3><ul><li>Deletes a client, invents details, or sends anything itself</li></ul></div></div>
+      <summary>How boss works</summary>
+      <div class="rulegrid"><div><h3>Runs things</h3><ul><li>Handles every request automatically: works out what you need and which agent does each part</li><li>Runs independent jobs at the same time, e.g. leads in two towns at once</li><li>Plans every job: which agents work on it, in what order, and with what</li><li>Sends every change to a site's code to critique for review, even one-line fixes</li><li>Knows every agent's rules, your prices and your playbook, so it can answer most questions itself</li><li>Keeps clients/pipeline.md: Pitched → Replied → In progress → Delivered → Maintenance → Closed</li><li>Logs pitches that got replies into the playbook, so idea-creator learns what works for you</li></ul></div><div><h3>When to chase</h3><ul><li>No reply to a pitch: after 4 days, then 7 days later. After 2 follow-ups it suggests closing them</li><li>Replied but the next step is unclear: after 2 days. Waiting on client info: after 3 days</li><li>£595 build fee: due 7 days after delivery. £50 maintenance: flagged 3 days before it's due</li></ul></div><div><h3>Never</h3><ul><li>Deletes a client, invents details, or sends anything itself</li></ul></div></div>
     </details>
   </section>
 
@@ -189,8 +189,8 @@ footer { color: var(--muted); font-size: 13px; text-align: center; }
 
 <script>
 (() => {
-const AGENT = {"key": "pm", "c": "#b98bff", "eye": "#f0e6ff", "id": "project-manager"};
-const CC = [["Plan anything", "What should I do today? Ask project-manager to plan it and run the agents it picks."], ["Apply what I logged here", "Check my agent pages."]];
+const AGENT = {"key": "pm", "c": "#b98bff", "eye": "#f0e6ff", "id": "boss"};
+const CC = [["Plan anything", "What should I do today? Ask boss to plan it and run the agents it picks."], ["Apply what I logged here", "Check my agent pages."]];
 
 function avatar(a, still) {
   const c = a.c, eye = a.eye, dark = "#0a0f1f";
@@ -387,7 +387,7 @@ function renderPipeline() {
     });
 }
 
-const RULES = `You are project-manager, the master of Sonny's team. Look at Sonny's pipeline and tell him exactly what to do today, most urgent first, with a ready-to-send message for everyone he needs to chase.
+const RULES = `You are boss, the master of Sonny's team. Look at Sonny's pipeline and tell him exactly what to do today, most urgent first, with a ready-to-send message for everyone he needs to chase.
 
 ${BUSINESS}
 
