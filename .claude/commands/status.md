@@ -4,3 +4,5 @@ description: Who needs chasing today, what money is due, and ready-to-send chase
 Use the **project-manager** subagent to give me a status update from `clients/pipeline.md`, including a ready-to-send message for everyone who needs chasing.
 
 If there are any chase messages, use the **critique** subagent to check them (Mode 1) and swap in its revised versions before showing me. Keep the final update short: urgent items first.
+
+For any chaser going to an email address, also save it as a Gmail draft using the Gmail connector's `create_draft` tool. Never send it: I send every message myself.
