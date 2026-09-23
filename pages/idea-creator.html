@@ -142,7 +142,7 @@ footer { color: var(--muted); font-size: 13px; text-align: center; }
       <div class="field"><label for="channel">How you'll send it</label>
         <select id="channel"><option>WhatsApp</option><option>Text message</option><option>Email</option><option>Instagram DM</option><option>Facebook DM</option></select></div>
       <div class="field"><label for="owner">Owner's first name <small>(if you know it)</small></label><input id="owner" autocomplete="off"></div>
-      <div class="field full"><label for="hook">What did you notice about them?</label><textarea id="hook" required placeholder="e.g. Only on Instagram, posts new nail designs most days, no way to see prices or book"></textarea></div>
+      <div class="field full"><label for="hook">What did you notice about them?</label><textarea id="hook" required placeholder="What would a customer struggle with? e.g. Only on Instagram, no way to see prices or book without messaging"></textarea></div>
       <div class="actions full"><button class="btn primary" type="submit" id="pitchBtn">Write pitch</button></div>
     </form>
     <div class="out" id="pitchOut" hidden></div>
@@ -168,7 +168,7 @@ footer { color: var(--muted); font-size: 13px; text-align: center; }
   <section class="panel">
     <details class="rules">
       <summary>How idea-creator works</summary>
-      <div class="rulegrid"><div><h3>Always</h3><ul><li>Says exactly £595 to build and £50 a month</li><li>Signs off &quot;Sonny&quot;</li><li>Keeps texts under 60 words and emails under 120</li><li>Uses one specific detail about the business and ends with one easy question</li><li>Only calls you local around Shrewsbury, and offers the Annie example site to beauty businesses only</li></ul></div><div><h3>Never</h3><ul><li>Mentions reviews, ratings or stars</li><li>Invents businesses, numbers or owner names</li><li>Promises more customers or top of Google, or uses fake urgency</li><li>Uses AI phrases like &quot;I hope this finds you well&quot; or &quot;elevate&quot;, or em-dashes</li></ul></div><div><h3>In Claude Code it also</h3><ul><li>Searches Google, Facebook, Instagram, Yell, Checkatrade, Fresha, Booksy, Treatwell, Just Eat and local groups</li><li>Labels each business: no website found, social media only, dead or parked site, or unconfirmed</li><li>Skips chains, closed businesses and anyone already in your pipeline</li><li>Ranks 5–10 leads and saves them to leads/&lt;town&gt;-&lt;trade&gt;-&lt;date&gt;.md</li></ul></div></div>
+      <div class="rulegrid"><div><h3>Always</h3><ul><li>Says exactly £595 to build and £50 a month</li><li>Signs off &quot;Sonny&quot;</li><li>Keeps texts under 60 words and emails under 120</li><li>Uses one specific detail about the business and ends with one easy question</li><li>Only calls you local around Shrewsbury, and offers the Annie example site to beauty businesses only</li></ul></div><div><h3>Never</h3><ul><li>Mentions reviews, ratings or stars</li><li>Invents businesses, numbers or owner names</li><li>Promises more customers or top of Google, or uses fake urgency</li><li>Uses AI phrases like &quot;I hope this finds you well&quot; or &quot;elevate&quot;, or em-dashes</li></ul></div><div><h3>Customer research</h3><ul><li>Walks the customer journey: can people find them, check prices and hours, book or contact, and find the address?</li><li>Uses the biggest problem customers have as the pitch hook, framed as the customer's problem, not a criticism</li><li>Passes what it found into the client brief, so web-builder puts it front and centre</li></ul></div><div><h3>In Claude Code it also</h3><ul><li>Searches Google, Facebook, Instagram, Yell, Checkatrade, Fresha, Booksy, Treatwell, Just Eat and local groups</li><li>Labels each business: no website found, social media only, dead or parked site, or unconfirmed</li><li>Skips chains, closed businesses and anyone already in your pipeline</li><li>Ranks 5–10 leads and saves them to leads/&lt;town&gt;-&lt;trade&gt;-&lt;date&gt;.md</li></ul></div></div>
     </details>
   </section>
 
@@ -345,7 +345,7 @@ Pitch rules:
 - The first message must say exactly "£595 to build" and "£50 a month" (e.g. "£595 to build it and then £50 a month to keep it running"). Never write "GBP". Describe the monthly fee only using what's listed above.
 - Length: WhatsApp or text message 2-4 sentences, under 60 words. Instagram or Facebook DM under 50 words. Email under 120 words with a short, plain, lowercase-ish subject line.
 - Open with "Hi" or "Hiya" and the business name, or the owner's first name if given. Say who Sonny is in a few words.
-- Use the detail Sonny noticed so it's clearly not a mass message. End with ONE low-pressure question. Offer the example site link only to beauty businesses; for anything else offer to send an example.
+- Use the detail Sonny noticed so it's clearly not a mass message. Frame it as a problem the business's CUSTOMERS have (e.g. "people can't see your prices without messaging"), never as a criticism of the owner. End with ONE low-pressure question. Offer the example site link only to beauty businesses; for anything else offer to send an example.
 - ${LOCAL}
 - WhatsApp only: mention in a few words that this is Sonny's WhatsApp and he's on 07944 539622 for calls.
 - The follow-up is 1-2 sentences, under 30 words, friendly, no pressure, and doesn't repeat the price or the pitch.

@@ -31,6 +31,19 @@ When given a town/area and an industry (e.g. "barbers in Telford", "cafes in Lud
 
 Be honest about what you checked. Mark website status as **"none found"**, **"social only"**, **"dead/parked site"**, or **"unconfirmed"**. Never invent a business, phone number, email or owner name. If a contact detail isn't public, write "not found".
 
+### Customer research (UX)
+
+Think like a UX researcher: see each business through its customers' eyes. For every lead, walk the customer journey using what's publicly visible, and note where a customer gets stuck:
+
+1. **Find:** does it show up on Google or Maps when someone searches the trade and town? Is the name and address consistent?
+2. **Check:** can a customer see prices, the menu or services, opening hours and photos without messaging? (Hours posted as an image, prices only on request, or a menu buried in old posts all count as friction.)
+3. **Contact or book:** is there a clear way to call, book or order, or only DMs? Do they reply in public comments, and how fast?
+4. **Visit:** is the address or service area easy to find? Parking, the entrance, which villages they cover?
+
+Also look for signs of what their customers ask about most, such as repeated questions in comments ("are you open Sunday?", "how much for…?"). Those are the pain points a website fixes.
+
+Pick the **biggest friction** as the pitch hook, and frame it as the customer's problem, not a criticism of the owner. For example, write "people can't see your prices without messaging", not "you don't have a price list". Record what you found so it can go into the client brief if they say yes. Only record what you actually saw, never guesses.
+
 ### Priority
 Give each lead a priority:
 - **High**: active on social media or busy on a booking app, has a public mobile/WhatsApp number, clearly trading, no website at all
@@ -41,10 +54,10 @@ List High first.
 
 ### Lead table
 
-| # | Priority | Business | Type | Area | Contact (phone / WhatsApp / email / socials) | Website status | Pitch hook |
+| # | Priority | Business | Type | Area | Contact (phone / WhatsApp / email / socials) | Website status | Customer journey gaps | Pitch hook |
 |---|----------|----------|------|------|----------------------------------------------|----------------|------------|
 
-"Pitch hook" is one practical, specific detail: what they sell, where they are, how people currently find them (e.g. "posts opening times as images on Facebook", "Instagram full of cake photos, no way to see prices"). **Never use their reviews or star rating as a hook.**
+"Customer journey gaps" lists the friction points you found at each step (e.g. "Check: hours only as an image. Book: DMs only"). "Pitch hook" is one practical, specific detail, usually the biggest gap: what they sell, where they are, how people currently find them (e.g. "posts opening times as images on Facebook", "Instagram full of cake photos, no way to see prices"). **Never use their reviews or star rating as a hook.**
 
 ## Part 2: Messages
 
