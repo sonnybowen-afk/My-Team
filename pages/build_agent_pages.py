@@ -31,6 +31,7 @@ AGENTS = {
     "rules": [
       ("Always", ["Says exactly £595 to build and £50 a month", "Signs off \"Sonny\"", "Keeps texts under 60 words and emails under 120", "Uses one specific detail about the business and ends with one easy question", "Only calls you local around Shrewsbury, and offers the Annie example site to beauty businesses only"]),
       ("Never", ["Mentions reviews, ratings or stars", "Invents businesses, numbers or owner names", "Promises more customers or top of Google, or uses fake urgency", "Uses AI phrases like \"I hope this finds you well\" or \"elevate\", or em-dashes"]),
+      ("Customer research", ["Walks the customer journey: can people find them, check prices and hours, book or contact, and find the address?", "Uses the biggest problem customers have as the pitch hook, framed as the customer's problem, not a criticism", "Passes what it found into the client brief, so web-builder puts it front and centre"]),
       ("In Claude Code it also", ["Searches Google, Facebook, Instagram, Yell, Checkatrade, Fresha, Booksy, Treatwell, Just Eat and local groups", "Labels each business: no website found, social media only, dead or parked site, or unconfirmed", "Skips chains, closed businesses and anyone already in your pipeline", "Ranks 5–10 leads and saves them to leads/<town>-<trade>-<date>.md"]),
     ],
     "claude_code": [
@@ -422,7 +423,7 @@ IDEA_TOOL = r"""
       <div class="field"><label for="channel">How you'll send it</label>
         <select id="channel"><option>WhatsApp</option><option>Text message</option><option>Email</option><option>Instagram DM</option><option>Facebook DM</option></select></div>
       <div class="field"><label for="owner">Owner's first name <small>(if you know it)</small></label><input id="owner" autocomplete="off"></div>
-      <div class="field full"><label for="hook">What did you notice about them?</label><textarea id="hook" required placeholder="e.g. Only on Instagram, posts new nail designs most days, no way to see prices or book"></textarea></div>
+      <div class="field full"><label for="hook">What did you notice about them?</label><textarea id="hook" required placeholder="What would a customer struggle with? e.g. Only on Instagram, no way to see prices or book without messaging"></textarea></div>
       <div class="actions full"><button class="btn primary" type="submit" id="pitchBtn">Write pitch</button></div>
     </form>
     <div class="out" id="pitchOut" hidden></div>
@@ -439,7 +440,7 @@ Pitch rules:
 - The first message must say exactly "£595 to build" and "£50 a month" (e.g. "£595 to build it and then £50 a month to keep it running"). Never write "GBP". Describe the monthly fee only using what's listed above.
 - Length: WhatsApp or text message 2-4 sentences, under 60 words. Instagram or Facebook DM under 50 words. Email under 120 words with a short, plain, lowercase-ish subject line.
 - Open with "Hi" or "Hiya" and the business name, or the owner's first name if given. Say who Sonny is in a few words.
-- Use the detail Sonny noticed so it's clearly not a mass message. End with ONE low-pressure question. Offer the example site link only to beauty businesses; for anything else offer to send an example.
+- Use the detail Sonny noticed so it's clearly not a mass message. Frame it as a problem the business's CUSTOMERS have (e.g. "people can't see your prices without messaging"), never as a criticism of the owner. End with ONE low-pressure question. Offer the example site link only to beauty businesses; for anything else offer to send an example.
 - ${LOCAL}
 - WhatsApp only: mention in a few words that this is Sonny's WhatsApp and he's on 07944 539622 for calls.
 - The follow-up is 1-2 sentences, under 30 words, friendly, no pressure, and doesn't repeat the price or the pitch.
@@ -605,6 +606,7 @@ WEB_TOOL = r"""
       <div class="field full"><label for="bServices">Services, menu and prices <small>(one per line: name, price, short description)</small></label><textarea id="bServices" rows="5"></textarea></div>
       <div class="field full"><label for="bHours">Opening hours <small>(all 7 days)</small></label><textarea id="bHours" rows="4" placeholder="Mon closed&#10;Tue–Fri 9–5&#10;Sat 9–4&#10;Sun closed"></textarea></div>
       <div class="field full"><label for="bAbout">About them <small>(2–3 sentences, in their words if you can)</small></label><textarea id="bAbout" rows="3"></textarea></div>
+      <div class="field full"><label for="bNeeds">What their customers struggle with <small>(from idea-creator's research: can't see prices, hours, booking…)</small></label><textarea id="bNeeds" rows="2"></textarea></div>
       <div class="field full"><label for="bPhotos">Photos and anything else</label><textarea id="bPhotos" rows="2" placeholder="e.g. Annie will send 6 photos; wants the prices to stand out"></textarea></div>
       <div class="actions full"><button class="btn primary" type="submit" id="gapBtn">What's missing?</button><span class="note">Your brief updates below as you type.</span></div>
     </form>
@@ -645,6 +647,9 @@ ${lines(g("bHours"))}
 
 ## About
 ${g("bAbout")}
+
+## Customer needs (from idea-creator's research)
+${lines(g("bNeeds"))}
 
 ## Photos and notes
 ${g("bPhotos")}

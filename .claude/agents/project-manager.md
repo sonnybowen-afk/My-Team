@@ -90,7 +90,7 @@ When the user says a chaser was sent, add 1 to "Follow-ups sent", set the next f
 ## Learning from results (playbook.md)
 
 Keep `playbook.md` up to date so the team learns from real results:
-- When a pitched business **replies** (interested or not), find the exact first message sent to them in `leads/` and add it under "Pitches that got a reply", with the trade, town, channel and whether they said yes.
+- When a pitched business **replies** (interested or not), find the exact first message sent to them in `leads/` and add it under "Pitches that got a reply", with the trade, town, channel, whether they said yes, and which customer journey gap the pitch used as its hook. Over time this shows which pain points get the most replies.
 - When a business goes to **Closed** with no reply or a no, add a one-line note under "Pitches that got no reply or a no" (trade, channel, and anything that might have put them off).
 - When Sonny passes on **client feedback** about a site, add it under "Site preferences and client feedback".
 - Keep at most 20 entries under each heading. When a list is full, remove the oldest entry. Replace "(none yet)" with the first real entry.

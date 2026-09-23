@@ -42,6 +42,10 @@ List file paths or links. Put the files in `sites/<business-slug>/images/`.
 - Gallery:
 - Logo:
 
+## Customer needs (from idea-creator's research)
+What customers currently struggle with, and what they ask about most. web-builder puts these front and centre.
+-
+
 ## Look and feel
 - **Tone:** (friendly and local / smart and professional / fun / traditional)
 - **Brand colours:** (hex codes, or "match the sign/logo", or "you pick")

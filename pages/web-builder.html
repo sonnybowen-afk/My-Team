@@ -150,6 +150,7 @@ footer { color: var(--muted); font-size: 13px; text-align: center; }
       <div class="field full"><label for="bServices">Services, menu and prices <small>(one per line: name, price, short description)</small></label><textarea id="bServices" rows="5"></textarea></div>
       <div class="field full"><label for="bHours">Opening hours <small>(all 7 days)</small></label><textarea id="bHours" rows="4" placeholder="Mon closed&#10;Tue–Fri 9–5&#10;Sat 9–4&#10;Sun closed"></textarea></div>
       <div class="field full"><label for="bAbout">About them <small>(2–3 sentences, in their words if you can)</small></label><textarea id="bAbout" rows="3"></textarea></div>
+      <div class="field full"><label for="bNeeds">What their customers struggle with <small>(from idea-creator's research: can't see prices, hours, booking…)</small></label><textarea id="bNeeds" rows="2"></textarea></div>
       <div class="field full"><label for="bPhotos">Photos and anything else</label><textarea id="bPhotos" rows="2" placeholder="e.g. Annie will send 6 photos; wants the prices to stand out"></textarea></div>
       <div class="actions full"><button class="btn primary" type="submit" id="gapBtn">What's missing?</button><span class="note">Your brief updates below as you type.</span></div>
     </form>
@@ -376,6 +377,9 @@ ${lines(g("bHours"))}
 
 ## About
 ${g("bAbout")}
+
+## Customer needs (from idea-creator's research)
+${lines(g("bNeeds"))}
 
 ## Photos and notes
 ${g("bPhotos")}
