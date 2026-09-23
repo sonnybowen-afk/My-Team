@@ -27,7 +27,27 @@ The agents will only promise what's listed here.
 ## Payment terms
 - **Build fee due:** within 7 days of the site going live
 - **Maintenance:** monthly, starting from the go-live date
+- **Cancelling:** clients can cancel the £50 a month any time after the first month. So there's a one-month minimum and no long contract.
 - **How clients pay:** bank transfer
 
+## Domains
+- Sonny buys and owns every client's domain, and the £50 a month covers renewing it.
+- If a client asks who owns it, say Sonny does. What happens to the domain if a client cancels hasn't been decided yet, so don't promise anything and check with Sonny.
+
 ## Typical turnaround
-- **Draft ready:** [EDIT: e.g. within 5 working days of getting their info]
+- No clients yet, so nothing is fixed. Agents plan on a draft within 5 working days of getting the client's info, but **never promise a turnaround or a number of revision rounds** in a pitch. Check with Sonny if a client asks.
+
+## Who I target
+Businesses anywhere in England that have **no website** and **clear demand**, in three groups:
+- **Tradesmen:** plumbers, electricians, builders, roofers, joiners and carpenters, plasterers, painters and decorators, landscapers and gardeners, tilers, kitchen and bathroom fitters, locksmiths, cleaners and similar.
+- **Beauty:** hair salons, barbers, nail techs, lash and brow artists, beauty salons, aestheticians, spray tanning, mobile beauty and similar.
+- **Housing developers:** small and local house builders and developers with current or upcoming developments.
+
+**Clear demand** means visible signs the business is busy and customers want it:
+- Recent posts, at least weekly, with regular job photos or new work.
+- Customers asking questions or trying to book in comments and messages.
+- A booking app with slots filling up.
+- A Checkatrade, MyBuilder or Rated People profile with recent jobs.
+- For developers: live or upcoming sites, or plots for sale.
+
+A big review count can be a private signal of demand, but **never mention reviews in any message**. Skip businesses with no recent activity, even if they have no website.

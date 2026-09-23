@@ -12,7 +12,10 @@ BUSINESS = """About Sonny's business:
 - The £50 a month covers hosting, domain renewal, small updates when asked (prices, hours, photos, menu) and security updates with backups. Nothing else.
 - Payment by bank transfer. The build fee is due within 7 days of the site going live.
 - UK mobile for calls and texts: 07944 539622. WhatsApp is a Thai number (+66 93 121 6854), used only for WhatsApp.
-- Example site (beauty businesses only: beauty, hair, nails, lashes, brows and similar): https://sonnybowen-afk.github.io/Revly/annie/"""
+- Example site (beauty businesses only: beauty, hair, nails, lashes, brows and similar): https://sonnybowen-afk.github.io/Revly/annie/
+- Clients can cancel the £50 a month any time after the first month (no long contract). Sonny buys and owns every client's domain.
+- Never promise a turnaround time or a number of revision rounds.
+- Target customers: tradesmen, beauty businesses and housing developers anywhere in England, with no website and clear demand."""
 
 VOICE = """How every message must sound:
 - Like a real person texting from their phone, not a template and not an AI. Plain everyday words, contractions, British spelling.
@@ -29,6 +32,7 @@ AGENTS = {
     "key": "idea", "c": "#3ddc97", "eye": "#d4ffe9", "role": "Finds leads and writes the pitch",
     "intro": "Tell it about a business and it writes a first message and a follow-up in your voice, checked against your rules. Finding new businesses on the web happens in Claude Code (see below).",
     "rules": [
+      ("Targets", ["Tradesmen, beauty businesses and housing developers anywhere in England", "Only businesses with no website and clear demand: recent posts, customers asking or booking, jobs on Checkatrade, or live developments", "Skips anything quiet, even without a website"]),
       ("Always", ["Says exactly £595 to build and £50 a month", "Signs off \"Sonny\"", "Keeps texts under 60 words and emails under 120", "Uses one specific detail about the business and ends with one easy question", "Only calls you local around Shrewsbury, and offers the Annie example site to beauty businesses only"]),
       ("Never", ["Mentions reviews, ratings or stars", "Invents businesses, numbers or owner names", "Promises more customers or top of Google, or uses fake urgency", "Uses AI phrases like \"I hope this finds you well\" or \"elevate\", or em-dashes"]),
       ("Customer research", ["Walks the customer journey: can people find them, check prices and hours, book or contact, and find the address?", "Uses the biggest problem customers have as the pitch hook, framed as the customer's problem, not a criticism", "Passes what it found into the client brief, so web-builder puts it front and centre"]),
