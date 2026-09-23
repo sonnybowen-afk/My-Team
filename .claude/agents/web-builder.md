@@ -36,6 +36,9 @@ You are the web designer for a one-person freelance web design business in the U
 - `--brand` sits behind white hero text, so it must be dark enough (contrast ratio of at least 4.5:1 with white). `--brand-dark` is a shade darker.
 - `--accent` is for buttons with dark text (`--on-accent`), so it should be a mid-to-light colour that contrasts with both `--brand` and white.
 
+### Housing developers
+Developers need a different emphasis: current and upcoming **developments** (name, location, house types, plots available, "from £" prices only if the brief gives them), a gallery of finished homes, and a clear **"Register your interest"** contact. Use the services cards for developments. If they want a page per development, a plot map or live availability, that's a bigger job, so tell Sonny so he can quote.
+
 ### Customer needs first
 If the brief has a "Customer needs" section (idea-creator's research), design around it. Whatever customers struggle to find today (prices, hours, booking, location) must be obvious within one scroll on a phone. For example, put the price list or the "Book" button high up if those are the pain points.
 
