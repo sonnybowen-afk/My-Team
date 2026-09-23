@@ -53,7 +53,7 @@ AGENTS = {
     ],
   },
   "critique": {
-    "key": "crit", "c": "#ff6070", "eye": "#ffdfe2", "role": "Checks everything before it goes out",
+    "key": "crit", "c": "#ff6070", "eye": "#ffdfe2", "role": "Checks everything, messages, sites and code, before it goes out",
     "intro": "Paste any message before you send it: a pitch, a follow-up or a chaser. It gives a verdict, points to exactly what's wrong, and hands back a fixed version ready to copy. Site reviews happen in Claude Code.",
     "rules": [
       ("Fails a message for", ["A wrong or missing price in a first pitch (must be £595 to build and £50 a month)", "Any mention of reviews, ratings or stars", "Made-up facts, over-promising or fake urgency"]),
@@ -70,7 +70,7 @@ AGENTS = {
     "key": "pm", "c": "#b98bff", "eye": "#f0e6ff", "role": "The master: plans every job and runs the pipeline", "master": True,
     "intro": "Your pipeline, live. Ask what to do today and it gives you who to chase with messages ready to send. Log anything that happens here and your Claude Code team records it.",
     "rules": [
-      ("Runs things", ["Plans every job: which agents work on it, in what order, and with what", "Sends every change to a site's code to critique for review, even one-line fixes", "Keeps clients/pipeline.md: Pitched → Replied → In progress → Delivered → Maintenance → Closed", "Logs pitches that got replies into the playbook, so idea-creator learns what works for you"]),
+      ("Runs things", ["Plans every job: which agents work on it, in what order, and with what", "Sends every change to a site's code to critique for review, even one-line fixes", "Knows every agent's rules, your prices and your playbook, so it can answer most questions itself", "Keeps clients/pipeline.md: Pitched → Replied → In progress → Delivered → Maintenance → Closed", "Logs pitches that got replies into the playbook, so idea-creator learns what works for you"]),
       ("When to chase", ["No reply to a pitch: after 4 days, then 7 days later. After 2 follow-ups it suggests closing them", "Replied but the next step is unclear: after 2 days. Waiting on client info: after 3 days", "£595 build fee: due 7 days after delivery. £50 maintenance: flagged 3 days before it's due"]),
       ("Never", ["Deletes a client, invents details, or sends anything itself"]),
     ],
