@@ -9,3 +9,5 @@ If a business has said yes to a site, also:
 2. List what I still need to ask them for, as one short, casual message I can send them.
 
 Show me the rows that changed and the next action and date for each.
+
+Then sync the HQ page as described in `CLAUDE.md`.

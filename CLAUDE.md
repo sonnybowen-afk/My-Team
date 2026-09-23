@@ -18,8 +18,9 @@ The work is done by four subagents in `.claude/agents/`. **project-manager is th
 ## Repository structure
 
 - `.claude/agents/`: the four subagents
-- `.claude/commands/`: slash commands that chain them (`/boss`, `/find-leads`, `/build-site`, `/review`, `/pipeline`, `/status`, `/email-drafts`)
+- `.claude/commands/`: slash commands that chain them (`/boss`, `/find-leads`, `/build-site`, `/review`, `/pipeline`, `/status`, `/email-drafts`, `/train`)
 - `business.md`: the user's name, area, pricing, what the monthly fee covers, and payment terms. Every agent reads this.
+- `playbook.md`: what the team has learned: Sonny's preferences, pitches that got replies, and client feedback. The agents read it, project-manager adds real results, and `/train` adds lessons.
 - `templates/site-template.html`: the house site template. Every client site starts as a copy of it.
 - `templates/client-brief.md`: the brief layout
 - `clients/pipeline.md`: the pipeline and single source of truth
@@ -60,3 +61,23 @@ node scripts/screenshot.mjs sites/<slug>/index.html   # screenshots + layout che
 - Don't automate Instagram or LinkedIn messages. The user sends DMs by hand.
 - Always run messages and sites past `critique` before calling them done.
 - Keep `clients/pipeline.md` updated through `project-manager`, not by hand-editing in other workflows.
+
+## Web Crew HQ page (pipeline sync)
+
+Sonny's HQ page at https://claude.ai/artifact/TVDxQLvtJLazHwpoArFq1r shows the pipeline live. **Whenever `clients/pipeline.md` changes**, sync the page straight afterwards with the `ArtifactData` tool (load it with ToolSearch if needed): action `set`, that url, collection `pipeline`, doc id `current`, with this body built from the whole of `clients/pipeline.md`:
+
+```json
+{
+  "updated": "YYYY-MM-DD",
+  "clients": [
+    { "business": "Annie's Nails", "stage": "pitched", "contact": "07700 900000", "channel": "WhatsApp",
+      "next_action": "Follow-up message", "due": "YYYY-MM-DD", "notes": "short note" }
+  ]
+}
+```
+
+- `stage` is one of: `pitched`, `replied`, `in_progress`, `delivered`, `maintenance`, `closed` ("Paid / Maintenance" is `maintenance`).
+- `due` is the row's follow-up, fee or next-£50 date, or `""` if there isn't one. `next_action` says what's due then, in a few words.
+- Always send the full list (it replaces the whole document). An empty pipeline is `"clients": []`.
+- If the `ArtifactData` tool isn't available in the session, skip the sync and tell Sonny the page is out of date.
+

@@ -76,6 +76,14 @@ Rules:
 
 When the user says a chaser was sent, add 1 to "Follow-ups sent", set the next follow-up date, and add "chased YYYY-MM-DD" to the notes.
 
+## Learning from results (playbook.md)
+
+Keep `playbook.md` up to date so the team learns from real results:
+- When a pitched business **replies** (interested or not), find the exact first message sent to them in `leads/` and add it under "Pitches that got a reply", with the trade, town, channel and whether they said yes.
+- When a business goes to **Closed** with no reply or a no, add a one-line note under "Pitches that got no reply or a no" (trade, channel, and anything that might have put them off).
+- When Sonny passes on **client feedback** about a site, add it under "Site preferences and client feedback".
+- Keep at most 20 entries under each heading. When a list is full, remove the oldest entry. Replace "(none yet)" with the first real entry.
+
 ## Adding leads in bulk
 
 When the user says pitches were sent from a leads file (e.g. `leads/stockport-barbers-2026-09-23.md`) or from idea-creator's output, add **only the businesses they say were sent** to **Pitched**: today's date, the channel, 0 follow-ups, and a follow-up due date 4 days out. Skip any that are already in the file and say so.
@@ -107,4 +115,4 @@ For "status", "who do I need to chase", or "what's due", read the file and reply
 Put the most urgent item first. If nothing needs chasing, say so in one line.
 
 ### Chase messages
-Write each chaser like a real person texting: 1–2 short sentences, friendly, no guilt-tripping, first name sign-off. Never mention reviews. No "just circling back", "per my last message", "gentle reminder", "I hope this finds you well" or em-dashes. For payments, be clear and polite: "Hi Dave, just a heads up the £595 for the site is due today. Bank details are on the invoice. Cheers, Sam". The `critique` agent can review chasers if the user asks.
+Write each chaser like a real person texting: 1–2 short sentences, friendly, no guilt-tripping, first name sign-off. Never mention reviews. No "just circling back", "per my last message", "gentle reminder", "I hope this finds you well" or em-dashes. For payments, be clear and polite: "Hi Dave, just a heads up the £595 for the site is due today. Bank details are on the invoice. Cheers, Sonny". The `critique` agent can review chasers if the user asks.
