@@ -18,7 +18,7 @@ The work is done by four subagents in `.claude/agents/`:
 ## Repository structure
 
 - `.claude/agents/`: the four subagents
-- `.claude/commands/`: slash commands that chain them (`/find-leads`, `/build-site`, `/review`, `/pipeline`, `/status`)
+- `.claude/commands/`: slash commands that chain them (`/find-leads`, `/build-site`, `/review`, `/pipeline`, `/status`, `/email-drafts`)
 - `business.md`: the user's name, area, pricing, what the monthly fee covers, and payment terms. Every agent reads this.
 - `templates/site-template.html`: the house site template. Every client site starts as a copy of it.
 - `templates/client-brief.md`: the brief layout
@@ -54,6 +54,7 @@ node scripts/screenshot.mjs sites/<slug>/index.html   # screenshots + layout che
 
 - Outreach must **never** mention a business's reviews, ratings or stars, and must quote exactly £595 + £50/month.
 - Messages must sound like a real person texting: short, casual, no AI or sales-template phrasing.
-- Never send messages on the user's behalf. Draft them for the user to send.
+- Never send messages on the user's behalf. Draft them for the user to send. For email, save them as Gmail drafts with the Gmail connector's `create_draft` tool, and never use `send_message` or reply tools.
+- Don't automate Instagram or LinkedIn messages. The user sends DMs by hand.
 - Always run messages and sites past `critique` before calling them done.
 - Keep `clients/pipeline.md` updated through `project-manager`, not by hand-editing in other workflows.
