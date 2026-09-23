@@ -26,4 +26,4 @@ A short note on the message and what might have put them off.
 ## Site preferences and client feedback
 What clients liked, asked to change, or complained about.
 
-- (none yet)
+- **Design reference (from Sonny, 2026-09-23):** https://www.silviamalavasi.com. Sonny wants his sites to feel like this: polished and professional, built to senior frontend-developer standards (responsive, accessible, fast). Take cues from its layout, spacing, type and finish, but never copy its text, images or branding. Claude's cloud environment couldn't open it on 2026-09-23. If it's still blocked, ask Sonny what he likes about it and add his answer here.
