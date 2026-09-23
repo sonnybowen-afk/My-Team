@@ -98,7 +98,7 @@ details.rules[open] summary { margin-bottom: 8px; }
 .rulegrid h3 { font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
 .rulegrid ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 15px; }
 
-/* pipeline (project-manager) */
+/* pipeline (boss) */
 .money { display: grid; gap: 10px; grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .tile { background: var(--panel-2); border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; }
 .tile span { display: block; font-size: 13px; color: var(--muted); }
@@ -392,7 +392,7 @@ function refresh() {
   const name = g("bName") || "the client";
   const s = slug(g("bName") || "client");
   renderCC([[`Build ${name}'s site (brief included)`,
-    `Save this brief to clients/briefs/${s}.md, then use the web-builder agent to build the site. Have the critique agent review it and web-builder apply the fixes (2 rounds max). Then have project-manager put ${name} in In progress and sync the HQ page.\n\n${briefText()}`]]);
+    `Save this brief to clients/briefs/${s}.md, then use the web-builder agent to build the site. Have the critique agent review it and web-builder apply the fixes (2 rounds max). Then have boss put ${name} in In progress and sync the HQ page.\n\n${briefText()}`]]);
 }
 $("briefForm").addEventListener("input", refresh);
 refresh();

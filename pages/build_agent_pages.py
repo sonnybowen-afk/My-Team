@@ -67,16 +67,16 @@ AGENTS = {
       ("Review a leads file", "Use the critique agent to check every message in my latest leads file."),
     ],
   },
-  "project-manager": {
-    "key": "pm", "c": "#b98bff", "eye": "#f0e6ff", "role": "The master: plans every job and runs the pipeline", "master": True,
+  "boss": {
+    "key": "pm", "c": "#b98bff", "eye": "#f0e6ff", "role": "The master: runs every job and the pipeline", "master": True,
     "intro": "Your pipeline, live. Ask what to do today and it gives you who to chase with messages ready to send. Log anything that happens here and your Claude Code team records it.",
     "rules": [
-      ("Runs things", ["Plans every job: which agents work on it, in what order, and with what", "Sends every change to a site's code to critique for review, even one-line fixes", "Knows every agent's rules, your prices and your playbook, so it can answer most questions itself", "Keeps clients/pipeline.md: Pitched → Replied → In progress → Delivered → Maintenance → Closed", "Logs pitches that got replies into the playbook, so idea-creator learns what works for you"]),
+      ("Runs things", ["Handles every request automatically: works out what you need and which agent does each part", "Runs independent jobs at the same time, e.g. leads in two towns at once", "Plans every job: which agents work on it, in what order, and with what", "Sends every change to a site's code to critique for review, even one-line fixes", "Knows every agent's rules, your prices and your playbook, so it can answer most questions itself", "Keeps clients/pipeline.md: Pitched → Replied → In progress → Delivered → Maintenance → Closed", "Logs pitches that got replies into the playbook, so idea-creator learns what works for you"]),
       ("When to chase", ["No reply to a pitch: after 4 days, then 7 days later. After 2 follow-ups it suggests closing them", "Replied but the next step is unclear: after 2 days. Waiting on client info: after 3 days", "£595 build fee: due 7 days after delivery. £50 maintenance: flagged 3 days before it's due"]),
       ("Never", ["Deletes a client, invents details, or sends anything itself"]),
     ],
     "claude_code": [
-      ("Plan anything", "What should I do today? Ask project-manager to plan it and run the agents it picks."),
+      ("Plan anything", "What should I do today? Ask boss to plan it and run the agents it picks."),
       ("Apply what I logged here", "Check my agent pages."),
     ],
   },
@@ -212,7 +212,7 @@ details.rules[open] summary { margin-bottom: 8px; }
 .rulegrid h3 { font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
 .rulegrid ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 15px; }
 
-/* pipeline (project-manager) */
+/* pipeline (boss) */
 .money { display: grid; gap: 10px; grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .tile { background: var(--panel-2); border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; }
 .tile span { display: block; font-size: 13px; color: var(--muted); }
@@ -662,7 +662,7 @@ function refresh() {
   const name = g("bName") || "the client";
   const s = slug(g("bName") || "client");
   renderCC([[`Build ${name}'s site (brief included)`,
-    `Save this brief to clients/briefs/${s}.md, then use the web-builder agent to build the site. Have the critique agent review it and web-builder apply the fixes (2 rounds max). Then have project-manager put ${name} in In progress and sync the HQ page.\n\n${briefText()}`]]);
+    `Save this brief to clients/briefs/${s}.md, then use the web-builder agent to build the site. Have the critique agent review it and web-builder apply the fixes (2 rounds max). Then have boss put ${name} in In progress and sync the HQ page.\n\n${briefText()}`]]);
 }
 $("briefForm").addEventListener("input", refresh);
 refresh();
@@ -692,7 +692,7 @@ Reply with only JSON in this shape: {"ready": true or false, "missing": ["short 
 });
 """
 
-# ---------------------------------------------------------------- project-manager
+# ---------------------------------------------------------------- boss
 PM_TOOL = r"""
   <section class="panel main" aria-labelledby="pipe-h">
     <div class="actions" style="justify-content: space-between"><h2 id="pipe-h">Pipeline</h2><span class="note" id="pipeUpdated">Connecting…</span></div>
@@ -762,7 +762,7 @@ function renderPipeline() {
     });
 }
 
-const RULES = `You are project-manager, the master of Sonny's team. Look at Sonny's pipeline and tell him exactly what to do today, most urgent first, with a ready-to-send message for everyone he needs to chase.
+const RULES = `You are boss, the master of Sonny's team. Look at Sonny's pipeline and tell him exactly what to do today, most urgent first, with a ready-to-send message for everyone he needs to chase.
 
 ${BUSINESS}
 
@@ -846,7 +846,7 @@ TOOLS = {
   "idea-creator": (IDEA_TOOL, IDEA_JS, "e.g. Always mention I can have a draft ready within a week"),
   "critique": (CRIT_TOOL, CRIT_JS, "e.g. Flag any message over 40 words"),
   "web-builder": (WEB_TOOL, WEB_JS, "e.g. Always put the booking button above the prices"),
-  "project-manager": (PM_TOOL, PM_JS, "e.g. Chase unpaid build fees after 5 days, not 7"),
+  "boss": (PM_TOOL, PM_JS, "e.g. Chase unpaid build fees after 5 days, not 7"),
 }
 
 def esc(s):
@@ -870,7 +870,7 @@ for name, a in AGENTS.items():
         .replace("__RULES__", rules_html)
         .replace("__LESSON_EG__", esc(lesson_eg))
         .replace("__HQ__", HQ_URL)
-        .replace("__TITLE__", {"idea-creator": "Idea Creator", "web-builder": "Web Builder", "critique": "Critique", "project-manager": "Project Manager"}[name])
+        .replace("__TITLE__", {"idea-creator": "Idea Creator", "web-builder": "Web Builder", "critique": "Critique", "boss": "Boss"}[name])
         .replace("__COLOR__", a["c"])
         .replace("__BADGE__", '<span class="badge">MASTER</span>' if a.get("master") else "")
         .replace("__NAME__", name)
