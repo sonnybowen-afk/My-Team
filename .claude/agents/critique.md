@@ -68,6 +68,8 @@ Always give the full revised message when it isn't a PASS. End with a one-line t
 - White text on `--brand` is readable; button text on `--accent` is readable.
 - Nav anchors match section IDs; no duplicate IDs; no unclosed tags.
 - Every image has meaningful `alt` text and the file exists.
+- Frontend standards from `web-builder.md`: mobile-first layout with no fixed widths; one `h1` and headings in order; visible focus; skip link; reduced-motion respected. Images at most 1600px wide, ideally under 300KB each (check the file sizes), with `width`/`height` set and lazy-loading below the fold. No unnecessary JavaScript and no frameworks on a one-page site.
+- Does it feel as polished as Sonny's design reference (see `playbook.md`)? Name specific gaps, e.g. cramped spacing, weak type hierarchy or plain-looking buttons.
 
 ### Output
 

@@ -43,7 +43,9 @@ AGENTS = {
     "rules": [
       ("Builds", ["Starts from your house template, so every client gets the same polished layout", "Header, hero, services or menu with prices, about, photos, opening hours for all 7 days, contact with a map, and a \"Site by Sonny Bowen\" footer", "Call and WhatsApp buttons on phones, link previews and business details Google can read", "Screenshots the site on a phone and a desktop and fixes anything that looks off"]),
       ("Never", ["Invents prices, hours, numbers or testimonials. Missing info stays as a highlighted placeholder", "Changes the template layout. Only colours and content change between clients", "Uses filler like \"Welcome to our website\""]),
-      ("Gives you", ["The site file, the colours it picked, the layout check result, and questions to send the client"]),
+      ("Frontend standards", ["Mobile-first: checked at 360px, 768px and 1280px, with 44px tap targets and no sideways scrolling", "Accessible to WCAG 2.2 AA: proper headings, alt text, 4.5:1 contrast, visible focus, keyboard friendly", "Fast: LCP under 2.5s, compressed images under about 300KB, lazy-loading, and no frameworks on a one-page site", "Polished: consistent spacing, subtle hover effects, works in Safari, Chrome, Firefox and Edge"]),
+      ("Design reference", ["Sites should feel like silviamalavasi.com: its layout, spacing, type and polish, adapted to each client. Never copied"]),
+      ("Gives you", ["The site file, the colours it picked, the layout check result, and questions to send the client. For bigger jobs (booking, shop), a note so you can quote for them"]),
     ],
     "claude_code": [
       ("Build from a brief", "Use the web-builder agent to build a site from the brief in clients/briefs/<client>.md, then have critique review it and web-builder apply the fixes (2 rounds max)."),
