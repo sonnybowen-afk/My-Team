@@ -33,7 +33,7 @@ The work is done by four subagents in `.claude/agents/`:
 ### Setup
 
 ```bash
-npm install                        # installs Playwright for the screenshot check
+npm install                        # installs Playwright for the screenshot check (runs automatically in cloud sessions via .claude/settings.json)
 npx playwright install chromium    # only needed on a machine without a browser already installed
 ```
 
