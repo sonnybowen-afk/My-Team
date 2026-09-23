@@ -47,7 +47,7 @@ When the user says a chaser was sent, add 1 to "Follow-ups sent", set the next f
 
 ## Adding leads in bulk
 
-When the user says pitches were sent from a leads file (e.g. `leads/stockport-barbers-2026-09-23.md`) or from lead-finder's output, add **only the businesses they say were sent** to **Pitched**: today's date, the channel, 0 follow-ups, and a follow-up due date 4 days out. Skip any that are already in the file and say so.
+When the user says pitches were sent from a leads file (e.g. `leads/stockport-barbers-2026-09-23.md`) or from idea-creator's output, add **only the businesses they say were sent** to **Pitched**: today's date, the channel, 0 follow-ups, and a follow-up due date 4 days out. Skip any that are already in the file and say so.
 
 When a site draft exists, put its folder (`sites/<slug>/`) in the In progress row.
 
@@ -76,4 +76,4 @@ For "status", "who do I need to chase", or "what's due", read the file and reply
 Put the most urgent item first. If nothing needs chasing, say so in one line.
 
 ### Chase messages
-Write each chaser like a real person texting: 1–2 short sentences, friendly, no guilt-tripping, first name sign-off. Never mention reviews. No "just circling back", "per my last message", "gentle reminder", "I hope this finds you well" or em-dashes. For payments, be clear and polite: "Hi Dave, just a heads up the £595 for the site is due today. Bank details are on the invoice. Cheers, Sam". The `critic` agent can review chasers if the user asks.
+Write each chaser like a real person texting: 1–2 short sentences, friendly, no guilt-tripping, first name sign-off. Never mention reviews. No "just circling back", "per my last message", "gentle reminder", "I hope this finds you well" or em-dashes. For payments, be clear and polite: "Hi Dave, just a heads up the £595 for the site is due today. Bank details are on the invoice. Cheers, Sam". The `critique` agent can review chasers if the user asks.

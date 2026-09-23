@@ -15,7 +15,7 @@ _Last updated: 2026-09-23_
 ## In progress
 | Business | Contact | Started | Target delivery | Waiting on | Site folder | Notes |
 |----------|---------|---------|-----------------|------------|-------------|-------|
-| Bramble & Bean | 07700 900461 (WhatsApp) | 2026-09-23 | 2026-09-30 | Client: postcode and photos | sites/bramble-and-bean/ | DEMO. Pitched and said yes 2026-09-23. Draft passed critic. Chase 2026-09-27 |
+| Bramble & Bean | 07700 900461 (WhatsApp) | 2026-09-23 | 2026-09-30 | Client: postcode and photos | sites/bramble-and-bean/ | DEMO. Pitched and said yes 2026-09-23. Draft passed critique. Chase 2026-09-27 |
 
 ## Delivered
 | Business | Contact | Delivered on | Invoice sent | Build fee (£595) due | Notes |

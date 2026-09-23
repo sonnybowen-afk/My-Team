@@ -1,6 +1,6 @@
 # Client brief: [Business name]
 
-Copy this to `clients/briefs/<business-slug>.md` and fill in what you know. Leave blanks empty: the web-designer will use placeholders and list them for you.
+Copy this to `clients/briefs/<business-slug>.md` and fill in what you know. Leave blanks empty: the web-builder will use placeholders and list them for you.
 
 ## Basics
 - **Business name:**
