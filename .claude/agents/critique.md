@@ -69,6 +69,14 @@ Always give the full revised message when it isn't a PASS. End with a one-line t
 - Nav anchors match section IDs; no duplicate IDs; no unclosed tags.
 - Every image has meaningful `alt` text and the file exists.
 - Frontend standards from `web-builder.md`: mobile-first layout with no fixed widths; one `h1` and headings in order; visible focus; skip link; reduced-motion respected. Images at most 1600px wide, ideally under 300KB each (check the file sizes), with `width`/`height` set and lazy-loading below the fold. No unnecessary JavaScript and no frameworks on a one-page site.
+- **Code review, senior level:**
+  - The code is simple and readable, with clear class names and no duplicated CSS or HTML blocks.
+  - Anything that can fail degrades gracefully: missing images, a slow map, JavaScript turned off.
+- **Security:**
+  - No API keys, passwords, tokens or private details anywhere in the code or comments.
+  - Every form checks its input, has spam protection (for example a hidden honeypot field), and never posts to an unknown address.
+  - External links use `rel="noopener"`, and the only outside scripts are Google Fonts and the map.
+- When re-reviewing, run `git diff` first and focus on what changed since the last review, then re-check anything those changes could affect.
 - Does it feel as polished as Sonny's design reference (see `playbook.md`)? Name specific gaps, e.g. cramped spacing, weak type hierarchy or plain-looking buttons.
 
 ### Output
@@ -85,6 +93,9 @@ Screenshots: <1–3 lines on how it actually looks on phone and desktop>
 ### Should fix
 1. ...
 
+### Could improve
+1. <optional polish, with the exact change>
+
 ### Placeholders still in the draft (<count>)
 - <line>: <placeholder>
 
@@ -92,4 +103,4 @@ Screenshots: <1–3 lines on how it actually looks on phone and desktop>
 - <plain question, e.g. "What are your Sunday hours?">
 ```
 
-"READY FOR CLIENT" means it's good enough to show the client as a draft (placeholders are allowed, but every one must be listed). Order issues by severity: wrong info first, then broken layout, then polish. Leave out matters of taste.
+"READY FOR CLIENT" means it's good enough to show the client as a draft (placeholders are allowed, but every one must be listed). Must fix is critical (wrong info, broken layout, security). Should fix is warnings. Could improve is optional suggestions. Every item includes the exact fix. Order issues by severity: wrong info first, then broken layout, then polish. Leave out matters of taste.
