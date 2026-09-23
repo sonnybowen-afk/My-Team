@@ -1,0 +1,742 @@
+<title>Web Crew HQ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=IBM+Plex+Sans:wght@400;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+  /* Night-shift control room. Single dark theme by design. */
+  :root {
+    color-scheme: dark;
+    --ground: #0a0f1f; --panel: #111832; --panel-2: #0d1328; --line: #243056; --grid: rgba(120, 140, 220, .07);
+    --text: #e9edf9; --muted: #9ba6c6; --gold: #ffd166;
+    --pm: #b98bff; --idea: #3ddc97; --web: #4fb3ff; --crit: #ff6070;
+    --display: "Chakra Petch", "Trebuchet MS", sans-serif;
+    --body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, "Courier New", monospace;
+  }
+  html, body { background: var(--ground); }
+  body { color: var(--text); font-family: var(--body); font-size: 16px; line-height: 1.5; padding-inline: 16px; padding-block: 20px 48px; }
+  .wrap { max-width: 1100px; margin-inline: auto; display: grid; gap: 32px; }
+  h1, h2, h3 { font-family: var(--display); line-height: 1.15; margin: 0; text-wrap: balance; }
+  h2 { font-size: clamp(21px, 2.8vw, 26px); }
+  h3 { font-size: 18px; }
+  p { margin: 0; }
+  a { color: var(--web); }
+  code { font-family: var(--mono); font-size: .86em; }
+  button { font: inherit; color: inherit; }
+  :focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; border-radius: 6px; }
+
+  header { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 12px 28px; }
+  .eyebrow { font-family: var(--display); font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+  h1 { font-size: clamp(28px, 5vw, 46px); margin-top: 4px; }
+  h1 span { color: var(--pm); }
+  .prices { display: flex; gap: 10px; }
+  .price { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 8px 14px; }
+  .price b { display: block; font-family: var(--display); font-size: 22px; color: var(--gold); font-variant-numeric: tabular-nums; }
+  .price span { font-size: 13px; color: var(--muted); }
+
+  /* ---------- Stage ---------- */
+  .stage {
+    --k: 1; position: relative; width: 100%; aspect-ratio: 16 / 8.5; overflow: hidden;
+    border: 1px solid var(--line); border-radius: 18px;
+    background:
+      radial-gradient(ellipse at 50% 60%, rgba(185, 139, 255, .16), transparent 50%),
+      linear-gradient(var(--grid) 1px, transparent 1px) 0 0 / 32px 32px,
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0 / 32px 32px,
+      var(--panel-2);
+  }
+  @media (max-width: 640px) { .stage { --k: .62; aspect-ratio: 1 / 1.06; } }
+  .stage > svg.links { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .spoke { stroke-width: 3; stroke-linecap: round; }
+  .flow { stroke: rgba(255, 255, 255, .6); stroke-width: 2; stroke-dasharray: 3 13; animation: flow 1.1s linear infinite; }
+  .peer { stroke: rgba(155, 166, 198, .3); stroke-width: 1.5; stroke-dasharray: 2 9; }
+  @keyframes flow { to { stroke-dashoffset: -16; } }
+
+  .bot {
+    --s: 1; --aw: calc(104px * var(--s) * var(--k));
+    position: absolute; left: var(--x); top: var(--y); z-index: 2;
+    translate: -50% calc(var(--aw) * -0.5917 - 4px);
+    display: flex; flex-direction: column; align-items: center;
+    background: none; border: 0; padding: 4px; cursor: pointer;
+  }
+  .bot.master { --s: 1.38; }
+  .bot-art { display: block; width: var(--aw); animation: bob var(--d, 3.2s) ease-in-out infinite; transition: filter .25s; }
+  .bot-art svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .bot-name, .bot-role { background: rgba(13, 19, 40, .85); border-radius: 6px; padding: 0 6px; white-space: nowrap; }
+  .bot-name { font-family: var(--display); font-weight: 700; font-size: calc(15px * var(--k) + 2px); color: var(--c); }
+  .bot-role { font-size: calc(12px * var(--k) + 1px); color: var(--muted); }
+  .bot.master .bot-role { color: var(--gold); font-family: var(--display); font-weight: 600; letter-spacing: .08em; }
+  @media (max-width: 640px) { .bot:not(.master) .bot-role { display: none; } }
+  .bot:hover .bot-art, .bot[aria-pressed="true"] .bot-art { filter: drop-shadow(0 0 14px var(--c)); }
+  @keyframes bob { 50% { transform: translateY(-7px); } }
+  .eyes { animation: blink 5.2s infinite; transform-box: fill-box; transform-origin: center; }
+  .bot:nth-of-type(2) .eyes { animation-delay: 1.3s; }
+  .bot:nth-of-type(3) .eyes { animation-delay: 2.6s; }
+  .bot:nth-of-type(4) .eyes { animation-delay: 3.7s; }
+  @keyframes blink { 0%, 93%, 100% { transform: scaleY(1); } 96% { transform: scaleY(.1); } }
+  .bulb { animation: glow 2.4s ease-in-out infinite; }
+  @keyframes glow { 50% { opacity: .45; } }
+  .scan { animation: scan 2.2s ease-in-out infinite; }
+  @keyframes scan { 50% { transform: translateY(34px); } }
+  .stage.still *, .stage.still *::before { animation-play-state: paused !important; }
+  .motion { position: absolute; right: 10px; bottom: 10px; z-index: 3; min-height: 34px; padding: 4px 12px; font-size: 13px;
+    background: rgba(13, 19, 40, .85); border: 1px solid var(--line); border-radius: 8px; cursor: pointer; color: var(--muted); }
+
+  .selected {
+    display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px 16px; align-items: center;
+    background: var(--panel); border: 1px solid var(--line); border-left: 4px solid var(--c, var(--pm)); border-radius: 12px; padding: 12px 16px;
+  }
+  .selected strong { font-family: var(--display); color: var(--c); font-size: 17px; }
+  .selected p { color: var(--muted); font-size: 15px; }
+  .acts { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; justify-content: end; }
+  @media (max-width: 640px) { .selected { grid-template-columns: minmax(0, 1fr); } .acts { justify-content: start; } }
+
+  .btn { min-height: 34px; padding: 4px 12px; border-radius: 8px; cursor: pointer; background: var(--panel-2); border: 1px solid var(--line); font-size: 14px; font-weight: 600; }
+  .btn:hover { border-color: var(--muted); }
+  .chip { display: inline-block; background: #070b18; border: 1px solid var(--line); color: var(--gold); border-radius: 6px; padding: 2px 8px; font-family: var(--mono); font-size: 14px; overflow-wrap: anywhere; }
+
+  /* ---------- Start here ---------- */
+  .start { background: linear-gradient(135deg, rgba(185, 139, 255, .16), rgba(185, 139, 255, .04)); border: 1px solid rgba(185, 139, 255, .45); border-radius: 18px; padding: 20px; display: grid; gap: 14px; }
+  .start-top { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; justify-content: space-between; }
+  .start .big { font-family: var(--mono); font-size: 22px; color: var(--gold); }
+  .start p { color: var(--muted); max-width: 70ch; }
+  .asks { display: flex; flex-wrap: wrap; gap: 8px; }
+
+  /* ---------- Sections ---------- */
+  section.block { display: grid; gap: 14px; }
+  .sub { color: var(--muted); max-width: 72ch; }
+  .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; }
+  table { width: 100%; border-collapse: collapse; background: var(--panel); font-size: 15px; min-width: 600px; }
+  th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-family: var(--display); font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  tr:last-child td { border-bottom: 0; }
+  td small { display: block; color: var(--muted); font-size: 13px; margin-top: 2px; }
+
+  .team { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 480px), 1fr)); }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 18px; display: grid; gap: 12px; align-content: start; scroll-margin-top: 16px; transition: border-color .25s, box-shadow .25s; }
+  .card.on { border-color: var(--c); box-shadow: 0 0 0 1px var(--c); }
+  .card-head { display: grid; grid-template-columns: 48px minmax(0, 1fr); gap: 12px; align-items: center; }
+  .card-head svg { width: 48px; height: auto; overflow: visible; }
+  .card-head h3 { color: var(--c); font-size: 20px; }
+  .card-head span { font-size: 13px; color: var(--muted); }
+  .card-head .crown { color: var(--gold); font-family: var(--display); font-weight: 600; letter-spacing: .08em; }
+  .kv { display: grid; gap: 8px; margin: 0; font-size: 15px; }
+  .kv div { display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: 10px; }
+  .kv dt { color: var(--muted); font-size: 13px; padding-top: 2px; }
+  .kv dd { margin: 0; }
+  .say { font-style: italic; }
+  details { border-top: 1px solid var(--line); padding-top: 10px; }
+  summary { cursor: pointer; font-family: var(--display); font-weight: 600; font-size: 14px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); min-height: 32px; display: flex; align-items: center; }
+  summary:hover { color: var(--text); }
+  details[open] summary { margin-bottom: 8px; }
+  details h4 { font-family: var(--display); font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin: 12px 0 4px; font-weight: 600; }
+  details h4:first-of-type { margin-top: 0; }
+  details ul { margin: 0; padding-left: 18px; display: grid; gap: 3px; font-size: 15px; }
+  ul.never li::marker { content: "✕  "; color: var(--crit); }
+  ul.always li::marker { content: "✓  "; color: var(--idea); }
+
+  .lanes { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 480px), 1fr)); }
+  .lane { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 16px; display: grid; gap: 10px; align-content: start; }
+  .lane h3 { font-size: 16px; }
+  .steps { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; font-size: 15px; }
+  .steps li { display: grid; grid-template-columns: 132px minmax(0, 1fr); gap: 10px; padding: 6px 10px; border-radius: 8px; background: var(--panel-2); border-left: 3px solid var(--c); }
+  .steps b { font-family: var(--display); color: var(--c); }
+  pre { margin: 0; background: #070b18; border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; font-family: var(--mono); font-size: 13px; line-height: 1.55; white-space: pre-wrap; overflow-wrap: anywhere; color: #d7def5; }
+  .prompt { display: grid; gap: 6px; margin-top: 8px; }
+  .prompt-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; font-size: 15px; font-weight: 600; }
+
+  .two { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); }
+  .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 16px 18px; display: grid; gap: 10px; align-content: start; }
+  .panel ul { margin: 0; padding-left: 18px; display: grid; gap: 5px; font-size: 15px; }
+  .kv.wide div { grid-template-columns: 120px minmax(0, 1fr); }
+  @media (max-width: 480px) {
+    .kv div, .kv.wide div, .steps li { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  }
+  footer { color: var(--muted); font-size: 13px; text-align: center; }
+
+  /* ---------- Pipeline ---------- */
+  .pipe-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 16px; }
+  .pipe-head .sub { font-size: 14px; }
+  .money { display: grid; gap: 10px; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .tile { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 12px 16px; }
+  .tile span { display: block; font-size: 13px; color: var(--muted); }
+  .tile b { font-family: var(--display); font-size: clamp(22px, 3.4vw, 30px); font-variant-numeric: tabular-nums; }
+  .tile.alert b { color: var(--crit); }
+  .tile.good b { color: var(--idea); }
+  @media (max-width: 480px) { .money { grid-template-columns: minmax(0, 1fr); } .tile { display: flex; justify-content: space-between; align-items: baseline; } }
+  .stages { display: flex; flex-wrap: wrap; gap: 6px; }
+  .stages button { min-height: 36px; padding: 4px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--panel); cursor: pointer; font-size: 14px; display: inline-flex; gap: 6px; align-items: center; }
+  .stages button b { font-variant-numeric: tabular-nums; color: var(--sc, var(--text)); }
+  .stages button[aria-pressed="true"] { border-color: var(--sc, var(--text)); background: var(--panel-2); }
+  .rows { display: grid; gap: 6px; }
+  .row { display: grid; grid-template-columns: minmax(0, 1.4fr) 118px minmax(0, 1.4fr) 110px minmax(0, 1fr); gap: 12px; align-items: center;
+    background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; font-size: 15px; }
+  .row.head { background: none; border: 0; padding-block: 0; font-family: var(--display); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .row .biz { font-weight: 600; }
+  .row .biz small, .row .contact small { display: block; color: var(--muted); font-weight: 400; font-size: 13px; }
+  .row .contact { overflow-wrap: anywhere; }
+  .pill { justify-self: start; font-size: 12px; font-weight: 600; padding: 2px 9px; border-radius: 999px; color: var(--sc); background: color-mix(in srgb, var(--sc) 16%, transparent); white-space: nowrap; }
+  .due { font-variant-numeric: tabular-nums; font-size: 14px; }
+  .due.over { color: var(--crit); font-weight: 600; }
+  .due.today { color: var(--gold); font-weight: 600; }
+  .due.none { color: var(--muted); }
+  @media (max-width: 720px) {
+    .row { grid-template-columns: minmax(0, 1fr) auto; gap: 4px 10px; }
+    .row.head { display: none; }
+    .row .pill { grid-column: 2; grid-row: 1; justify-self: end; }
+    .row .next { grid-column: 1 / -1; }
+    .row .due { grid-column: 2; grid-row: 3; justify-self: end; }
+    .row .contact { grid-column: 1; grid-row: 3; font-size: 14px; }
+  }
+  .empty { background: var(--panel); border: 1px dashed var(--line); border-radius: 14px; padding: 18px; color: var(--muted); text-align: center; }
+  .empty code { color: var(--gold); }
+
+  .train { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); }
+  .train .panel p { color: var(--muted); font-size: 15px; }
+  .train .asks { margin-top: 2px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bot-art, .eyes, .bulb, .scan, .flow { animation: none; }
+    .motion { display: none; }
+  }
+</style>
+
+<div class="wrap">
+  <header>
+    <div>
+      <div class="eyebrow">Sonny Bowen · Websites for small businesses · Shrewsbury</div>
+      <h1>Web Crew <span>HQ</span></h1>
+    </div>
+    <div class="prices" aria-label="Your pricing">
+      <div class="price"><b>£595</b><span>to build</span></div>
+      <div class="price"><b>£50</b><span>a month</span></div>
+    </div>
+  </header>
+
+  <section class="block" aria-label="Your agent team">
+    <div class="stage" id="stage">
+      <svg class="links" id="links" aria-hidden="true"></svg>
+      <button class="motion" id="motion" type="button" aria-pressed="false">Pause motion</button>
+    </div>
+    <div class="selected" id="selected" aria-live="polite"></div>
+  </section>
+
+  <section class="block" aria-labelledby="pipe-h">
+    <div class="pipe-head">
+      <h2 id="pipe-h">Pipeline</h2>
+      <span class="sub" id="pipeUpdated">Connecting…</span>
+    </div>
+    <div class="money">
+      <div class="tile" id="tDue"><span>Chase today or overdue</span><b id="mDue">0</b></div>
+      <div class="tile" id="tOwed"><span>Build fees owed</span><b id="mOwed">£0</b></div>
+      <div class="tile good"><span>Monthly income</span><b id="mMonthly">£0</b></div>
+    </div>
+    <div class="stages" id="stages" role="group" aria-label="Show one stage"></div>
+    <div class="rows" id="rows" hidden></div>
+    <p class="empty" id="pipeEmpty">No clients yet. Type <code>/boss find work in Shrewsbury</code> and they'll show up here.</p>
+  </section>
+
+  <section class="start" aria-labelledby="start-h">
+    <div class="start-top">
+      <div>
+        <h2 id="start-h">Start here: tell the boss</h2>
+      </div>
+      <div class="acts"><span class="big">/boss</span><button class="btn" type="button" data-copy-text="/boss ">Copy</button></div>
+    </div>
+    <p>Type <code>/boss</code> and say what you want in plain words. project-manager checks your pipeline, decides which agents to use and in what order, and Claude runs them. When the work's done, project-manager updates the pipeline and tells you what happens next. With nothing after it, <code>/boss</code> means "what should I do today?"</p>
+    <div class="asks">
+      <span class="chip">/boss</span>
+      <span class="chip">/boss find work in Telford</span>
+      <span class="chip">/boss Annie's Nails said yes</span>
+      <span class="chip">/boss Annie paid</span>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="cmd-h">
+    <h2 id="cmd-h">Shortcuts</h2>
+    <p class="sub">Type these in Claude Code on your My-Team repo. Use <code>/boss</code> when you're not sure. Use the others when you know exactly what you want.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Type</th><th>What happens</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td><span class="chip">/boss</span></td><td>project-manager plans the job, the agents it picks do the work, then it updates the pipeline<small>project-manager → whoever it picks → project-manager</small></td><td><code>/boss find work in Telford</code></td></tr>
+          <tr><td><span class="chip">/find-leads</span></td><td>Finds businesses with no website and writes pitches. critique checks each one, and email pitches are saved as Gmail drafts<small>idea-creator → critique</small></td><td><code>/find-leads Shrewsbury nail salons</code></td></tr>
+          <tr><td><span class="chip">/build-site</span></td><td>Builds the site, reviews it, fixes it (up to 2 rounds) and tracks it. Ends with one message asking the client for what's missing<small>web-builder → critique → web-builder → critique → project-manager</small></td><td><code>/build-site Annie's Nails</code></td></tr>
+          <tr><td><span class="chip">/review</span></td><td>critique's verdict on any message, leads file or site<small>critique</small></td><td><code>/review sites/annies-nails</code></td></tr>
+          <tr><td><span class="chip">/pipeline</span></td><td>Tell project-manager what happened: sent, replied, said yes, delivered, paid or not interested<small>project-manager</small></td><td><code>/pipeline Annie's Nails paid</code></td></tr>
+          <tr><td><span class="chip">/status</span></td><td>Who to chase today and what money is due, with messages critique has checked. Email chasers are saved as Gmail drafts<small>project-manager → critique</small></td><td><code>/status</code></td></tr>
+          <tr><td><span class="chip">/train</span></td><td>Teaches an agent a new rule or preference. Every future job uses it<small>updates the agent's file or playbook.md</small></td><td><code>/train critique flag messages over 40 words</code></td></tr>
+          <tr><td><span class="chip">/email-drafts</span></td><td>Saves checked email messages from a leads file as Gmail drafts. Never sends anything<small>critique → Gmail</small></td><td><code>/email-drafts leads/&lt;file&gt;.md</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="team-h">
+    <h2 id="team-h">The team</h2>
+    <p class="sub">Each agent is a file in <code>.claude/agents/</code>, and every one reads <code>business.md</code> first. Each one has its own page where it can do its job, learn new rules, and give you instructions to paste into Claude Code. Tap a name to open it.</p>
+    <div class="team">
+      <article class="card" id="card-project-manager" style="--c: var(--pm)">
+        <div class="card-head"><span data-avatar="pm"></span><div><h3><a href="https://claude.ai/artifact/Qperj1e8cxMEMgtFKV55M5" target="_blank" rel="noopener" style="color:inherit">project-manager ↗</a></h3><span><span class="crown">MASTER</span> · plans every job, runs the pipeline</span></div></div>
+        <dl class="kv">
+          <div><dt>Job</dt><dd>Decides which agents work on each job and in what order, keeps <code>clients/pipeline.md</code> up to date, and tells you who to chase, with messages ready to send.</dd></div>
+          <div><dt>Say</dt><dd class="say">"What should I do today?" · "Annie paid today, start maintenance." · "Who do I need to chase?"</dd></div>
+          <div><dt>Shortcut</dt><dd><span class="chip">/boss</span> <span class="chip">/status</span> <span class="chip">/pipeline</span></dd></div>
+        </dl>
+        <details>
+          <summary>How it runs things</summary>
+          <h4>Plans</h4>
+          <ul>
+            <li>Reads your pipeline, <code>business.md</code> and any leads or briefs involved, then writes a step-by-step plan: which agent does what, with what input</li>
+            <li>Uses as few steps as possible, and every message and site goes through critique</li>
+            <li>Lists which messages become Gmail drafts, and asks you first if anything is missing</li>
+            <li>Updates the pipeline once the work is done</li>
+          </ul>
+          <h4>Pipeline</h4>
+          <ul>
+            <li>Stages: Pitched → Replied → In progress → Delivered → Paid / Maintenance → Closed</li>
+            <li>Moves each business to its new stage, always sets the next action date, and checks today's date first</li>
+          </ul>
+          <h4>When to chase</h4>
+          <ul>
+            <li>No reply to a pitch: after 4 days, then after another 7. After 2 follow-ups it suggests closing them</li>
+            <li>They replied but the next step is unclear: after 2 days. Waiting on photos, a menu or hours: after 3 days</li>
+            <li>The £595 build fee: due 7 days after delivery. The £50 maintenance: flagged 3 days before it's due</li>
+          </ul>
+          <ul class="never"><li>Never deletes a client, makes up details, or plans to send anything</li></ul>
+          <h4>Tools</h4><ul><li>Reads and writes files, and checks the date</li></ul>
+        </details>
+      </article>
+
+      <article class="card" id="card-idea-creator" style="--c: var(--idea)">
+        <div class="card-head"><span data-avatar="idea"></span><div><h3><a href="https://claude.ai/artifact/A4Kdm6smnkdZeEgEkP3wyN" target="_blank" rel="noopener" style="color:inherit">idea-creator ↗</a></h3><span>finds leads · writes the pitch</span></div></div>
+        <dl class="kv">
+          <div><dt>Job</dt><dd>Finds local businesses with no website, and writes a first message and a follow-up for each one.</dd></div>
+          <div><dt>Say</dt><dd class="say">"Find 8 nail salons in Shrewsbury with no website and draft WhatsApp pitches."</dd></div>
+          <div><dt>Shortcut</dt><dd><span class="chip">/find-leads Shrewsbury nail salons</span></dd></div>
+        </dl>
+        <details>
+          <summary>How it works and its rules</summary>
+          <h4>Does</h4>
+          <ul>
+            <li>Searches Google, Facebook, Instagram, Yell, Thomson Local, FreeIndex, Checkatrade, Fresha, Booksy, Treatwell, Just Eat, Deliveroo and local Facebook groups</li>
+            <li>Labels each website as none found, social only, dead or parked, or unconfirmed</li>
+            <li>Skips chains, closed businesses, and anyone already in your pipeline. Ranks 5–10 leads High, Medium or Low</li>
+            <li>Picks text, WhatsApp, email or DM based on the contact details, and saves everything to <code>leads/&lt;town&gt;-&lt;trade&gt;-&lt;date&gt;.md</code></li>
+          </ul>
+          <ul class="always">
+            <li>Always says exactly £595 to build and £50 a month, and signs off "Sonny"</li>
+            <li>Only calls you local around Shrewsbury. Offers the Annie site to beauty businesses only</li>
+            <li>Texts under 60 words, emails under 120</li>
+          </ul>
+          <ul class="never">
+            <li>Never mentions reviews, ratings or stars, and never invents businesses or contact details</li>
+            <li>Never promises "more customers" or "top of Google", and never uses fake urgency</li>
+            <li>Never uses AI phrases like "I hope this finds you well" or "elevate", or em-dashes</li>
+          </ul>
+          <h4>Tools</h4><ul><li>Web search, reading web pages, reading and writing files</li></ul>
+        </details>
+      </article>
+
+      <article class="card" id="card-web-builder" style="--c: var(--web)">
+        <div class="card-head"><span data-avatar="web"></span><div><h3><a href="https://claude.ai/artifact/3BVSpy1fTHfKZ7ZBJsC3c3" target="_blank" rel="noopener" style="color:inherit">web-builder ↗</a></h3><span>builds the site</span></div></div>
+        <dl class="kv">
+          <div><dt>Job</dt><dd>Turns a client brief into a one-page site in your house style, and applies critique's fixes.</dd></div>
+          <div><dt>Say</dt><dd class="say">"Build a site for Annie's Nails: gel manicure £25, BIAB £35. Open Tue–Sat 9–5."</dd></div>
+          <div><dt>Shortcut</dt><dd><span class="chip">/build-site Annie's Nails</span></dd></div>
+        </dl>
+        <details>
+          <summary>How it works and its rules</summary>
+          <h4>Does</h4>
+          <ul>
+            <li>Saves the brief to <code>clients/briefs/</code> and copies <code>templates/site-template.html</code></li>
+            <li>Sections: header, hero, services or menu with prices, about, photos, opening hours for all 7 days, contact with a map, and a "Site by Sonny Bowen" footer</li>
+            <li>Picks colours that stay easy to read. Adds a call and WhatsApp bar for phones, link previews, and business details Google can read</li>
+            <li>Screenshots the site on a phone and a desktop, then fixes anything that looks off</li>
+          </ul>
+          <ul class="never">
+            <li>Never invents prices, hours, numbers or testimonials. Missing info stays as a highlighted placeholder</li>
+            <li>Never changes the template layout, and never uses filler like "Welcome to our website"</li>
+          </ul>
+          <h4>Gives you</h4><ul><li>The site file, the colours it picked, the layout check result, and questions to send the client</li></ul>
+          <h4>Tools</h4><ul><li>Reads and writes files, and runs the screenshot check</li></ul>
+        </details>
+      </article>
+
+      <article class="card" id="card-critique" style="--c: var(--crit)">
+        <div class="card-head"><span data-avatar="crit"></span><div><h3><a href="https://claude.ai/artifact/8gPtTkGHSJpVmUUjUCq5uy" target="_blank" rel="noopener" style="color:inherit">critique ↗</a></h3><span>checks everything</span></div></div>
+        <dl class="kv">
+          <div><dt>Job</dt><dd>Checks every message and site before it reaches you, and gives exact fixes, not vague feedback.</dd></div>
+          <div><dt>Say</dt><dd class="say">"Review the pitches above." · "Review sites/annies-nails."</dd></div>
+          <div><dt>Shortcut</dt><dd><span class="chip">/review &lt;file or message&gt;</span></dd></div>
+        </dl>
+        <details>
+          <summary>How it works and its rules</summary>
+          <h4>Messages</h4>
+          <ul>
+            <li>Marks each one PASS, NEEDS CHANGES or FAIL. It fails anything with a wrong price, any mention of reviews, made-up facts, over-promising, fake urgency, or a business that's already been pitched</li>
+            <li>Flags anything that sounds like AI or salesy, runs too long, could go to anyone, or opens the same way as another message</li>
+            <li>Gives you the full rewritten message, ready to copy</li>
+          </ul>
+          <h4>Sites</h4>
+          <ul>
+            <li>Looks at the phone and desktop screenshots, checks typos and British spelling, and makes sure every fact matches the brief</li>
+            <li>Checks all 7 days of hours, every section, the links and the text contrast</li>
+            <li>Gives "Must fix" and "Should fix" lists with line numbers, remaining placeholders, and questions to send the client</li>
+          </ul>
+          <ul class="never"><li>Never edits files itself</li></ul>
+          <h4>Tools</h4><ul><li>Reads files and runs the screenshot check</li></ul>
+        </details>
+      </article>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="flow-h">
+    <h2 id="flow-h">The workflow</h2>
+    <p class="sub">project-manager hands out each job, and the work always goes through critique before it reaches you. The agents can't message each other directly, so Claude passes each one's work along the links.</p>
+    <div class="lanes">
+      <div class="lane">
+        <h3>Win the client</h3>
+        <ol class="steps">
+          <li style="--c: var(--pm)"><b>project-manager</b><span>Plans it and checks who's already been pitched</span></li>
+          <li style="--c: var(--idea)"><b>idea-creator</b><span>Finds leads and writes the pitches</span></li>
+          <li style="--c: var(--crit)"><b>critique</b><span>Checks and fixes every pitch</span></li>
+          <li style="--c: var(--text)"><b>You</b><span>Send them. The email ones are waiting in Gmail drafts</span></li>
+          <li style="--c: var(--pm)"><b>project-manager</b><span>Logs them and sets the follow-up dates</span></li>
+        </ol>
+      </div>
+      <div class="lane">
+        <h3>Build it and get paid</h3>
+        <ol class="steps">
+          <li style="--c: var(--pm)"><b>project-manager</b><span>Plans the build from the brief</span></li>
+          <li style="--c: var(--web)"><b>web-builder</b><span>Builds the site</span></li>
+          <li style="--c: var(--crit)"><b>critique</b><span>Reviews it, and web-builder fixes it (2 rounds max)</span></li>
+          <li style="--c: var(--pm)"><b>project-manager</b><span>Moves it to In progress, then Delivered, then Paid, then £50 a month</span></li>
+        </ol>
+      </div>
+    </div>
+    <details class="panel">
+      <summary>Or spell out the whole chain yourself</summary>
+      <div class="prompt">
+        <div class="prompt-head">New leads<button class="btn" type="button" data-copy="p1">Copy</button></div>
+        <pre id="p1">Run my client workflow for nail salons in Shrewsbury:
+1. idea-creator: find 6 leads and draft WhatsApp pitches.
+2. critique: review every pitch; apply its revised versions.
+3. Show me the final pitches and the lead table, then stop so I can send them.</pre>
+      </div>
+      <div class="prompt">
+        <div class="prompt-head">When someone says yes<button class="btn" type="button" data-copy="p2">Copy</button></div>
+        <pre id="p2">Annie's Nails said yes. Here's the brief: &lt;details&gt;.
+1. web-builder: build the site draft.
+2. critique: review sites/annies-nails/index.html.
+3. web-builder: apply every "Must fix" and "Should fix".
+4. critique: re-check. Repeat until READY (max 2 rounds).
+5. project-manager: move Annie's Nails to In progress,
+   waiting on client for any placeholders critique listed.</pre>
+      </div>
+      <div class="prompt">
+        <div class="prompt-head">Keeping the pipeline up to date<button class="btn" type="button" data-copy="p3">Copy</button></div>
+        <pre id="p3">project-manager: I sent pitches to leads 1, 3 and 5 today.
+project-manager: Annie's site delivered today, invoice sent.
+project-manager: Annie paid, start maintenance from today.
+project-manager: who do I need to chase?</pre>
+      </div>
+    </details>
+  </section>
+
+  <section class="block" aria-labelledby="train-h">
+    <h2 id="train-h">Train your agents</h2>
+    <p class="sub">Agents don't remember past chats. They learn from their instruction files and from <code>playbook.md</code>, which every agent reads before it works. There are three ways to teach them:</p>
+    <div class="train">
+      <div class="panel">
+        <h3>1 · Tell them</h3>
+        <p>Type <code>/train</code>, then who and what. Claude puts the lesson in the right file, shows you before and after, and saves it for every future job.</p>
+        <div class="asks">
+          <span class="chip">/train critique flag messages over 40 words</span>
+          <span class="chip">/train web-builder put the booking button first</span>
+          <span class="chip">/train everyone say "cheers", not "thanks"</span>
+        </div>
+      </div>
+      <div class="panel">
+        <h3>2 · Let results teach them</h3>
+        <p>When you tell project-manager someone replied, it saves the exact pitch you sent to the playbook. It also notes the pitches that got no reply. idea-creator then writes new pitches in the style that works for you, and client feedback on sites goes in there too.</p>
+      </div>
+      <div class="panel">
+        <h3>3 · Edit them directly</h3>
+        <p>Type <code>/agents</code> in Claude Code, pick an agent and edit its instructions. Or open <code>.claude/agents/&lt;name&gt;.md</code> or <code>playbook.md</code> in the repo. Plain English works.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="two" aria-label="Your setup">
+    <div class="panel">
+      <h3>What every agent knows</h3>
+      <dl class="kv wide">
+        <div><dt>Name</dt><dd>Sonny Bowen. Messages are signed "Sonny"</dd></div>
+        <div><dt>Area</dt><dd>Shrewsbury, plus businesses across England</dd></div>
+        <div><dt>Price</dt><dd>£595 to build, then £50 a month for hosting, domain renewal, small updates, security updates and backups</dd></div>
+        <div><dt>Payment</dt><dd>Bank transfer, due within 7 days of the site going live</dd></div>
+        <div><dt>Example</dt><dd><a href="https://sonnybowen-afk.github.io/Revly/annie/" target="_blank" rel="noopener">Annie (beauty)</a>, offered to beauty businesses only</dd></div>
+        <div><dt>Email</dt><dd>Saved as Gmail drafts in sonnybowen07@gmail.com, never sent</dd></div>
+      </dl>
+    </div>
+    <div class="panel">
+      <h3>Good to know</h3>
+      <ul>
+        <li><b>Nothing is sent without you.</b> Texts, DMs and emails all go out by your hand. Instagram and LinkedIn stay manual</li>
+        <li>The pipeline above updates every time project-manager changes it. It's only as current as what you tell project-manager</li>
+        <li>Agents load when a session starts. In a new My-Team session, type <code>/agents</code> or <code>@</code> to see them</li>
+        <li>When an agent is working, a block with its name appears in the chat. Tap it to watch</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>Web Crew HQ · sonnybowen-afk/My-Team</footer>
+</div>
+
+<script>
+(() => {
+  const AGENTS = [
+    { key: "pm", url: "https://claude.ai/artifact/Qperj1e8cxMEMgtFKV55M5", id: "project-manager", role: "★ MASTER", c: "#b98bff", eye: "#f0e6ff", master: true,
+      pos: { d: [50, 60], m: [50, 60] }, dur: "4.2s",
+      tagline: "The master. Plans every job, picks the agents, keeps the pipeline and tells you who to chase.", cmd: "/boss" },
+    { key: "idea", url: "https://claude.ai/artifact/A4Kdm6smnkdZeEgEkP3wyN", id: "idea-creator", role: "finds leads · writes pitches", c: "#3ddc97", eye: "#d4ffe9",
+      pos: { d: [17, 66], m: [17, 70] }, dur: "3.1s",
+      tagline: "Finds businesses with no website and writes the first message.", cmd: "/find-leads Shrewsbury nail salons" },
+    { key: "web", url: "https://claude.ai/artifact/3BVSpy1fTHfKZ7ZBJsC3c3", id: "web-builder", role: "builds the sites", c: "#4fb3ff", eye: "#dcefff",
+      pos: { d: [83, 66], m: [83, 70] }, dur: "3.5s",
+      tagline: "Turns a client brief into a finished one-page site.", cmd: "/build-site Annie's Nails" },
+    { key: "crit", url: "https://claude.ai/artifact/8gPtTkGHSJpVmUUjUCq5uy", id: "critique", role: "checks everything", c: "#ff6070", eye: "#ffdfe2",
+      pos: { d: [50, 21], m: [50, 19] }, dur: "2.8s",
+      tagline: "Checks every message and site before it reaches you, with exact fixes.", cmd: "/review <file or message>" },
+  ];
+  const byKey = Object.fromEntries(AGENTS.map((a) => [a.key, a]));
+
+  function avatar(a, still) {
+    const c = a.c, eye = a.eye, dark = "#0a0f1f";
+    let top = "", face = "", chest = "";
+    if (a.key === "pm") {
+      top = `<path d="M34 26 L40 6 L50 18 L60 1 L70 18 L80 6 L86 26 Z" fill="#ffd166"/><circle cx="60" cy="4" r="3.5" fill="#fff4cf"/>
+        <path d="M12 58 a48 48 0 0 1 96 0" fill="none" stroke="${dark}" stroke-width="4" opacity=".55"/>
+        <rect x="6" y="52" width="10" height="20" rx="5" fill="${dark}"/><rect x="104" y="52" width="10" height="20" rx="5" fill="${dark}"/>
+        <path d="M11 70 q2 18 22 18" fill="none" stroke="${dark}" stroke-width="3"/><circle cx="35" cy="88" r="4" fill="${dark}"/>`;
+      chest = `<path d="M60 94 l3 6 6.5 .8 -4.8 4.4 1.3 6.4 -6 -3.2 -6 3.2 1.3 -6.4 -4.8 -4.4 6.5 -.8z" fill="#ffd166"/>`;
+    } else if (a.key === "idea") {
+      top = `<line x1="60" y1="26" x2="60" y2="13" stroke="${c}" stroke-width="4" stroke-linecap="round"/><circle class="${still ? "" : "bulb"}" cx="60" cy="8" r="8" fill="#fff6b8"/>
+        <g stroke="#fff6b8" stroke-width="2.5" stroke-linecap="round" opacity=".8"><line x1="46" y1="4" x2="42" y2="1"/><line x1="74" y1="4" x2="78" y2="1"/><line x1="60" y1="-4" x2="60" y2="-8"/></g>`;
+      chest = `<circle cx="57" cy="100" r="6" fill="none" stroke="${dark}" stroke-width="3"/><line x1="61.5" y1="104.5" x2="67" y2="110" stroke="${dark}" stroke-width="3.5" stroke-linecap="round"/>`;
+    } else if (a.key === "web") {
+      top = `<path d="M26 32 a34 24 0 0 1 68 0 z" fill="#ffd166"/><rect x="56" y="10" width="8" height="22" rx="3" fill="#f4b942"/><rect x="16" y="28" width="88" height="7" rx="3.5" fill="#f4b942"/>`;
+      chest = `<text x="60" y="106" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" font-weight="700" fill="${dark}">&lt;/&gt;</text>`;
+    } else {
+      top = `<line x1="60" y1="26" x2="60" y2="15" stroke="${c}" stroke-width="4" stroke-linecap="round"/><circle cx="60" cy="11" r="5" fill="${c}"/>`;
+      face = `<circle cx="74" cy="57" r="13" fill="none" stroke="#fff" stroke-width="3"/><path d="M87 60 q8 14 2 30" fill="none" stroke="#fff" stroke-width="2" opacity=".7"/>
+        <rect class="${still ? "" : "scan"}" x="26" y="40" width="68" height="3" rx="1.5" fill="${c}" opacity=".7"/>`;
+      chest = `<path d="M51 101 l6 6 12 -13" fill="none" stroke="${dark}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>`;
+    }
+    return `<svg viewBox="0 -10 120 142" aria-hidden="true">
+      <ellipse cx="60" cy="128" rx="28" ry="5" fill="${c}" opacity=".28"/>
+      <rect x="36" y="88" width="48" height="30" rx="14" fill="${c}" opacity=".9"/>
+      <rect x="14" y="26" width="92" height="66" rx="24" fill="${c}"/>
+      <rect x="24" y="36" width="72" height="46" rx="16" fill="${dark}"/>
+      <g class="${still ? "" : "eyes"}"><rect x="39" y="48" width="12" height="17" rx="6" fill="${eye}"/><rect x="68" y="48" width="12" height="17" rx="6" fill="${eye}"/></g>
+      <path d="M51 73 q9 6 18 0" fill="none" stroke="${eye}" stroke-width="3" stroke-linecap="round"/>
+      ${face}${top}${chest}</svg>`;
+  }
+
+  document.querySelectorAll("[data-avatar]").forEach((el) => { el.innerHTML = avatar(byKey[el.dataset.avatar], true); });
+
+  const stage = document.getElementById("stage");
+  const svg = document.getElementById("links");
+  const selectedEl = document.getElementById("selected");
+  const NS = "http://www.w3.org/2000/svg";
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // Characters: placed and animated by CSS only
+  AGENTS.forEach((a) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "bot" + (a.master ? " master" : "");
+    b.style.setProperty("--c", a.c);
+    b.style.setProperty("--d", a.dur);
+    b.setAttribute("aria-pressed", "false");
+    b.setAttribute("aria-label", `${a.id}: ${a.tagline}`);
+    b.innerHTML = `<span class="bot-art">${avatar(a, false)}</span><span class="bot-name">${a.id}</span><span class="bot-role">${a.role}</span>`;
+    b.addEventListener("click", () => select(a.key, true));
+    stage.append(b);
+    a.el = b;
+  });
+
+  // Links: rebuilt only when the stage changes size
+  let mobile = null;
+  function layout() {
+    const W = stage.clientWidth, H = stage.clientHeight;
+    const isMobile = W < 600;
+    svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+    AGENTS.forEach((a) => {
+      const [x, y] = isMobile ? a.pos.m : a.pos.d;
+      a.el.style.setProperty("--x", x + "%");
+      a.el.style.setProperty("--y", y + "%");
+      a.px = [x / 100 * W, y / 100 * H];
+    });
+    const pm = byKey.pm, others = ["idea", "web", "crit"].map((k) => byKey[k]);
+    let out = "<defs>";
+    others.forEach((o) => {
+      out += `<linearGradient id="g-${o.key}" gradientUnits="userSpaceOnUse" x1="${pm.px[0]}" y1="${pm.px[1]}" x2="${o.px[0]}" y2="${o.px[1]}"><stop offset="0" stop-color="${pm.c}"/><stop offset="1" stop-color="${o.c}"/></linearGradient>`;
+    });
+    out += "</defs>";
+    [["idea", "crit"], ["crit", "web"], ["web", "idea"]].forEach(([p, q]) => {
+      const A = byKey[p].px, B = byKey[q].px;
+      out += `<line class="peer" x1="${A[0]}" y1="${A[1]}" x2="${B[0]}" y2="${B[1]}"/>`;
+    });
+    others.forEach((o, i) => {
+      const A = pm.px, B = o.px, path = `M${A[0]} ${A[1]} L${B[0]} ${B[1]}`;
+      out += `<line class="spoke" stroke="url(#g-${o.key})" x1="${A[0]}" y1="${A[1]}" x2="${B[0]}" y2="${B[1]}"/>`;
+      out += `<line class="flow" x1="${A[0]}" y1="${A[1]}" x2="${B[0]}" y2="${B[1]}"/>`;
+      if (!reduced) {
+        const r = isMobile ? 3.5 : 5;
+        out += `<circle r="${r}" fill="#fff" stroke="${o.c}" stroke-width="2.5"><animateMotion dur="2.6s" begin="${i * 0.8}s" repeatCount="indefinite" path="${path}"/></circle>`;
+        out += `<circle r="${r - 1}" fill="${o.c}"><animateMotion dur="2.6s" begin="${i * 0.8 + 1.3}s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear" path="${path}"/></circle>`;
+      }
+    });
+    svg.innerHTML = out;
+    if (stage.classList.contains("still") && svg.pauseAnimations) svg.pauseAnimations();
+    mobile = isMobile;
+  }
+  new ResizeObserver(layout).observe(stage);
+
+  const motion = document.getElementById("motion");
+  motion.addEventListener("click", () => {
+    const still = stage.classList.toggle("still");
+    if (svg.pauseAnimations) still ? svg.pauseAnimations() : svg.unpauseAnimations();
+    motion.textContent = still ? "Resume motion" : "Pause motion";
+    motion.setAttribute("aria-pressed", String(still));
+  });
+
+  function select(key, fromClick) {
+    const a = byKey[key];
+    AGENTS.forEach((x) => x.el.setAttribute("aria-pressed", String(x.key === key)));
+    document.querySelectorAll(".card").forEach((c) => c.classList.toggle("on", c.id === "card-" + a.id));
+    selectedEl.style.setProperty("--c", a.c);
+    selectedEl.innerHTML = `<div><strong></strong><p></p></div><div class="acts"><span class="chip"></span><button class="btn" type="button">Copy</button><a href="${a.url}" target="_blank" rel="noopener">Open ${a.id}'s page ↗</a><a href="#card-${a.id}">Full card ↓</a></div>`;
+    selectedEl.querySelector("strong").textContent = a.id + (a.master ? " · master" : "");
+    selectedEl.querySelector("p").textContent = a.tagline;
+    const chip = selectedEl.querySelector(".chip"); chip.textContent = a.cmd;
+    const btn = selectedEl.querySelector("button");
+    btn.addEventListener("click", () => copy(a.cmd, btn, chip));
+  }
+
+  function copy(text, btn, node) {
+    const label = btn.textContent;
+    const done = () => { btn.textContent = "Copied"; setTimeout(() => (btn.textContent = label), 1300); };
+    const fallback = () => {
+      const r = document.createRange(); r.selectNodeContents(node);
+      const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+      btn.textContent = "Press Ctrl+C";
+    };
+    try { navigator.clipboard.writeText(text).then(done, fallback); } catch (e) { fallback(); }
+  }
+  document.querySelectorAll("[data-copy]").forEach((btn) => {
+    const pre = document.getElementById(btn.dataset.copy);
+    btn.addEventListener("click", () => copy(pre.textContent, btn, pre));
+  });
+  document.querySelectorAll("[data-copy-text]").forEach((btn) => {
+    btn.addEventListener("click", () => copy(btn.dataset.copyText, btn, btn.previousElementSibling));
+  });
+
+  select("pm", false);
+
+  // ---------- Live pipeline (read-only; Claude writes it after every pipeline change) ----------
+  const STAGES = [
+    { key: "pitched", label: "Pitched", c: "#3ddc97" },
+    { key: "replied", label: "Replied", c: "#ffd166" },
+    { key: "in_progress", label: "In progress", c: "#4fb3ff" },
+    { key: "delivered", label: "Delivered", c: "#b98bff" },
+    { key: "maintenance", label: "Maintenance", c: "#6fe3c1" },
+    { key: "closed", label: "Closed", c: "#8a93b3" },
+  ];
+  const stageOf = Object.fromEntries(STAGES.map((st) => [st.key, st]));
+  const $ = (id) => document.getElementById(id);
+  const stagesEl = $("stages"), rowsEl = $("rows"), emptyEl = $("pipeEmpty"), updatedEl = $("pipeUpdated");
+  let clients = [], filter = "all";
+
+  const pad = (n) => String(n).padStart(2, "0");
+  const now = new Date();
+  const today = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
+  const dayDiff = (d) => Math.round((Date.parse(d + "T00:00:00") - Date.parse(today + "T00:00:00")) / 86400000);
+  const fmt = (d) => new Date(d + "T00:00:00").toLocaleDateString("en-GB", { day: "numeric", month: "short" });
+  const money = (n) => "£" + n.toLocaleString("en-GB");
+
+  function dueInfo(c) {
+    if (!c.due || c.stage === "closed") return { cls: "none", text: "—", rank: 1e6 };
+    const n = dayDiff(c.due);
+    if (isNaN(n)) return { cls: "none", text: c.due, rank: 1e5 };
+    if (n < 0) return { cls: "over", text: `${-n} day${n === -1 ? "" : "s"} overdue`, rank: n };
+    if (n === 0) return { cls: "today", text: "Today", rank: 0 };
+    return { cls: "", text: n <= 7 ? `${fmt(c.due)} · ${n}d` : fmt(c.due), rank: n };
+  }
+
+  function render(doc) {
+    clients = Array.isArray(doc && doc.clients) ? doc.clients.filter((c) => c && stageOf[c.stage]) : [];
+    updatedEl.textContent = doc && doc.updated ? `Updated ${fmt(doc.updated)}` : "Not synced yet";
+
+    const counts = Object.fromEntries(STAGES.map((st) => [st.key, 0]));
+    clients.forEach((c) => counts[c.stage]++);
+    const chase = clients.filter((c) => c.stage !== "closed" && c.due && dayDiff(c.due) <= 0).length;
+    $("mDue").textContent = chase;
+    $("tDue").classList.toggle("alert", chase > 0);
+    $("mOwed").textContent = money(counts.delivered * 595);
+    $("tOwed").classList.toggle("alert", counts.delivered > 0);
+    $("mMonthly").textContent = money(counts.maintenance * 50);
+
+    stagesEl.innerHTML = "";
+    [{ key: "all", label: "All", c: "#e9edf9" }, ...STAGES].forEach((st) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.style.setProperty("--sc", st.c);
+      b.setAttribute("aria-pressed", String(filter === st.key));
+      const n = st.key === "all" ? clients.length : counts[st.key];
+      b.append(st.label + " ");
+      const bold = document.createElement("b"); bold.textContent = n; b.append(bold);
+      b.addEventListener("click", () => { filter = st.key; render(doc); });
+      stagesEl.append(b);
+    });
+
+    const shown = clients
+      .filter((c) => filter === "all" || c.stage === filter)
+      .map((c) => ({ c, d: dueInfo(c) }))
+      .sort((a, b) => (a.c.stage === "closed") - (b.c.stage === "closed") || a.d.rank - b.d.rank);
+
+    rowsEl.innerHTML = "";
+    emptyEl.hidden = shown.length > 0;
+    rowsEl.hidden = shown.length === 0;
+    if (clients.length && !shown.length) { emptyEl.hidden = false; emptyEl.textContent = "Nobody at this stage right now."; }
+    if (!shown.length) return;
+    const head = document.createElement("div");
+    head.className = "row head";
+    head.innerHTML = "<span>Business</span><span>Stage</span><span>Next</span><span>Due</span><span>Contact</span>";
+    rowsEl.append(head);
+    shown.forEach(({ c, d }) => {
+      const r = document.createElement("div"); r.className = "row";
+      const biz = document.createElement("span"); biz.className = "biz"; biz.textContent = c.business || "Unnamed";
+      if (c.notes) { const s = document.createElement("small"); s.textContent = c.notes; biz.append(s); }
+      const pill = document.createElement("span"); pill.className = "pill"; pill.style.setProperty("--sc", stageOf[c.stage].c); pill.textContent = stageOf[c.stage].label;
+      const next = document.createElement("span"); next.className = "next"; next.textContent = c.next_action || "—";
+      const due = document.createElement("span"); due.className = "due " + d.cls; due.textContent = d.text;
+      const contact = document.createElement("span"); contact.className = "contact"; contact.textContent = c.contact || "—";
+      if (c.channel) { const s = document.createElement("small"); s.textContent = c.channel; contact.append(s); }
+      r.append(biz, pill, next, due, contact);
+      rowsEl.append(r);
+    });
+  }
+  render(null);
+
+  (async () => {
+    const db = typeof claude !== "undefined" && claude.use ? await claude.use("db") : null;
+    if (!db) { updatedEl.textContent = "Open this page in Claude to see your live pipeline"; return; }
+    db.doc("pipeline/current").onSnapshot(
+      (snap) => render(snap.exists ? snap.data() : null),
+      () => { updatedEl.textContent = "Couldn't load the pipeline. Reload the page to try again"; }
+    );
+  })();
+})();
+</script>
