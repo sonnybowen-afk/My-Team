@@ -3,13 +3,14 @@
 Every agent reads this file. **Fill in the `[EDIT]` bits once** and every pitch, site footer and follow-up will use them.
 
 ## Me
-- **First name (for signing messages):** [EDIT]
+- **Full name:** Sonny Bowen
+- **First name (for signing messages):** Sonny
 - **Trading name (optional):** [EDIT]
 - **Where I'm based / areas I cover:** [EDIT: e.g. Stockport and South Manchester]
 - **Mobile / WhatsApp:** [EDIT]
 - **Email:** [EDIT]
 - **Example site to show people:** [EDIT: link to a finished site or demo, or leave blank]
-- **Footer credit on client sites:** Site by [EDIT: name or trading name + link]
+- **Footer credit on client sites:** Site by Sonny Bowen
 
 ## Pricing (don't change without updating the agents)
 - **Build:** £595 one-off
