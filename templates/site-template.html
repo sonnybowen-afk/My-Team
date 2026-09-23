@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--
+    HOUSE TEMPLATE: copy this file to sites/<slug>/index.html for each client.
+    1. Swap the colour variables in :root to suit the client.
+    2. Replace every [PLACEHOLDER: ...] with real content, or leave it marked as a todo.
+    3. Delete any section the client genuinely doesn't need (e.g. no gallery photos yet: keep placeholders instead).
+    Don't change the structure, spacing, or class names between clients.
+  -->
+  <title>[PLACEHOLDER: Business Name] | [PLACEHOLDER: what they do] in [PLACEHOLDER: Town]</title>
+  <meta name="description" content="[PLACEHOLDER: One sentence: what they do, where, and how to get in touch.]">
+
+  <!-- Link previews (WhatsApp, Facebook, iMessage) -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="[PLACEHOLDER: Business Name]">
+  <meta property="og:description" content="[PLACEHOLDER: same as meta description]">
+  <meta property="og:image" content="images/hero.jpg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===== Client colours: change these per client ===== */
+    :root {
+      --brand: #2f5d50;        /* main colour: headings, hero background */
+      --brand-dark: #1f3f36;   /* darker shade of --brand */
+      --accent: #e0a458;       /* buttons and highlights */
+      --accent-dark: #c98c3f;  /* button hover */
+      --on-accent: #1c1c1c;    /* text on buttons: keep dark unless the accent is dark */
+
+      /* ===== House style: keep the same for every client ===== */
+      --bg: #fafaf7;
+      --surface: #ffffff;
+      --text: #1c1c1c;
+      --muted: #5f6368;
+      --line: #e6e6e0;
+      --radius: 10px;
+      --shadow: 0 1px 2px rgba(0, 0, 0, .06), 0 6px 20px rgba(0, 0, 0, .06);
+      --max-width: 1100px;
+      --font-heading: "Poppins", system-ui, -apple-system, "Segoe UI", sans-serif;
+      --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+    body {
+      margin: 0;
+      font-family: var(--font-body);
+      font-size: 1.0625rem;
+      line-height: 1.6;
+      color: var(--text);
+      background: var(--bg);
+      overflow-wrap: break-word;
+    }
+    img { display: block; max-width: 100%; height: auto; }
+    a { color: var(--brand); }
+    h1, h2, h3 { font-family: var(--font-heading); line-height: 1.2; margin: 0 0 .5em; }
+    h2 { font-size: clamp(1.6rem, 4vw, 2.2rem); color: var(--brand-dark); }
+    h3 { font-size: 1.15rem; }
+    p { margin: 0 0 1em; }
+    :focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+
+    .container { width: min(100% - 2rem, var(--max-width)); margin-inline: auto; }
+    .skip-link { position: absolute; left: -999px; top: 0; background: var(--surface); padding: .75rem 1rem; z-index: 100; }
+    .skip-link:focus { left: 1rem; }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+      min-height: 48px; padding: .75rem 1.5rem;
+      border-radius: var(--radius); border: 2px solid transparent;
+      background: var(--accent); color: var(--on-accent);
+      font-weight: 600; text-decoration: none;
+      transition: background-color .15s ease, color .15s ease;
+    }
+    .btn:hover { background: var(--accent-dark); }
+    .btn-ghost { background: transparent; color: #fff; border-color: rgba(255, 255, 255, .8); }
+    .btn-ghost:hover { background: rgba(255, 255, 255, .12); }
+
+    /* Header */
+    .site-header { position: sticky; top: 0; z-index: 20; background: var(--surface); border-bottom: 1px solid var(--line); }
+    .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 64px; }
+    .logo { display: inline-flex; align-items: center; min-height: 44px; font-family: var(--font-heading); font-weight: 700; font-size: 1.2rem; color: var(--brand-dark); text-decoration: none; }
+    .logo img { max-height: 44px; width: auto; }
+    .site-nav ul { display: flex; gap: 1.25rem; margin: 0; padding: 0; list-style: none; }
+    .site-nav a { display: inline-flex; align-items: center; min-height: 44px; color: var(--text); font-weight: 500; text-decoration: none; }
+    .site-nav a:hover { color: var(--brand); }
+    .header-cta { min-height: 44px; padding: .5rem 1.1rem; }
+
+    /* Sections */
+    section { padding: clamp(3rem, 8vw, 5rem) 0; }
+    .alt { background: var(--surface); }
+    .section-intro { color: var(--muted); max-width: 60ch; margin-bottom: 2rem; }
+
+    /* Hero */
+    .hero { background: var(--brand); color: #fff; }
+    .hero-inner { display: grid; gap: 2rem; align-items: center; }
+    .hero h1 { font-size: clamp(2rem, 6vw, 3.2rem); color: #fff; }
+    .hero p { font-size: 1.15rem; opacity: .92; max-width: 45ch; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.5rem; }
+    .hero-img { border-radius: var(--radius); aspect-ratio: 4 / 3; object-fit: cover; width: 100%; }
+
+    /* Services / menu cards */
+    .cards { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); }
+    .card { background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.25rem 1.5rem; }
+    .alt .card { background: var(--bg); box-shadow: none; border: 1px solid var(--line); }
+    .card-top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: .25rem 1rem; }
+    .card h3 { margin: 0; }
+    .card p { margin: .4rem 0 0; color: var(--muted); font-size: .98rem; }
+    .price { font-weight: 600; color: var(--brand-dark); white-space: nowrap; }
+    .menu-group + .menu-group { margin-top: 2.5rem; }
+
+    /* About */
+    .about-inner { display: grid; gap: 2rem; align-items: center; }
+    .about-inner p { max-width: 60ch; }
+
+    /* Gallery */
+    .gallery { display: grid; gap: .75rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 150px), 1fr)); }
+    .gallery img, .gallery .img-placeholder { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--radius); }
+
+    /* Hours */
+    .hours-table { width: 100%; max-width: 480px; border-collapse: collapse; background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
+    .hours-table th, .hours-table td { padding: .8rem 1.25rem; text-align: left; border-bottom: 1px solid var(--line); }
+    .hours-table tr:last-child th, .hours-table tr:last-child td { border-bottom: 0; }
+    .hours-table th { font-weight: 600; }
+    .hours-table td { text-align: right; }
+    .closed { color: var(--muted); }
+
+    /* Contact */
+    .contact-grid { display: grid; gap: 2rem; }
+    .contact-list { list-style: none; margin: 0 0 1.5rem; padding: 0; }
+    .contact-list li { padding: .6rem 0; border-bottom: 1px solid var(--line); }
+    .contact-list strong { display: block; font-size: .85rem; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+    .contact-list a { display: inline-flex; align-items: center; min-height: 44px; font-weight: 500; }
+    .socials { display: flex; flex-wrap: wrap; gap: .75rem; }
+    .socials a { display: inline-flex; align-items: center; min-height: 44px; }
+    .map { width: 100%; min-height: 320px; border: 0; border-radius: var(--radius); box-shadow: var(--shadow); }
+
+    /* Footer */
+    .site-footer { background: var(--brand-dark); color: rgba(255, 255, 255, .85); padding: 2rem 0; font-size: .95rem; }
+    .site-footer a { color: #fff; }
+    .footer-inner { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem 2rem; }
+
+    /* Sticky call bar on phones */
+    .call-bar { display: none; }
+
+    /* Placeholders: must all be gone before a site goes live */
+    .todo { background: #fff3a3; color: #1c1c1c; outline: 1px dashed #b58900; }
+    .img-placeholder {
+      display: grid; place-items: center; min-height: 160px; padding: 1rem; text-align: center;
+      background: #ecece6; color: #5f6368; border: 2px dashed #b5b5ad; border-radius: var(--radius);
+    }
+
+    @media (min-width: 800px) {
+      .hero-inner { grid-template-columns: 1.1fr 1fr; }
+      .about-inner { grid-template-columns: 1fr 1fr; }
+      .contact-grid { grid-template-columns: 1fr 1.2fr; }
+    }
+
+    @media (max-width: 799px) {
+      .header-inner { flex-wrap: wrap; padding-top: .5rem; }
+      .site-nav { order: 3; width: 100%; overflow-x: auto; }
+      .site-nav ul { gap: 1rem; white-space: nowrap; }
+      .call-bar {
+        display: flex; gap: .5rem; position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;
+        padding: .6rem 1rem calc(.6rem + env(safe-area-inset-bottom));
+        background: var(--surface); border-top: 1px solid var(--line); box-shadow: 0 -4px 16px rgba(0, 0, 0, .08);
+      }
+      .call-bar .btn { flex: 1; }
+      body { padding-bottom: 5rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      * { transition: none !important; }
+    }
+  </style>
+
+  <!-- Helps Google show the business properly in local search. Keep in sync with the page. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "[PLACEHOLDER: Business Name]",
+    "description": "[PLACEHOLDER: same as meta description]",
+    "telephone": "[PLACEHOLDER: +44 7700 900000]",
+    "email": "[PLACEHOLDER: email]",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "[PLACEHOLDER: street]",
+      "addressLocality": "[PLACEHOLDER: town]",
+      "postalCode": "[PLACEHOLDER: postcode]",
+      "addressCountry": "GB"
+    },
+    "openingHours": ["[PLACEHOLDER: e.g. Tu-Fr 09:00-17:30]", "[PLACEHOLDER: e.g. Sa 08:00-16:00]"]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="#top">[PLACEHOLDER: Business Name]</a>
+      <nav class="site-nav" aria-label="Main">
+        <ul>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#photos">Photos</a></li>
+          <li><a href="#hours">Hours</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <a class="btn header-cta" href="tel:+447700900000">Call</a>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="container hero-inner">
+        <div>
+          <h1>[PLACEHOLDER: Business Name]</h1>
+          <p>[PLACEHOLDER: One plain line on what they do and where, e.g. "Traditional barbers on Market Street, Stockport. Walk-ins welcome."]</p>
+          <div class="hero-actions">
+            <a class="btn" href="tel:+447700900000">Call [PLACEHOLDER: 07700 900000]</a>
+            <a class="btn btn-ghost" href="#services">See prices</a>
+          </div>
+        </div>
+        <div class="img-placeholder hero-img">Photo: [PLACEHOLDER: shop front or best work]</div>
+        <!-- Real photo: <img class="hero-img" src="images/hero.jpg" alt="[describe the photo]" width="800" height="600"> -->
+      </div>
+    </section>
+
+    <section id="services">
+      <div class="container">
+        <h2>Services</h2> <!-- Rename to suit: "Menu", "Prices", "What we do" -->
+        <p class="section-intro">[PLACEHOLDER: One line intro, or delete this paragraph.]</p>
+
+        <div class="menu-group">
+          <!-- Optional group heading for menus: <h3>Breakfast</h3> -->
+          <div class="cards">
+            <article class="card">
+              <div class="card-top"><h3>[PLACEHOLDER: Service]</h3><span class="price">£[PLACEHOLDER]</span></div>
+              <p>[PLACEHOLDER: short description]</p>
+            </article>
+            <article class="card">
+              <div class="card-top"><h3>[PLACEHOLDER: Service]</h3><span class="price">£[PLACEHOLDER]</span></div>
+              <p>[PLACEHOLDER: short description]</p>
+            </article>
+            <article class="card">
+              <div class="card-top"><h3>[PLACEHOLDER: Service]</h3><span class="price">£[PLACEHOLDER]</span></div>
+              <p>[PLACEHOLDER: short description]</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="alt" id="about">
+      <div class="container about-inner">
+        <div>
+          <h2>About</h2>
+          <p>[PLACEHOLDER: 2–3 sentences in the client's voice: who they are, how long they've been going, what they're known for.]</p>
+        </div>
+        <div class="img-placeholder">Photo: [PLACEHOLDER: owner, team or inside the shop]</div>
+      </div>
+    </section>
+
+    <section id="photos">
+      <div class="container">
+        <h2>Photos</h2>
+        <div class="gallery">
+          <div class="img-placeholder">Photo 1</div>
+          <div class="img-placeholder">Photo 2</div>
+          <div class="img-placeholder">Photo 3</div>
+          <div class="img-placeholder">Photo 4</div>
+          <!-- Real photos: <img src="images/1.jpg" alt="[describe]" loading="lazy" width="800" height="600"> -->
+        </div>
+      </div>
+    </section>
+
+    <section class="alt" id="hours">
+      <div class="container">
+        <h2>Opening hours</h2>
+        <table class="hours-table">
+          <tbody>
+            <tr><th scope="row">Monday</th><td>[PLACEHOLDER]</td></tr>
+            <tr><th scope="row">Tuesday</th><td>[PLACEHOLDER]</td></tr>
+            <tr><th scope="row">Wednesday</th><td>[PLACEHOLDER]</td></tr>
+            <tr><th scope="row">Thursday</th><td>[PLACEHOLDER]</td></tr>
+            <tr><th scope="row">Friday</th><td>[PLACEHOLDER]</td></tr>
+            <tr><th scope="row">Saturday</th><td>[PLACEHOLDER]</td></tr>
+            <tr><th scope="row">Sunday</th><td class="closed">Closed</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container contact-grid">
+        <div>
+          <h2>Get in touch</h2>
+          <ul class="contact-list">
+            <li><strong>Phone</strong><a href="tel:+447700900000">[PLACEHOLDER: 07700 900000]</a></li>
+            <li><strong>WhatsApp</strong><a href="https://wa.me/447700900000">Message us on WhatsApp</a></li>
+            <li><strong>Email</strong><a href="mailto:[PLACEHOLDER]">[PLACEHOLDER: email]</a></li>
+            <li><strong>Address</strong><a href="https://www.google.com/maps/search/?api=1&amp;query=[PLACEHOLDER+address]">[PLACEHOLDER: street, town, postcode]</a></li>
+          </ul>
+          <div class="socials">
+            <a href="[PLACEHOLDER: facebook url]">Facebook</a>
+            <a href="[PLACEHOLDER: instagram url]">Instagram</a>
+          </div>
+        </div>
+        <iframe class="map" title="Map showing [PLACEHOLDER: Business Name]" loading="lazy"
+          src="https://www.google.com/maps?q=[PLACEHOLDER+address]&amp;output=embed"></iframe>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span>© 2026 [PLACEHOLDER: Business Name]</span>
+      <span>Site by [PLACEHOLDER: your name / link]</span>
+    </div>
+  </footer>
+
+  <div class="call-bar">
+    <a class="btn" href="tel:+447700900000">Call</a>
+    <a class="btn" href="https://wa.me/447700900000">WhatsApp</a>
+  </div>
+</body>
+</html>
