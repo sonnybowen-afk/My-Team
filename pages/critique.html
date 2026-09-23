@@ -1,0 +1,411 @@
+<title>Critique</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=IBM+Plex+Sans:wght@400;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+:root {
+  color-scheme: dark;
+  --ground: #0a0f1f; --panel: #111832; --panel-2: #0d1328; --field: #070b18; --line: #243056;
+  --text: #e9edf9; --muted: #9ba6c6; --gold: #ffd166; --bad: #ff6070; --ok: #3ddc97; --warn: #ffd166;
+  --display: "Chakra Petch", "Trebuchet MS", sans-serif;
+  --body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "Courier New", monospace;
+}
+html, body { background: var(--ground); }
+body { color: var(--text); font-family: var(--body); font-size: 16px; line-height: 1.5; padding-inline: 16px; padding-block: 18px 48px; }
+.wrap { max-width: 960px; margin-inline: auto; display: grid; gap: 22px; }
+h1, h2, h3 { font-family: var(--display); line-height: 1.15; margin: 0; text-wrap: balance; }
+h2 { font-size: 21px; }
+p { margin: 0; }
+a { color: var(--c); }
+code { font-family: var(--mono); font-size: .86em; }
+button, input, select, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; border-radius: 6px; }
+
+.back { font-size: 14px; color: var(--muted); text-decoration: none; }
+.back:hover { color: var(--text); }
+.hero { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 20px; align-items: center;
+  background: radial-gradient(ellipse at 10% 50%, color-mix(in srgb, var(--c) 18%, transparent), transparent 60%), var(--panel);
+  border: 1px solid var(--line); border-radius: 18px; padding: 18px 22px; }
+.hero .art { width: 112px; animation: bob 3.4s ease-in-out infinite; }
+.hero .art svg { width: 100%; height: auto; overflow: visible; display: block; }
+.hero h1 { font-size: clamp(28px, 5vw, 40px); color: var(--c); }
+.hero .role { color: var(--text); font-weight: 600; margin-top: 2px; }
+.hero .intro { color: var(--muted); margin-top: 8px; max-width: 64ch; }
+.badge { display: inline-block; margin-left: 8px; vertical-align: middle; font-family: var(--display); font-size: 13px; letter-spacing: .1em; color: #1b1300; background: var(--gold); border-radius: 6px; padding: 1px 8px; }
+@media (max-width: 520px) { .hero { grid-template-columns: 76px minmax(0, 1fr); gap: 14px; padding: 16px; } .hero .art { width: 76px; } }
+@keyframes bob { 50% { transform: translateY(-6px); } }
+.eyes { animation: blink 5.2s infinite; transform-box: fill-box; transform-origin: center; }
+@keyframes blink { 0%, 93%, 100% { transform: scaleY(1); } 96% { transform: scaleY(.1); } }
+.bulb { animation: glow 2.4s ease-in-out infinite; }
+@keyframes glow { 50% { opacity: .45; } }
+.scan { animation: scan 2.2s ease-in-out infinite; }
+@keyframes scan { 50% { transform: translateY(34px); } }
+
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 18px 20px; display: grid; gap: 14px; align-content: start; }
+.panel.main { border-color: color-mix(in srgb, var(--c) 55%, var(--line)); }
+.sub { color: var(--muted); font-size: 15px; max-width: 70ch; }
+.grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); }
+.full { grid-column: 1 / -1; }
+.field { display: grid; gap: 4px; }
+.field label { font-size: 14px; font-weight: 600; }
+.field label small { font-weight: 400; color: var(--muted); }
+input, select, textarea { width: 100%; min-height: 44px; background: var(--field); border: 1px solid var(--line); border-radius: 10px; padding: 9px 12px; }
+textarea { min-height: 88px; resize: vertical; line-height: 1.45; }
+input:focus, select:focus, textarea:focus { border-color: var(--c); outline: none; box-shadow: 0 0 0 2px color-mix(in srgb, var(--c) 35%, transparent); }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.btn { min-height: 44px; padding: 8px 18px; border-radius: 10px; cursor: pointer; background: var(--panel-2); border: 1px solid var(--line); font-weight: 600; }
+.btn:hover { border-color: var(--muted); }
+.btn.primary { background: var(--c); border-color: var(--c); color: #0b1020; font-family: var(--display); font-size: 16px; }
+.btn.primary:hover { filter: brightness(1.08); }
+.btn.small { min-height: 34px; padding: 3px 12px; font-size: 14px; }
+.btn[disabled] { opacity: .55; cursor: default; }
+.note { font-size: 14px; color: var(--muted); }
+.note.err { color: var(--bad); }
+
+.out { display: grid; gap: 12px; }
+.msg { background: var(--panel-2); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; display: grid; gap: 8px; }
+.msg-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+.msg-head b { font-family: var(--display); font-size: 15px; color: var(--c); }
+.msg-head span { font-size: 13px; color: var(--muted); }
+.msg-body { white-space: pre-wrap; overflow-wrap: anywhere; }
+.thinking { color: var(--muted); font-style: italic; }
+
+.verdict { display: inline-block; font-family: var(--display); font-weight: 700; letter-spacing: .06em; padding: 4px 12px; border-radius: 8px; font-size: 16px; }
+.verdict.PASS { background: color-mix(in srgb, var(--ok) 18%, transparent); color: var(--ok); }
+.verdict.NEEDS { background: color-mix(in srgb, var(--warn) 18%, transparent); color: var(--warn); }
+.verdict.FAIL { background: color-mix(in srgb, var(--bad) 18%, transparent); color: var(--bad); }
+.issues { margin: 0; padding-left: 20px; display: grid; gap: 8px; }
+.issues q { color: var(--text); font-style: italic; }
+.issues .fix { color: var(--ok); }
+
+pre.cmd { margin: 0; background: var(--field); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; font-family: var(--mono); font-size: 13px; line-height: 1.55; white-space: pre-wrap; overflow-wrap: anywhere; color: #d7def5; max-height: 360px; overflow-y: auto; }
+.cc { display: grid; gap: 12px; }
+.cc-item { display: grid; gap: 6px; }
+.cc-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; font-weight: 600; font-size: 15px; }
+
+.lessons { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.lessons li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; align-items: center; background: var(--panel-2); border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; font-size: 15px; }
+.lessons li small { grid-column: 1; color: var(--muted); font-size: 13px; }
+.lessons .x { grid-row: 1 / span 2; grid-column: 2; }
+.chip { font-size: 12px; font-weight: 600; padding: 1px 8px; border-radius: 999px; }
+.chip.new { color: var(--warn); background: color-mix(in srgb, var(--warn) 15%, transparent); }
+.chip.applied { color: var(--ok); background: color-mix(in srgb, var(--ok) 15%, transparent); }
+
+details.rules summary { cursor: pointer; font-family: var(--display); font-weight: 600; font-size: 17px; min-height: 36px; display: flex; align-items: center; }
+details.rules[open] summary { margin-bottom: 8px; }
+.rulegrid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); }
+.rulegrid h3 { font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+.rulegrid ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 15px; }
+
+/* pipeline (project-manager) */
+.money { display: grid; gap: 10px; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.tile { background: var(--panel-2); border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; }
+.tile span { display: block; font-size: 13px; color: var(--muted); }
+.tile b { font-family: var(--display); font-size: 26px; font-variant-numeric: tabular-nums; }
+.tile.alert b { color: var(--bad); } .tile.good b { color: var(--ok); }
+@media (max-width: 480px) { .money { grid-template-columns: minmax(0, 1fr); } .tile { display: flex; justify-content: space-between; align-items: baseline; } }
+.rows { display: grid; gap: 6px; }
+.row { display: grid; grid-template-columns: minmax(0, 1.4fr) 112px minmax(0, 1.3fr) 118px minmax(0, 1fr); gap: 10px; align-items: center; background: var(--panel-2); border: 1px solid var(--line); border-radius: 10px; padding: 9px 12px; font-size: 15px; }
+.row.head { background: none; border: 0; padding-block: 0; font-family: var(--display); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.row .biz { font-weight: 600; } .row small { display: block; color: var(--muted); font-weight: 400; font-size: 13px; }
+.row .contact { overflow-wrap: anywhere; }
+.pill { justify-self: start; font-size: 12px; font-weight: 600; padding: 2px 9px; border-radius: 999px; color: var(--sc); background: color-mix(in srgb, var(--sc) 16%, transparent); white-space: nowrap; }
+.due { font-variant-numeric: tabular-nums; font-size: 14px; } .due.over { color: var(--bad); font-weight: 600; } .due.today { color: var(--gold); font-weight: 600; } .due.none { color: var(--muted); }
+@media (max-width: 720px) {
+  .row { grid-template-columns: minmax(0, 1fr) auto; gap: 3px 10px; } .row.head { display: none; }
+  .row .pill { grid-column: 2; grid-row: 1; justify-self: end; } .row .next { grid-column: 1 / -1; }
+  .row .due { grid-column: 2; grid-row: 3; justify-self: end; } .row .contact { grid-column: 1; grid-row: 3; font-size: 14px; }
+}
+.empty { border: 1px dashed var(--line); border-radius: 12px; padding: 16px; color: var(--muted); text-align: center; }
+footer { color: var(--muted); font-size: 13px; text-align: center; }
+@media (prefers-reduced-motion: reduce) { .hero .art, .eyes, .bulb, .scan { animation: none; } }
+</style>
+<div class="wrap" style="--c: #ff6070">
+  <a class="back" href="https://claude.ai/artifact/TVDxQLvtJLazHwpoArFq1r" target="_blank" rel="noopener">← Web Crew HQ</a>
+  <header class="hero">
+    <div class="art" id="art"></div>
+    <div>
+      <h1>critique</h1>
+      <p class="role">Checks everything before it goes out</p>
+      <p class="intro">Paste any message before you send it: a pitch, a follow-up or a chaser. It gives a verdict, points to exactly what's wrong, and hands back a fixed version ready to copy. Site reviews happen in Claude Code.</p>
+    </div>
+  </header>
+
+
+  <section class="panel main" aria-labelledby="tool-h">
+    <h2 id="tool-h">Check a message</h2>
+    <form id="critForm" class="grid">
+      <div class="field"><label for="kind">What is it?</label>
+        <select id="kind"><option>First pitch</option><option>Follow-up to a pitch</option><option>Chase or payment reminder</option><option>Other message to a client</option></select></div>
+      <div class="field"><label for="chan">Channel</label>
+        <select id="chan"><option>WhatsApp</option><option>Text message</option><option>Email</option><option>Instagram DM</option><option>Facebook DM</option></select></div>
+      <div class="field"><label for="who">Business <small>(optional)</small></label><input id="who" autocomplete="off"></div>
+      <div class="field full"><label for="msg">The message</label><textarea id="msg" required rows="6" placeholder="Paste the message here"></textarea></div>
+      <div class="actions full"><button class="btn primary" type="submit" id="critBtn">Check it</button><span class="note" id="wc"></span></div>
+    </form>
+    <div class="out" id="critOut" hidden></div>
+  </section>
+
+
+  <section class="panel" aria-labelledby="train-h">
+    <h2 id="train-h">Teach critique</h2>
+    <p class="sub">Write a rule, a preference or an example in plain English. This page uses it straight away. Your Claude Code team picks it up the next time you say <b>"check my agent pages"</b> in a Claude Code session on My-Team.</p>
+    <form id="trainForm" class="grid">
+      <div class="field full"><label for="lesson">New lesson</label><textarea id="lesson" required placeholder="e.g. Flag any message over 40 words"></textarea></div>
+      <div class="actions full"><button class="btn primary" type="submit">Save lesson</button><span class="note" id="trainNote"></span></div>
+    </form>
+    <ul class="lessons" id="lessons"></ul>
+  </section>
+
+  <section class="panel" aria-labelledby="cc-h">
+    <h2 id="cc-h">Use critique in Claude Code</h2>
+    <p class="sub">Open a Claude Code session on <b>sonnybowen-afk/My-Team</b> (at claude.ai/code or in the Code tab of the Claude app), paste one of these and press send. No slash commands needed.</p>
+    <div class="cc" id="cc"></div>
+  </section>
+
+  <section class="panel">
+    <details class="rules">
+      <summary>How critique works</summary>
+      <div class="rulegrid"><div><h3>Fails a message for</h3><ul><li>A wrong or missing price in a first pitch (must be £595 to build and £50 a month)</li><li>Any mention of reviews, ratings or stars</li><li>Made-up facts, over-promising or fake urgency</li></ul></div><div><h3>Flags</h3><ul><li>Anything that sounds like AI or like a sales template</li><li>Salesy tone, more than one question, or too long for the channel</li><li>Messages so generic they could go to anyone</li></ul></div><div><h3>For sites, in Claude Code</h3><ul><li>Looks at phone and desktop screenshots</li><li>Checks spelling, that every fact matches the brief, all 7 days of hours, links and contrast</li><li>Gives Must fix and Should fix lists with line numbers, plus questions to send the client</li></ul></div></div>
+    </details>
+  </section>
+
+  <footer>Part of Sonny's Web Crew · sonnybowen-afk/My-Team</footer>
+</div>
+
+<script>
+(() => {
+const AGENT = {"key": "crit", "c": "#ff6070", "eye": "#ffdfe2", "id": "critique"};
+const CC = [["Review a site", "Use the critique agent to review sites/<client>/index.html."], ["Review a leads file", "Use the critique agent to check every message in my latest leads file."]];
+
+function avatar(a, still) {
+  const c = a.c, eye = a.eye, dark = "#0a0f1f";
+  let top = "", face = "", chest = "";
+  if (a.key === "pm") {
+    top = `<path d="M34 26 L40 6 L50 18 L60 1 L70 18 L80 6 L86 26 Z" fill="#ffd166"/><circle cx="60" cy="4" r="3.5" fill="#fff4cf"/>
+      <path d="M12 58 a48 48 0 0 1 96 0" fill="none" stroke="${dark}" stroke-width="4" opacity=".55"/>
+      <rect x="6" y="52" width="10" height="20" rx="5" fill="${dark}"/><rect x="104" y="52" width="10" height="20" rx="5" fill="${dark}"/>
+      <path d="M11 70 q2 18 22 18" fill="none" stroke="${dark}" stroke-width="3"/><circle cx="35" cy="88" r="4" fill="${dark}"/>`;
+    chest = `<path d="M60 94 l3 6 6.5 .8 -4.8 4.4 1.3 6.4 -6 -3.2 -6 3.2 1.3 -6.4 -4.8 -4.4 6.5 -.8z" fill="#ffd166"/>`;
+  } else if (a.key === "idea") {
+    top = `<line x1="60" y1="26" x2="60" y2="13" stroke="${c}" stroke-width="4" stroke-linecap="round"/><circle class="${still ? "" : "bulb"}" cx="60" cy="8" r="8" fill="#fff6b8"/>
+      <g stroke="#fff6b8" stroke-width="2.5" stroke-linecap="round" opacity=".8"><line x1="46" y1="4" x2="42" y2="1"/><line x1="74" y1="4" x2="78" y2="1"/><line x1="60" y1="-4" x2="60" y2="-8"/></g>`;
+    chest = `<circle cx="57" cy="100" r="6" fill="none" stroke="${dark}" stroke-width="3"/><line x1="61.5" y1="104.5" x2="67" y2="110" stroke="${dark}" stroke-width="3.5" stroke-linecap="round"/>`;
+  } else if (a.key === "web") {
+    top = `<path d="M26 32 a34 24 0 0 1 68 0 z" fill="#ffd166"/><rect x="56" y="10" width="8" height="22" rx="3" fill="#f4b942"/><rect x="16" y="28" width="88" height="7" rx="3.5" fill="#f4b942"/>`;
+    chest = `<text x="60" y="106" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" font-weight="700" fill="${dark}">&lt;/&gt;</text>`;
+  } else {
+    top = `<line x1="60" y1="26" x2="60" y2="15" stroke="${c}" stroke-width="4" stroke-linecap="round"/><circle cx="60" cy="11" r="5" fill="${c}"/>`;
+    face = `<circle cx="74" cy="57" r="13" fill="none" stroke="#fff" stroke-width="3"/><path d="M87 60 q8 14 2 30" fill="none" stroke="#fff" stroke-width="2" opacity=".7"/>
+      <rect class="${still ? "" : "scan"}" x="26" y="40" width="68" height="3" rx="1.5" fill="${c}" opacity=".7"/>`;
+    chest = `<path d="M51 101 l6 6 12 -13" fill="none" stroke="${dark}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>`;
+  }
+  return `<svg viewBox="0 -10 120 142" aria-hidden="true">
+    <ellipse cx="60" cy="128" rx="28" ry="5" fill="${c}" opacity=".28"/>
+    <rect x="36" y="88" width="48" height="30" rx="14" fill="${c}" opacity=".9"/>
+    <rect x="14" y="26" width="92" height="66" rx="24" fill="${c}"/>
+    <rect x="24" y="36" width="72" height="46" rx="16" fill="${dark}"/>
+    <g class="${still ? "" : "eyes"}"><rect x="39" y="48" width="12" height="17" rx="6" fill="${eye}"/><rect x="68" y="48" width="12" height="17" rx="6" fill="${eye}"/></g>
+    <path d="M51 73 q9 6 18 0" fill="none" stroke="${eye}" stroke-width="3" stroke-linecap="round"/>
+    ${face}${top}${chest}</svg>`;
+}
+
+document.getElementById("art").innerHTML = avatar(AGENT, false);
+
+const $ = (id) => document.getElementById(id);
+const hasClaude = typeof claude !== "undefined" && claude && claude.use;
+const dbP = hasClaude ? claude.use("db") : Promise.resolve(null);
+const sampleP = hasClaude ? claude.use("sample") : Promise.resolve(null);
+const BUSINESS = "About Sonny's business:\n- Sonny Bowen, a one-person freelance web designer based in Shrewsbury, England. Takes on small businesses anywhere in England.\n- Price: \u00a3595 to build a one-page website, then \u00a350 a month.\n- The \u00a350 a month covers hosting, domain renewal, small updates when asked (prices, hours, photos, menu) and security updates with backups. Nothing else.\n- Payment by bank transfer. The build fee is due within 7 days of the site going live.\n- UK mobile for calls and texts: 07944 539622. WhatsApp is a Thai number (+66 93 121 6854), used only for WhatsApp.\n- Example site (beauty businesses only: beauty, hair, nails, lashes, brows and similar): https://sonnybowen-afk.github.io/Revly/annie/";
+const VOICE = "How every message must sound:\n- Like a real person texting from their phone, not a template and not an AI. Plain everyday words, contractions, British spelling.\n- Never mention reviews, ratings or stars in any way.\n- Never invent facts (being a customer, walking past, \"saw you're busy\", owner names you weren't given).\n- Never promise results (\"more customers\", \"top of Google\", \"double your bookings\", guarantees) and never use fake urgency.\n- Banned words and patterns: \"I hope this message finds you well\", \"I came across\", \"I noticed that\", \"elevate\", \"leverage\", \"boost your online presence\", \"take your business to the next level\", \"in today's digital age\", \"seamless\", \"unlock\", \"game-changer\", \"tailored\", \"I'd love to\", \"reach out\", \"don't hesitate\", \"just circling back\", \"gentle reminder\", em-dashes, semicolons, bullet points or bold inside a message, more than one exclamation mark, more than one emoji.\n- Sign off with just \"Sonny\".";
+const LOCAL = "Only call Sonny local when the business is in Shrewsbury or a nearby Shropshire town (Telford, Wellington, Newport, Ludlow, Oswestry, Bridgnorth, Market Drayton, Whitchurch, Church Stretton). Elsewhere just say he builds websites for small businesses.";
+
+function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+function todayISO() { const d = new Date(), p = (n) => String(n).padStart(2, "0"); return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`; }
+function words(s) { return (s.trim().match(/\S+/g) || []).length; }
+
+function copy(text, btn, node) {
+  const label = btn.textContent;
+  const done = () => { btn.textContent = "Copied"; setTimeout(() => (btn.textContent = label), 1300); };
+  const fallback = () => { if (node) { const r = document.createRange(); r.selectNodeContents(node); const s = getSelection(); s.removeAllRanges(); s.addRange(r); } btn.textContent = "Press Ctrl+C"; };
+  try { navigator.clipboard.writeText(text).then(done, fallback); } catch (e) { fallback(); }
+}
+function copyBtn(getText, node) { const b = el("button", "btn small", "Copy"); b.type = "button"; b.addEventListener("click", () => copy(getText(), b, node)); return b; }
+
+function msgBlock(title, text, meta) {
+  const box = el("div", "msg");
+  const head = el("div", "msg-head");
+  const left = el("div"); left.append(el("b", null, title)); if (meta) { left.append(" "); left.append(el("span", null, meta)); }
+  const body = el("div", "msg-body", text);
+  head.append(left, copyBtn(() => text, body));
+  box.append(head, body);
+  return box;
+}
+
+function sampleError(e) {
+  const code = e && e.code;
+  if (["not_granted", "sampling_disabled", "not_declared", "capability_disabled", "capability_removed", "unavailable"].includes(code))
+    return "Claude can't run on this page right now. Use the Claude Code instructions further down instead.";
+  if (code === "rate_limited") return "Too many requests. Give it a minute and try again.";
+  if (code === "session_expired") return "You've been signed out of Claude. Sign in again and retry.";
+  if (code === "invalid_json") return "The answer came back jumbled. Press the button again.";
+  if (code === "refused") return "Claude wouldn't write that. Try rewording what you entered.";
+  if (code === "prompt_too_large") return "That's too much text at once. Shorten it and try again.";
+  return "Something went wrong. Press the button to try again.";
+}
+
+// Run one Claude request with a Stop button and a thinking message.
+async function ask(prompt, { out, button, tier = "default" }) {
+  const sample = await sampleP;
+  if (!sample) throw { code: "unavailable" };
+  const ctl = new AbortController();
+  const stop = el("button", "btn", "Stop"); stop.type = "button";
+  stop.addEventListener("click", () => ctl.abort());
+  button.disabled = true;
+  button.after(stop);
+  out.hidden = false;
+  out.replaceChildren(el("p", "thinking", "Thinking… this usually takes 10–40 seconds."));
+  try {
+    return await sample.json(prompt, { modelTier: tier, cache: false, signal: ctl.signal });
+  } finally {
+    button.disabled = false;
+    stop.remove();
+  }
+}
+
+// ---------- Lessons (training) ----------
+let lessons = [];
+function lessonsText() {
+  const list = lessons.filter((l) => l.text).map((l) => "- " + l.text);
+  return list.length ? "\n\nSonny has taught you these extra rules. They override anything above:\n" + list.join("\n") : "";
+}
+(async () => {
+  const db = await dbP;
+  const note = $("trainNote");
+  const listEl = $("lessons");
+  if (!db) { note.textContent = "Lessons save when this page is open in Claude."; return; }
+  db.collection("lessons").orderBy("created", "desc").limit(100).onSnapshot((snap) => {
+    lessons = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+    listEl.replaceChildren();
+    if (!lessons.length) { listEl.append(el("li", "empty", "No lessons yet.")); return; }
+    lessons.forEach((l) => {
+      const li = el("li");
+      const text = el("span", null, l.text || "");
+      const meta = el("small");
+      const chip = el("span", "chip " + (l.status === "applied" ? "applied" : "new"), l.status === "applied" ? "Learned in Claude Code" : "Waiting for Claude Code");
+      meta.append(chip, " " + (l.created ? new Date(l.created).toLocaleDateString("en-GB", { day: "numeric", month: "short" }) : ""));
+      li.append(text, meta);
+      if (l.status !== "applied") {
+        const x = el("button", "btn small x", "Remove"); x.type = "button";
+        x.addEventListener("click", async () => { x.disabled = true; try { await db.doc("lessons/" + l.id).delete(); } catch (e) { x.disabled = false; note.textContent = "Couldn't remove that lesson. Try again."; } });
+        li.append(x);
+      }
+      listEl.append(li);
+    });
+  }, () => { note.textContent = "Couldn't load lessons. Reload the page."; });
+  $("trainForm").addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    const box = $("lesson"), text = box.value.trim();
+    if (!text) return;
+    const btn = ev.submitter || $("trainForm").querySelector("button");
+    btn.disabled = true; note.textContent = "Saving…";
+    try {
+      await db.collection("lessons").add({ text: text.slice(0, 1000), created: new Date().toISOString(), status: "new" });
+      box.value = ""; note.textContent = "Saved. This page uses it from now on.";
+    } catch (e) {
+      note.textContent = e && e.code === "invalid_argument" ? "Only you can teach this agent." : "Couldn't save. Try again.";
+    } finally { btn.disabled = false; }
+  });
+})();
+
+// ---------- Claude Code instructions ----------
+function renderCC(extra) {
+  const wrap = $("cc"); wrap.replaceChildren();
+  [...(extra || []), ...CC].forEach(([label, text]) => {
+    const item = el("div", "cc-item");
+    const head = el("div", "cc-head", label);
+    const pre = el("pre", "cmd", text);
+    head.append(copyBtn(() => pre.textContent, pre));
+    item.append(head, pre);
+    wrap.append(item);
+  });
+}
+renderCC();
+
+
+const RULES = `You are critique, the quality checker on Sonny's team. Review one message before Sonny sends it. Be direct and specific: every issue needs an exact fix.
+
+${BUSINESS}
+
+${VOICE}
+
+Hard rules (breaking one = FAIL):
+- A FIRST PITCH must include exactly "£595 to build" and "£50 a month". Wrong numbers, a missing figure, "GBP"/"595gbp", or vague wording like "a small monthly fee" fails. Other message types don't need the price, but any price they mention must be right.
+- Any mention of reviews, ratings or stars.
+- Made-up facts: being a customer, walking past, "saw you're busy".
+- Over-promising ("more customers", "top of Google", "guaranteed") or monthly extras not listed above.
+- Fake urgency or scarcity.
+
+Tone and form (NEEDS CHANGES):
+- AI or template phrasing (the banned list above), em-dashes, semicolons, a tidy three-part list, flawless formal grammar in a text, bullets or bold in a text.
+- Salesy: more than one exclamation mark, hype words, more than one question or ask, a pushy close.
+- Too long: WhatsApp or text over 60 words, DM over 50, email over 120, follow-up over 30.
+- Generic: nothing specific to this business.
+- Wrong for the channel (e.g. an email-style sign-off in a WhatsApp).
+- ${LOCAL}
+- The example link may only be offered to beauty businesses.
+
+Verdict: PASS if nothing needs changing, NEEDS CHANGES for tone or form problems, FAIL if any hard rule is broken. For anything other than PASS, give the full revised message, ready to send, keeping Sonny's voice and any real details.`;
+
+const msg = $("msg");
+msg.addEventListener("input", () => { $("wc").textContent = msg.value.trim() ? words(msg.value) + " words" : ""; });
+$("critForm").addEventListener("submit", async (ev) => {
+  ev.preventDefault();
+  const kind = $("kind").value, chan = $("chan").value, who = $("who").value.trim();
+  const text = msg.value.trim();
+  const prompt = `${RULES}${lessonsText()}
+
+Message type: ${kind}
+Channel: ${chan}
+Business: ${who || "not given"}
+Word count: ${words(text)}
+
+The message (between the lines):
+-----
+${text.slice(0, 6000)}
+-----
+
+Reply with only JSON in this shape: {"verdict": "PASS" | "NEEDS CHANGES" | "FAIL", "summary": "one short sentence", "issues": [{"quote": "exact words from the message", "problem": "what's wrong", "fix": "replacement words"}], "revised": "the full corrected message, or empty string if PASS"}`;
+  const out = $("critOut");
+  try {
+    const r = await ask(prompt, { out, button: $("critBtn") });
+    out.replaceChildren();
+    const verdict = String(r.verdict || "").toUpperCase();
+    const cls = verdict.startsWith("PASS") ? "PASS" : verdict.startsWith("FAIL") ? "FAIL" : "NEEDS";
+    const head = el("div", "msg-head");
+    head.append(el("span", "verdict " + cls, cls === "NEEDS" ? "NEEDS CHANGES" : cls));
+    out.append(head);
+    if (r.summary) out.append(el("p", null, String(r.summary)));
+    const issues = Array.isArray(r.issues) ? r.issues : [];
+    if (issues.length) {
+      const ol = el("ol", "issues");
+      issues.forEach((i) => {
+        const li = el("li");
+        if (i.quote) { li.append(el("q", null, String(i.quote)), " "); }
+        li.append(String(i.problem || ""));
+        if (i.fix) { li.append(el("br"), el("span", "fix", "Fix: " + String(i.fix))); }
+        ol.append(li);
+      });
+      out.append(ol);
+    }
+    if (cls !== "PASS" && r.revised) out.append(msgBlock("Revised message", String(r.revised), `${words(String(r.revised))} words`));
+    if (cls === "PASS") out.append(el("p", "note", "Good to send."));
+  } catch (e) {
+    if (e && e.code === "cancelled") { out.replaceChildren(el("p", "note", "Stopped.")); return; }
+    out.replaceChildren(el("p", "note err", sampleError(e)));
+  }
+});
+
+})();
+</script>

@@ -10,4 +10,4 @@ If a business has said yes to a site, also:
 
 Show me the rows that changed and the next action and date for each.
 
-Then sync the HQ page as described in `CLAUDE.md`.
+Then sync the pipeline to Sonny's pages as described in `CLAUDE.md`.
