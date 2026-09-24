@@ -23,7 +23,7 @@ Check the UENI page (gdo-plumbing-services.ueniweb.com) before sending. If it's 
 
 **First message**
 
-> Hi Gareth, it's Sonny, a web designer here in Shrewsbury. This is my WhatsApp, for calls it's 07944 539622. If someone searches GDO they get Checkatrade, MyBuilder, Facebook and a UENI page, so they end up jumping between them. I could build one site with it all together, £595 to build and then £50 a month after that. Want me to send an example?
+> Hi Gareth, it's Sonny, a web designer here in Shrewsbury. This is my WhatsApp, for calls it's 07944 539622. If someone searches GDO Plumbing they get Checkatrade, MyBuilder, Facebook and a UENI page, so they end up jumping between them. I could do one site with it all together, £595 to build and then £50 a month. Want me to send an example?
 
 **Follow-up (about 4 days later)**
 
@@ -33,11 +33,11 @@ Check the UENI page (gdo-plumbing-services.ueniweb.com) before sending. If it's 
 
 **First message**
 
-> Hiya Ryan, Sonny here. I'm local to Shrewsbury and build websites for small businesses. When I searched RS Plumbing and Heating, firms in Redditch and Burgess Hill came up alongside you, so people could ring the wrong one. I could do you a simple site with your number and the areas you cover, £595 to build it and then £50 a month to keep it running. Worth a quick chat?
+> Hiya Ryan, when I searched RS Plumbing and Heating, firms in Redditch and Burgess Hill came up next to you, so people could ring the wrong one. I'm Sonny, I build websites here in Shrewsbury. I could do you a simple site with your number and the areas you cover, £595 to build and then £50 a month to keep it running. Worth a chat?
 
 **Follow-up (about 4 days later)**
 
-> Hi Ryan, only me again. Did you get my text about the website? No pressure at all, Sonny
+> Hi Ryan, Sonny again about the website. Happy to send you an example of what yours could look like if that helps. No pressure either way
 
 ---
 
@@ -74,3 +74,7 @@ The Gentleman Plumber (thegentlemanplumber.co.uk), Urquhart Plumbing & Heating (
 - https://www.mybuilder.com/profile/salop_plumbing_and_heating
 - https://www.facebook.com/Lovettplumb/
 - https://www.mybuilder.com/profile/glr_plumbing_and_heating/reviews
+
+---
+
+_Critique review applied 2026-09-24: 4 messages, 1 passed, 3 fixed._
