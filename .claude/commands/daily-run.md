@@ -26,6 +26,7 @@ Ask **boss** (master mode) for today's plan, with this request: "Daily run. Pick
 - **idea-creator** batches run in parallel. Save to `leads/<town>-<trade>-<date>.md`.
 - **critique** reviews every new message. Apply its revised versions and drop anything that still breaks a hard rule.
 - Skip anyone in `clients/do-not-contact.md` or already in the pipeline.
+- Sync the final leads to the idea-creator page (see "Leads sync" in `CLAUDE.md`).
 
 ## 5. Emails
 - **Auto-send OFF (the default):** save every email pitch, and every email follow-up or chaser due today, as a Gmail draft (`create_draft`, plain text, subject in `subject`).

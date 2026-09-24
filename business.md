@@ -37,6 +37,10 @@ The agents will only promise what's listed here.
 ## Typical turnaround
 - No clients yet, so nothing is fixed. Agents plan on a draft within 5 working days of getting the client's info, but **never promise a turnaround or a number of revision rounds** in a pitch. Check with Sonny if a client asks.
 
+## How I contact leads
+- **Email first** (saved as Gmail drafts), then **text (SMS)** to a mobile, then WhatsApp.
+- **Instagram DMs only when there's no email or mobile.** I don't want my Instagram banned, so keep DMs to a minimum, but Instagram-only leads are fine.
+
 ## Who I target
 Businesses anywhere in England that have **no website** and **clear demand**, in three groups:
 - **Tradesmen:** plumbers, electricians, builders, roofers, joiners and carpenters, plasterers, painters and decorators, landscapers and gardeners, tilers, kitchen and bathroom fitters, locksmiths, cleaners and similar.

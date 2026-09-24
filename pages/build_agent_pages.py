@@ -29,16 +29,18 @@ LOCAL = "Only call Sonny local when the business is in Shrewsbury or a nearby Sh
 
 AGENTS = {
   "idea-creator": {
-    "key": "idea", "c": "#3ddc97", "eye": "#d4ffe9", "role": "Finds leads and writes the pitch",
-    "intro": "Tell it about a business and it writes a first message and a follow-up in your voice, checked against your rules. Finding new businesses on the web happens in Claude Code (see below).",
+    "key": "idea", "c": "#3ddc97", "eye": "#d4ffe9", "role": "The leads getter: finds businesses with no website and gets them pitched",
+    "intro": "Every potential client it finds lands here, with the checked pitch ready to copy. Send one, tap \"I sent it\", and boss adds them to your pipeline the next time you say \"check my agent pages\".",
     "rules": [
+      ("Its job", ["Finding leads comes first: businesses with no website and clear demand, verified as far as the web allows", "Checks each one: recent posts, the right phone number, any public email, Companies House status", "Writes a first message and a follow-up for every lead it keeps, and critique checks them", "Saves every lead and pitch to this page, so you always have your potential clients in one place"]),
       ("Targets", ["Tradesmen, beauty businesses and housing developers anywhere in England", "Only businesses with no website and clear demand: recent posts, customers asking or booking, jobs on Checkatrade, or live developments", "Skips anything quiet, even without a website"]),
-      ("Always", ["Says exactly £595 to build and £50 a month", "Signs off \"Sonny\"", "Keeps texts under 60 words and emails under 120", "Uses one specific detail about the business and ends with one easy question", "Only calls you local around Shrewsbury, and offers the Annie example site to beauty businesses only"]),
+      ("Always", ["Says exactly £595 to build and £50 a month", "Contacts by email first (Gmail drafts), then text. Only uses Instagram DMs when there's no email or mobile", "Signs off \"Sonny\"", "Keeps texts under 60 words and emails under 120", "Uses one specific detail about the business and ends with one easy question", "Only calls you local around Shrewsbury, and offers the Annie example site to beauty businesses only"]),
       ("Never", ["Mentions reviews, ratings or stars", "Invents businesses, numbers or owner names", "Promises more customers or top of Google, or uses fake urgency", "Uses AI phrases like \"I hope this finds you well\" or \"elevate\", or em-dashes"]),
       ("Customer research", ["Walks the customer journey: can people find them, check prices and hours, book or contact, and find the address?", "Uses the biggest problem customers have as the pitch hook, framed as the customer's problem, not a criticism", "Passes what it found into the client brief, so web-builder puts it front and centre"]),
-      ("In Claude Code it also", ["Searches Google, Facebook, Instagram, Yell, Checkatrade, Fresha, Booksy, Treatwell, Just Eat and local groups", "Labels each business: no website found, social media only, dead or parked site, or unconfirmed", "Skips chains, closed businesses and anyone already in your pipeline", "Ranks 5–10 leads and saves them to leads/<town>-<trade>-<date>.md"]),
+      ("In Claude Code it also", ["Searches Google, Facebook, Instagram, TikTok, Linktree, Fresha, Booksy, Treatwell, Nextdoor, Companies House and local groups", "Labels each business: no website found, social media only, dead or parked site, or unconfirmed", "Skips chains, closed businesses and anyone already in your pipeline or on your do-not-contact list", "Ranks 5–10 leads, saves them to leads/<town>-<trade>-<date>.md and syncs them to this page"]),
     ],
     "claude_code": [
+      ("Re-check my leads", "Use the idea-creator agent to re-check the leads on its page that I haven't sent yet: recent posts, numbers, emails and hooks. Have critique check any changed pitches, then sync the leads to the idea-creator page."),
       ("Save email pitches as Gmail drafts", "Save the email pitches from my latest leads file as Gmail drafts. Don't send anything."),
     ],
   },
@@ -235,6 +237,24 @@ details.rules[open] summary { margin-bottom: 8px; }
   .row .pill { grid-column: 2; grid-row: 1; justify-self: end; } .row .next { grid-column: 1 / -1; }
   .row .due { grid-column: 2; grid-row: 3; justify-self: end; } .row .contact { grid-column: 1; grid-row: 3; font-size: 14px; }
 }
+/* leads (idea-creator) */
+.leads-top { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.filters { display: flex; flex-wrap: wrap; gap: 8px; }
+.filters .btn.on { border-color: var(--c); color: var(--c); }
+.leadlist { display: grid; gap: 8px; }
+details.lead { background: var(--panel-2); border: 1px solid var(--line); border-radius: 12px; }
+details.lead > summary { cursor: pointer; list-style: none; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 12px; align-items: center; padding: 10px 14px; min-height: 44px; }
+details.lead > summary::-webkit-details-marker { display: none; }
+details.lead > summary b { font-weight: 600; }
+details.lead > summary small { grid-column: 1; color: var(--muted); font-size: 13px; overflow-wrap: anywhere; }
+details.lead > summary .pill { grid-column: 2; grid-row: 1 / span 2; }
+details.lead[open] > summary { border-bottom: 1px solid var(--line); }
+.lead-body { padding: 12px 14px; display: grid; gap: 10px; }
+.facts { display: grid; gap: 4px 14px; grid-template-columns: max-content minmax(0, 1fr); margin: 0; font-size: 14px; }
+.facts dt { color: var(--muted); }
+.facts dd { margin: 0; overflow-wrap: anywhere; }
+@media (max-width: 480px) { .facts { grid-template-columns: minmax(0, 1fr); } .facts dd { margin-bottom: 6px; } }
+.checks { border-left: 3px solid var(--warn); padding-left: 10px; font-size: 14px; }
 .empty { border: 1px dashed var(--line); border-radius: 12px; padding: 16px; color: var(--muted); text-align: center; }
 footer { color: var(--muted); font-size: 13px; text-align: center; }
 @media (prefers-reduced-motion: reduce) { .hero .art, .eyes, .bulb, .scan { animation: none; } }
@@ -418,14 +438,36 @@ __AGENT_JS__
 
 # ---------------------------------------------------------------- idea-creator
 IDEA_TOOL = r"""
-  <section class="panel main" aria-labelledby="tool-h">
-    <h2 id="tool-h">Write a pitch</h2>
+  <section class="panel main" aria-labelledby="leads-h">
+    <div class="leads-top">
+      <h2 id="leads-h">Your leads</h2>
+      <span class="note" id="leadsUpdated"></span>
+    </div>
+    <div class="money" id="leadTiles">
+      <div class="tile good"><span>Ready to send</span><b id="tReady">0</b></div>
+      <div class="tile"><span>Sent, waiting on boss</span><b id="tSent">0</b></div>
+      <div class="tile"><span>Pitched</span><b id="tPitched">0</b></div>
+    </div>
+    <div class="filters" role="group" aria-label="Show leads">
+      <button type="button" class="btn small on" data-f="todo">To send</button>
+      <button type="button" class="btn small" data-f="pitched">Pitched</button>
+      <button type="button" class="btn small" data-f="dropped">Dropped</button>
+      <button type="button" class="btn small" data-f="all">All</button>
+    </div>
+    <div class="leadlist" id="leadList"></div>
+    <p class="empty" id="leadsEmpty" hidden>No leads here yet. Use the "Find new leads" boxes further down in Claude Code.</p>
+    <span class="note" id="leadsNote"></span>
+  </section>
+
+  <section class="panel" aria-labelledby="tool-h">
+    <h2 id="tool-h">Write a pitch for one business</h2>
+    <p class="sub">Spotted a business yourself? Describe it and get a first message and a follow-up.</p>
     <form id="pitchForm" class="grid">
       <div class="field"><label for="biz">Business name</label><input id="biz" required autocomplete="off" placeholder="e.g. Annie's Nails"></div>
       <div class="field"><label for="trade">What they do</label><input id="trade" required autocomplete="off" placeholder="e.g. nail salon"></div>
       <div class="field"><label for="town">Town</label><input id="town" required value="Shrewsbury"></div>
       <div class="field"><label for="channel">How you'll send it</label>
-        <select id="channel"><option>WhatsApp</option><option>Text message</option><option>Email</option><option>Instagram DM</option><option>Facebook DM</option></select></div>
+        <select id="channel"><option>Email</option><option>Text message</option><option>WhatsApp</option><option>Instagram DM</option><option>Facebook DM</option></select></div>
       <div class="field"><label for="owner">Owner's first name <small>(if you know it)</small></label><input id="owner" autocomplete="off"></div>
       <div class="field full"><label for="hook">What did you notice about them?</label><textarea id="hook" required placeholder="What would a customer struggle with? e.g. Only on Instagram, no way to see prices or book without messaging"></textarea></div>
       <div class="actions full"><button class="btn primary" type="submit" id="pitchBtn">Write pitch</button></div>
@@ -489,15 +531,102 @@ finder.innerHTML = `
   <div class="field"><label for="fTown">Town</label><input id="fTown" value="Shrewsbury"></div>
   <div class="field"><label for="fTrade">Type of business</label><input id="fTrade" value="nail salons"></div>
   <div class="field"><label for="fCount">How many</label><input id="fCount" type="number" min="3" max="15" value="8"></div>
-  <div class="field"><label for="fChan">Preferred channel</label><select id="fChan"><option>WhatsApp</option><option>text message</option><option>email</option><option>whatever fits each one</option></select></div>`;
+  <div class="field"><label for="fChan">Preferred channel</label><select id="fChan"><option>email, then text</option><option>email</option><option>text message</option><option>WhatsApp</option></select></div>`;
 cc.before(finder);
 function finderText() {
   const g = (id) => $(id).value.trim();
-  return `Use the idea-creator agent to find ${g("fCount") || 8} ${g("fTrade") || "small businesses"} in ${g("fTown") || "Shrewsbury"} with no website and draft ${g("fChan") === "whatever fits each one" ? "pitches using whichever channel fits each one" : g("fChan") + " pitches"}. Then have the critique agent check every one, apply its fixes, save any email pitches as Gmail drafts, and show me the final messages.`;
+  return `Use the idea-creator agent to find ${g("fCount") || 8} ${g("fTrade") || "small businesses"} in ${g("fTown") || "Shrewsbury"} with no website and draft ${g("fChan") === "email, then text" ? "pitches by email where there is a business email, otherwise by text, or Instagram DM only when there is neither" : g("fChan") + " pitches"}. Then have the critique agent check every one, apply its fixes, save any email pitches as Gmail drafts, sync the leads to the idea-creator page, and show me the final messages.`;
 }
 function refreshFinder() { renderCC([["Find new leads (from the boxes above)", finderText()]]); }
 finder.addEventListener("input", refreshFinder);
 refreshFinder();
+
+// ---------- Leads (synced from Claude Code into the "leads" collection) ----------
+const LSTAGE = {
+  ready: ["Ready to send", "#3ddc97"], check: ["Check first", "#ffd166"], pitched: ["Pitched", "#4fb3ff"],
+  replied: ["Replied", "#b98bff"], in_progress: ["Building", "#ff9f43"], delivered: ["Delivered", "#ff9f43"],
+  maintenance: ["Client", "#3ddc97"], closed: ["Closed", "#9ba6c6"], dropped: ["Dropped", "#9ba6c6"],
+};
+const PRI = { High: 0, Medium: 1, Low: 2 };
+let leads = [], leadFilter = "todo";
+const fmtDay = (iso) => iso ? new Date(iso + (iso.length === 10 ? "T12:00:00" : "")).toLocaleDateString("en-GB", { day: "numeric", month: "short" }) : "";
+const isSent = (l) => !!l.sent && l.status !== "dropped";
+function stageOf(l) {
+  if (l.sent && l.sent_status === "new") return ["Sent, telling boss", "#4fb3ff"];
+  return LSTAGE[l.status] || LSTAGE.check;
+}
+function inFilter(l) {
+  const s = l.status || "check";
+  if (leadFilter === "all") return true;
+  if (leadFilter === "dropped") return s === "dropped" || s === "closed";
+  if (leadFilter === "pitched") return isSent(l) || ["pitched", "replied", "in_progress", "delivered", "maintenance"].includes(s);
+  return (s === "ready" || s === "check") && !l.sent;
+}
+function renderLeads() {
+  const list = $("leadList"); list.replaceChildren();
+  $("tReady").textContent = leads.filter((l) => (l.status === "ready" || l.status === "check") && !l.sent).length;
+  $("tSent").textContent = leads.filter((l) => l.sent && l.sent_status === "new").length;
+  $("tPitched").textContent = leads.filter((l) => ["pitched", "replied", "in_progress", "delivered", "maintenance"].includes(l.status)).length;
+  const shown = leads.filter(inFilter).sort((a, b) => (PRI[a.priority] ?? 3) - (PRI[b.priority] ?? 3) || String(b.found || "").localeCompare(String(a.found || "")) || String(a.business).localeCompare(String(b.business)));
+  $("leadsEmpty").hidden = shown.length > 0;
+  shown.forEach((l) => list.append(leadCard(l)));
+}
+function leadCard(l) {
+  const d = el("details", "lead");
+  const sum = el("summary");
+  const [label, colour] = stageOf(l);
+  const pill = el("span", "pill", label); pill.style.setProperty("--sc", colour);
+  sum.append(el("b", null, l.business || "Unnamed"), pill,
+    el("small", null, [l.priority, l.trade, l.town, l.channel && l.contact ? `${l.channel}: ${l.contact}` : l.channel].filter(Boolean).join(" · ")));
+  d.append(sum);
+  const body = el("div", "lead-body");
+  const facts = el("dl", "facts");
+  [["Why pitch them", l.hook], ["Demand", l.demand], ["Website", l.website], ["Company", l.company], ["Other contact", l.other_contact],
+   ["Found", l.found ? fmtDay(l.found) + (l.leads_file ? " · " + l.leads_file : "") : l.leads_file],
+   ["Sent", l.sent ? fmtDay(l.sent) : ""], ["Follow-up due", l.followup_due ? fmtDay(l.followup_due) : ""], ["Dropped because", l.status === "dropped" ? l.reason : ""]]
+    .forEach(([k, v]) => { if (v) facts.append(el("dt", null, k), el("dd", null, String(v))); });
+  body.append(facts);
+  if (l.checks && !l.sent && l.status !== "dropped") body.append(el("p", "checks", "Before sending: " + l.checks));
+  if (l.subject) body.append(msgBlock("Subject line", String(l.subject)));
+  if (l.first) body.append(msgBlock(l.status === "pitched" || l.sent ? "First message (sent)" : "First message", String(l.first), `${l.channel || ""} · ${words(String(l.first))} words`));
+  if (l.first_alt) body.append(msgBlock("Backup version", String(l.first_alt), l.first_alt_note || ""));
+  if (l.followup) body.append(msgBlock("Follow-up", String(l.followup), l.followup_due ? "send " + fmtDay(l.followup_due) + " if no reply" : "send about 4 days later if no reply"));
+  const acts = el("div", "actions");
+  if (!l.sent && (l.status === "ready" || l.status === "check")) {
+    const b = el("button", "btn primary", "I sent it"); b.type = "button";
+    b.addEventListener("click", () => markSent(l, b, todayISO()));
+    acts.append(b, el("span", "note", "boss adds it to your pipeline next time you say \"check my agent pages\"."));
+  } else if (l.sent && l.sent_status === "new") {
+    const b = el("button", "btn small", "Undo, not sent yet"); b.type = "button";
+    b.addEventListener("click", () => markSent(l, b, ""));
+    acts.append(b);
+  }
+  if (acts.childNodes.length) body.append(acts);
+  d.append(body);
+  return d;
+}
+let leadsDb = null;
+async function markSent(l, btn, day) {
+  if (!leadsDb) return;
+  btn.disabled = true;
+  try { await leadsDb.doc("leads/" + l.id).update(day ? { sent: day, sent_status: "new" } : { sent: "", sent_status: "" }); }
+  catch (e) { btn.disabled = false; $("leadsNote").textContent = "Couldn't save that. Try again."; }
+}
+document.querySelectorAll(".filters .btn").forEach((b) => b.addEventListener("click", () => {
+  leadFilter = b.dataset.f;
+  document.querySelectorAll(".filters .btn").forEach((x) => x.classList.toggle("on", x === b));
+  renderLeads();
+}));
+(async () => {
+  leadsDb = await dbP;
+  if (!leadsDb) { $("leadsUpdated").textContent = "Open this page in Claude to see your leads"; $("leadsEmpty").hidden = false; return; }
+  leadsDb.collection("leads").limit(500).onSnapshot((snap) => {
+    leads = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+    const last = leads.map((l) => l.updated || "").sort().pop();
+    $("leadsUpdated").textContent = last ? "Updated " + fmtDay(last) : "";
+    renderLeads();
+  }, () => { $("leadsNote").textContent = "Couldn't load your leads. Reload the page."; });
+})();
 """
 
 # ---------------------------------------------------------------- critique

@@ -379,20 +379,22 @@
       </article>
 
       <article class="card" id="card-idea-creator" style="--c: var(--idea)">
-        <div class="card-head"><span data-avatar="idea"></span><div><h3><a href="https://claude.ai/artifact/A4Kdm6smnkdZeEgEkP3wyN" target="_blank" rel="noopener" style="color:inherit">idea-creator ↗</a></h3><span>finds leads · writes the pitch</span></div></div>
+        <div class="card-head"><span data-avatar="idea"></span><div><h3><a href="https://claude.ai/artifact/A4Kdm6smnkdZeEgEkP3wyN" target="_blank" rel="noopener" style="color:inherit">idea-creator ↗</a></h3><span>the leads getter · keeps your potential clients</span></div></div>
         <dl class="kv">
-          <div><dt>Job</dt><dd>Finds local businesses with no website, and writes a first message and a follow-up for each one.</dd></div>
-          <div><dt>Say</dt><dd class="say">"Find 8 nail salons in Shrewsbury with no website and draft WhatsApp pitches."</dd></div>
+          <div><dt>Job</dt><dd>Gets you leads: finds businesses with no website, checks them properly, writes a first message and a follow-up for each, and keeps them all on <a href="https://claude.ai/artifact/A4Kdm6smnkdZeEgEkP3wyN" target="_blank" rel="noopener">its page</a>. Tap <b>I sent it</b> there and boss adds them to your pipeline.</dd></div>
+          <div><dt>Say</dt><dd class="say">"Find 8 plumbers in Telford with no website." · "Re-check my leads." · "Find emails for my Instagram leads."</dd></div>
           <div><dt>Shortcut</dt><dd><span class="chip">/find-leads Shrewsbury nail salons</span></dd></div>
         </dl>
         <details>
           <summary>How it works and its rules</summary>
           <h4>Does</h4>
           <ul>
-            <li>Searches Google, Facebook, Instagram, Yell, Thomson Local, FreeIndex, Checkatrade, Fresha, Booksy, Treatwell, Just Eat, Deliveroo and local Facebook groups</li>
+            <li>Searches Google, Facebook, Instagram, TikTok, Linktree, Fresha, Booksy, Treatwell, Nextdoor and local groups</li>
+            <li>Checks each lead: recent posts, the right phone number, a business email, and Companies House (Ltd or sole trader)</li>
             <li>Labels each website as none found, social only, dead or parked, or unconfirmed</li>
-            <li>Skips chains, closed businesses, and anyone already in your pipeline. Ranks 5–10 leads High, Medium or Low</li>
-            <li>Picks text, WhatsApp, email or DM based on the contact details, and saves everything to <code>leads/&lt;town&gt;-&lt;trade&gt;-&lt;date&gt;.md</code></li>
+            <li>Skips chains, closed businesses, anyone already in your pipeline and anyone on the do-not-contact list. Ranks 5–10 leads High, Medium or Low</li>
+            <li>Contacts by <b>email first</b> (saved as a Gmail draft), then text, then WhatsApp. Instagram DM only when there's no email or mobile</li>
+            <li>Saves everything to <code>leads/&lt;town&gt;-&lt;trade&gt;-&lt;date&gt;.md</code> and syncs the leads to its page</li>
           </ul>
           <ul class="always">
             <li>Always says exactly £595 to build and £50 a month, and signs off "Sonny"</li>
@@ -493,10 +495,10 @@
         <h3>Win the client</h3>
         <ol class="steps">
           <li style="--c: var(--pm)"><b>boss</b><span>Plans it and checks who's already been pitched</span></li>
-          <li style="--c: var(--idea)"><b>idea-creator</b><span>Finds leads and writes the pitches</span></li>
+          <li style="--c: var(--idea)"><b>idea-creator</b><span>Finds and checks the leads, writes the pitches and puts them on its page</span></li>
           <li style="--c: var(--crit)"><b>critique</b><span>Checks and fixes every pitch</span></li>
-          <li style="--c: var(--text)"><b>You</b><span>Send them. The email ones are waiting in Gmail drafts</span></li>
-          <li style="--c: var(--pm)"><b>boss</b><span>Logs them and sets the follow-up dates</span></li>
+          <li style="--c: var(--text)"><b>You</b><span>Send them (emails are waiting in Gmail drafts), then tap <b>I sent it</b> on idea-creator's page</span></li>
+          <li style="--c: var(--pm)"><b>boss</b><span>Adds them to the pipeline and sets the follow-up dates</span></li>
         </ol>
       </div>
       <div class="lane">
@@ -525,7 +527,7 @@
       <div class="prompt">
         <div class="prompt-head">New leads<button class="btn" type="button" data-copy="p1">Copy</button></div>
         <pre id="p1">Run my client workflow for nail salons in Shrewsbury:
-1. idea-creator: find 6 leads and draft WhatsApp pitches.
+1. idea-creator: find 6 leads and draft pitches (email first, then text).
 2. critique: review every pitch; apply its revised versions.
 3. Show me the final pitches and the lead table, then stop so I can send them.</pre>
       </div>
@@ -584,6 +586,7 @@ boss: who do I need to chase?</pre>
         <div><dt>Domains</dt><dd>You buy and own every client's domain</dd></div>
         <div><dt>Targets</dt><dd>Tradesmen, beauty businesses and housing developers in England, with no website and clear demand</dd></div>
         <div><dt>Example</dt><dd><a href="https://sonnybowen-afk.github.io/Revly/annie/" target="_blank" rel="noopener">Annie (beauty)</a>, offered to beauty businesses only</dd></div>
+        <div><dt>Contact</dt><dd>Email first, then text, then WhatsApp. Instagram DMs only when there's no email or mobile</dd></div>
         <div><dt>Email</dt><dd>Saved as Gmail drafts in sonnybowen07@gmail.com. Auto-send is <b>off</b>, and only you can switch it on (limited companies only, max 10 a day, with an opt-out)</dd></div>
         <div><dt>Hosting</dt><dd>GitHub Pages, one repo per client. You own every domain</dd></div>
         <div><dt>Daily run</dt><dd>Every morning: new leads, checked pitches, follow-ups, reply check, and today's briefing</dd></div>
@@ -594,7 +597,7 @@ boss: who do I need to chase?</pre>
       <ul>
         <li><b>Nothing is sent without you.</b> Texts, WhatsApps and DMs always go out by your hand, and emails wait in Gmail drafts unless you switch auto-send on</li>
         <li>Anyone who asks not to be contacted goes on the do-not-contact list, and the agents never message them again</li>
-        <li>The pipeline above updates every time boss changes it. It's only as current as what you tell boss</li>
+        <li>The pipeline above updates every time boss changes it. Tap <b>I sent it</b> on idea-creator's page, or tell boss, so it stays current</li>
         <li>Agents load when a session starts. In a new My-Team session, type <code>/agents</code> or <code>@</code> to see them</li>
         <li>When an agent is working, a block with its name appears in the chat. Tap it to watch</li>
       </ul>
@@ -613,7 +616,7 @@ boss: who do I need to chase?</pre>
       tagline: "The master. Plans every job, picks the agents, keeps the pipeline and tells you who to chase.", cmd: "What should I do today?" },
     { key: "idea", id: "idea-creator", url: "https://claude.ai/artifact/A4Kdm6smnkdZeEgEkP3wyN", building: "SCOUT TOWER", c: "#3ddc97",
       pal: { h: "#2f9e6e", s: "#f1c27d", e: "#1a1426", b: "#3ddc97", a: "#e9edf9", l: "#264653", k: "#1a1426" },
-      tagline: "Finds businesses with no website and clear demand, and writes the first message.", cmd: "Find me plumbers in Shrewsbury" },
+      tagline: "The leads getter. Finds and checks businesses with no website, writes the pitches and keeps them on its page.", cmd: "Find me plumbers in Shrewsbury" },
     { key: "web", id: "web-builder", url: "https://claude.ai/artifact/3BVSpy1fTHfKZ7ZBJsC3c3", building: "WORKSHOP", c: "#4fb3ff",
       pal: { h: "#f4b942", s: "#c68642", e: "#1a1426", b: "#4fb3ff", a: "#f28c28", l: "#2b4a7a", k: "#1a1426" },
       tagline: "Turns a client brief into a finished one-page site in your house style.", cmd: "Build a site for Annie's Nails" },
