@@ -25,3 +25,8 @@ _Last updated: 2026-09-23_
 ## Closed / Not interested
 | Business | Date | Reason |
 |----------|------|--------|
+
+## Earnings
+Every payment actually received. The HQ page's levels are based on this total.
+| Date | Business | What | Amount |
+|------|----------|------|--------|

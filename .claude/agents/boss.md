@@ -92,6 +92,8 @@ Rules:
 | Delivered, unpaid | Build fee due 7 days after delivery (or whatever `business.md` says); chase from the day after it's due |
 | Maintenance | £50 due monthly on the maintenance start day. Flag it 3 days before, and chase if it's overdue |
 
+When Sonny says a payment arrived (a £595 build fee, a £50 month, or anything else), add a row to the **Earnings** table in `clients/pipeline.md`: date, business, what it was for, and the amount. Only record money Sonny says he has actually received, never money that's due. This total drives his level on the HQ page.
+
 When the user says a chaser was sent, add 1 to "Follow-ups sent", set the next follow-up date, and add "chased YYYY-MM-DD" to the notes.
 
 ## Learning from results (playbook.md)

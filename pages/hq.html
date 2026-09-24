@@ -194,6 +194,28 @@
   .train .panel p { color: var(--muted); font-size: 15px; }
   .train .asks { margin-top: 2px; }
 
+  /* ---------- Level ---------- */
+  .level { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 16px 20px; align-items: center;
+    background: linear-gradient(135deg, rgba(255, 209, 102, .14), rgba(185, 139, 255, .10)); border: 1px solid rgba(255, 209, 102, .45); border-radius: 18px; padding: 18px 20px; }
+  .badge-lvl { width: 86px; height: 86px; border-radius: 50%; display: grid; place-items: center; text-align: center;
+    background: radial-gradient(circle at 35% 30%, #fff3c4, var(--gold) 55%, #b8860b); color: #2a1c00; box-shadow: 0 0 24px rgba(255, 209, 102, .45); }
+  .badge-lvl small { display: block; font-family: var(--display); font-size: 11px; letter-spacing: .12em; }
+  .badge-lvl b { display: block; font-family: var(--display); font-size: 34px; line-height: 1; }
+  .lvl-name { font-family: var(--display); font-size: clamp(22px, 3.2vw, 28px); color: var(--gold); }
+  .lvl-sub { color: var(--muted); font-size: 14px; margin-top: 2px; }
+  .bar { height: 14px; border-radius: 999px; background: #070b18; border: 1px solid var(--line); overflow: hidden; margin-top: 10px; }
+  .bar i { display: block; height: 100%; width: 0; border-radius: 999px; background: linear-gradient(90deg, var(--pm), var(--gold)); transition: width .8s ease; }
+  .bar-meta { display: flex; justify-content: space-between; gap: 10px; font-size: 13px; color: var(--muted); margin-top: 6px; font-variant-numeric: tabular-nums; flex-wrap: wrap; }
+  .achievements { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 8px; }
+  .ach { font-size: 13px; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); background: var(--panel-2); }
+  .ach.got { color: #1b1300; background: var(--gold); border-color: var(--gold); font-weight: 600; }
+  .ladder { grid-column: 1 / -1; }
+  .ladder summary { cursor: pointer; font-size: 14px; color: var(--muted); }
+  .ladder ol { margin: 8px 0 0; padding-left: 22px; display: grid; gap: 3px; font-size: 14px; font-variant-numeric: tabular-nums; }
+  .ladder li.now { color: var(--gold); font-weight: 600; }
+  .ladder li.done { color: var(--text); }
+  @media (max-width: 520px) { .level { grid-template-columns: minmax(0, 1fr); justify-items: start; } .badge-lvl { width: 72px; height: 72px; } .badge-lvl b { font-size: 28px; } }
+
   @media (prefers-reduced-motion: reduce) {
     .bot-art, .eyes, .bulb, .scan, .flow { animation: none; }
     .motion { display: none; }
@@ -218,6 +240,18 @@
       <button class="motion" id="motion" type="button" aria-pressed="false">Pause motion</button>
     </div>
     <div class="selected" id="selected" aria-live="polite"></div>
+  </section>
+
+  <section class="level" aria-labelledby="lvl-h" aria-live="polite">
+    <div class="badge-lvl" aria-hidden="true"><div><small>LEVEL</small><b id="lvlNum">1</b></div></div>
+    <div>
+      <h2 class="lvl-name" id="lvl-h">Rookie</h2>
+      <p class="lvl-sub" id="lvlSub">£0 earned so far. Land your first client to level up.</p>
+      <div class="bar" role="progressbar" aria-label="Progress to next level" aria-valuemin="0" aria-valuemax="100" id="lvlBar"><i id="lvlFill"></i></div>
+      <div class="bar-meta"><span id="lvlFrom">£0</span><span id="lvlNext">Next: First Blood at £595</span></div>
+    </div>
+    <div class="achievements" id="achievements"></div>
+    <details class="ladder"><summary>All levels</summary><ol id="ladder"></ol></details>
   </section>
 
   <section class="block" aria-labelledby="pipe-h">
@@ -677,9 +711,53 @@ boss: who do I need to chase?</pre>
     return { cls: "", text: n <= 7 ? `${fmt(c.due)} · ${n}d` : fmt(c.due), rank: n };
   }
 
+  // ---------- Levels: based only on money actually received ----------
+  const LEVELS = [
+    [0, "Rookie"], [595, "First Blood"], [1500, "Side Hustler"], [3000, "Freelancer"], [6000, "Pro"],
+    [10000, "Studio Owner"], [20000, "Agency Boss"], [35000, "Web Tycoon"], [60000, "Legend"], [100000, "Six-Figure King"],
+  ];
+  const ladderEl = document.getElementById("ladder");
+  function renderLevel(doc, clients) {
+    const earned = Math.max(0, Number(doc && doc.earned) || 0);
+    let i = 0; while (i + 1 < LEVELS.length && earned >= LEVELS[i + 1][0]) i++;
+    const [from, name] = LEVELS[i], next = LEVELS[i + 1];
+    document.getElementById("lvlNum").textContent = i + 1;
+    document.getElementById("lvl-h").textContent = name;
+    const monthly = clients.filter((c) => c.stage === "maintenance").length * 50;
+    document.getElementById("lvlSub").textContent = `£${earned.toLocaleString("en-GB")} earned so far · £${monthly} a month coming in`;
+    const pct = next ? Math.min(100, Math.round(((earned - from) / (next[0] - from)) * 100)) : 100;
+    document.getElementById("lvlFill").style.width = pct + "%";
+    document.getElementById("lvlBar").setAttribute("aria-valuenow", pct);
+    document.getElementById("lvlFrom").textContent = `£${from.toLocaleString("en-GB")}`;
+    document.getElementById("lvlNext").textContent = next ? `£${(next[0] - earned).toLocaleString("en-GB")} to go · Next: ${next[1]} at £${next[0].toLocaleString("en-GB")}` : "Max level. Legendary.";
+    ladderEl.innerHTML = "";
+    LEVELS.forEach(([amt, n], j) => {
+      const li = document.createElement("li");
+      li.textContent = `${n}: £${amt.toLocaleString("en-GB")}`;
+      if (j < i) li.className = "done"; if (j === i) li.className = "now";
+      ladderEl.append(li);
+    });
+    const count = (st) => clients.filter((c) => c.stage === st).length;
+    const everPitched = clients.length > 0;
+    const replied = clients.some((c) => c.stage !== "pitched");
+    const won = clients.some((c) => ["in_progress", "delivered", "maintenance"].includes(c.stage));
+    const ach = [
+      ["First pitch sent", everPitched],
+      ["First reply", replied],
+      ["First yes", won],
+      ["First £595", earned >= 595],
+      ["3 on £50 a month", count("maintenance") >= 3],
+      ["10 on £50 a month", count("maintenance") >= 10],
+      ["£500 a month recurring", monthly >= 500],
+    ];
+    const achEl = document.getElementById("achievements"); achEl.innerHTML = "";
+    ach.forEach(([label, got]) => { const b = document.createElement("span"); b.className = "ach" + (got ? " got" : ""); b.textContent = (got ? "★ " : "☆ ") + label; achEl.append(b); });
+  }
+
   function render(doc) {
     clients = Array.isArray(doc && doc.clients) ? doc.clients.filter((c) => c && stageOf[c.stage]) : [];
     updatedEl.textContent = doc && doc.updated ? `Updated ${fmt(doc.updated)}` : "Not synced yet";
+    renderLevel(doc, clients);
 
     const counts = Object.fromEntries(STAGES.map((st) => [st.key, 0]));
     clients.forEach((c) => counts[c.stage]++);

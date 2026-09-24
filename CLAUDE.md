@@ -80,6 +80,7 @@ Sonny uses these claude.ai pages instead of slash commands. Their sources are in
 ```json
 {
   "updated": "YYYY-MM-DD",
+  "earned": 0,
   "clients": [
     { "business": "Annie's Nails", "stage": "pitched", "contact": "07700 900000", "channel": "WhatsApp",
       "next_action": "Follow-up message", "due": "YYYY-MM-DD", "notes": "short note" }
@@ -89,6 +90,7 @@ Sonny uses these claude.ai pages instead of slash commands. Their sources are in
 
 - `stage` is one of: `pitched`, `replied`, `in_progress`, `delivered`, `maintenance`, `closed` ("Paid / Maintenance" is `maintenance`).
 - `due` is the row's follow-up, fee or next-£50 date, or `""` if there isn't one. `next_action` says what's due then, in a few words.
+- `earned` is the total of the **Earnings** table in `clients/pipeline.md` (money actually received, in £, as a number). It sets Sonny's level on the HQ page.
 - Always send the full list, because it replaces the whole document. An empty pipeline is `"clients": []`.
 - If the `ArtifactData` tool isn't available, skip the sync and tell Sonny the pages are out of date.
 
