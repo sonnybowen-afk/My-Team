@@ -99,6 +99,14 @@ Sonny uses these claude.ai pages instead of slash commands. Their sources are in
 - Always send the full list, because it replaces the whole document. An empty pipeline is `"clients": []`.
 - If the `ArtifactData` tool isn't available, skip the sync and tell Sonny the pages are out of date.
 
+### Live activity (the crew working in the HQ town)
+The HQ town shows each agent working at its building while it's busy. To make that happen, write to the HQ page (https://claude.ai/artifact/TVDxQLvtJLazHwpoArFq1r) with one `ArtifactData` `batch` **before and after every subagent run** (boss included, while it plans):
+- **Start:** `update` doc `activity/now` with `{"agents": {"<agent>": {"state": "working", "task": "<what it's doing, 60 characters max>", "since": "<ISO time>"}}, "updated": "<ISO time>"}`, and `set` doc `activity_log/<YYYYMMDD-HHMMSS>-<agent>` to `{"at": "<ISO time>", "agent": "<agent>", "text": "Started: <task>"}`.
+- **Finish:** the same, with `"state": "idle"` and a log line starting `Done: ` that says what came out of it (e.g. "Done: 8 leads, 6 pitches").
+- `<agent>` is one of `boss`, `idea-creator`, `web-builder`, `critique`, `launcher`. Agents running in parallel all go in one batch.
+- Plain words only. Never put phone numbers, emails or message text in a task or log line.
+- If `ArtifactData` isn't available, skip this silently. It's only the display.
+
 ### "Check my agent pages" (the inbox)
 Sonny teaches agents and logs what happened on the pages. **At the start of every session, before the first job, and whenever Sonny says "check my agent pages"**, do this:
 1. **Lessons:** for each of the four agent pages, `ArtifactData` `query` the `lessons` collection with `where: [["status", "==", "new"]]`. Apply each lesson the way `.claude/commands/train.md` describes, putting it in the right agent file or `playbook.md`. Then `update` that lesson doc to `{"status": "applied", "applied": "YYYY-MM-DD"}`.
