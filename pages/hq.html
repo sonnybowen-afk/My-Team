@@ -8,7 +8,7 @@
     color-scheme: dark;
     --ground: #0a0f1f; --panel: #111832; --panel-2: #0d1328; --line: #243056; --grid: rgba(120, 140, 220, .07);
     --text: #e9edf9; --muted: #9ba6c6; --gold: #ffd166;
-    --pm: #b98bff; --idea: #3ddc97; --web: #4fb3ff; --crit: #ff6070;
+    --pm: #b98bff; --idea: #3ddc97; --web: #4fb3ff; --crit: #ff6070; --launch: #ff9f43;
     --display: "Chakra Petch", "Trebuchet MS", sans-serif;
     --body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
     --mono: "JetBrains Mono", ui-monospace, "Courier New", monospace;
@@ -34,52 +34,45 @@
   .price b { display: block; font-family: var(--display); font-size: 22px; color: var(--gold); font-variant-numeric: tabular-nums; }
   .price span { font-size: 13px; color: var(--muted); }
 
-  /* ---------- Stage ---------- */
-  .stage {
-    --k: 1; position: relative; width: 100%; aspect-ratio: 16 / 8.5; overflow: hidden;
-    border: 1px solid var(--line); border-radius: 18px;
-    background:
-      radial-gradient(ellipse at 50% 60%, rgba(185, 139, 255, .16), transparent 50%),
-      linear-gradient(var(--grid) 1px, transparent 1px) 0 0 / 32px 32px,
-      linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0 / 32px 32px,
-      var(--panel-2);
-  }
-  @media (max-width: 640px) { .stage { --k: .62; aspect-ratio: 1 / 1.06; } }
-  .stage > svg.links { position: absolute; inset: 0; width: 100%; height: 100%; }
-  .spoke { stroke-width: 3; stroke-linecap: round; }
-  .flow { stroke: rgba(255, 255, 255, .6); stroke-width: 2; stroke-dasharray: 3 13; animation: flow 1.1s linear infinite; }
-  .peer { stroke: rgba(155, 166, 198, .3); stroke-width: 1.5; stroke-dasharray: 2 9; }
-  @keyframes flow { to { stroke-dashoffset: -16; } }
-
-  .bot {
-    --s: 1; --aw: calc(104px * var(--s) * var(--k));
-    position: absolute; left: var(--x); top: var(--y); z-index: 2;
-    translate: -50% calc(var(--aw) * -0.5917 - 4px);
-    display: flex; flex-direction: column; align-items: center;
-    background: none; border: 0; padding: 4px; cursor: pointer;
-  }
-  .bot.master { --s: 1.38; }
-  .bot-art { display: block; width: var(--aw); animation: bob var(--d, 3.2s) ease-in-out infinite; transition: filter .25s; }
-  .bot-art svg { display: block; width: 100%; height: auto; overflow: visible; }
-  .bot-name, .bot-role { background: rgba(13, 19, 40, .85); border-radius: 6px; padding: 0 6px; white-space: nowrap; }
-  .bot-name { font-family: var(--display); font-weight: 700; font-size: calc(15px * var(--k) + 2px); color: var(--c); }
-  .bot-role { font-size: calc(12px * var(--k) + 1px); color: var(--muted); }
-  .bot.master .bot-role { color: var(--gold); font-family: var(--display); font-weight: 600; letter-spacing: .08em; }
-  @media (max-width: 640px) { .bot:not(.master) .bot-role { display: none; } }
-  .bot:hover .bot-art, .bot[aria-pressed="true"] .bot-art { filter: drop-shadow(0 0 14px var(--c)); }
-  @keyframes bob { 50% { transform: translateY(-7px); } }
+  /* ---------- Agent town ---------- */
+  .stage { position: relative; width: 100%; aspect-ratio: 1000 / 600; overflow: hidden; border: 1px solid var(--line); border-radius: 18px; background: #0b1226; }
+  @media (max-width: 599px) { .stage { aspect-ratio: 600 / 820; } }
+  .stage > svg.town { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .town .sign { font-family: var(--display); font-weight: 700; letter-spacing: .06em; }
+  .town .mono { font-family: var(--mono); font-weight: 700; }
+  .spot { cursor: pointer; outline: none; }
+  .spot .ring { opacity: 0; transition: opacity .25s; }
+  .spot:hover .ring, .spot.on .ring { opacity: 1; }
+  .spot:focus-visible .ring { opacity: 1; stroke: var(--gold); }
+  .bobber { animation: bob var(--d, 3.2s) ease-in-out infinite; }
+  @keyframes bob { 50% { transform: translateY(-5px); } }
   .eyes { animation: blink 5.2s infinite; transform-box: fill-box; transform-origin: center; }
-  .bot:nth-of-type(2) .eyes { animation-delay: 1.3s; }
-  .bot:nth-of-type(3) .eyes { animation-delay: 2.6s; }
-  .bot:nth-of-type(4) .eyes { animation-delay: 3.7s; }
   @keyframes blink { 0%, 93%, 100% { transform: scaleY(1); } 96% { transform: scaleY(.1); } }
-  .bulb { animation: glow 2.4s ease-in-out infinite; }
-  @keyframes glow { 50% { opacity: .45; } }
+  .bulb, .beacon { animation: glow 2s ease-in-out infinite; }
+  @keyframes glow { 50% { opacity: .4; } }
   .scan { animation: scan 2.2s ease-in-out infinite; }
   @keyframes scan { 50% { transform: translateY(34px); } }
+  .twinkle { animation: twinkle 3.4s ease-in-out infinite; }
+  @keyframes twinkle { 50% { opacity: .15; } }
+  .beam { transform-box: fill-box; transform-origin: 0% 50%; animation: sweep 5s ease-in-out infinite alternate; }
+  @keyframes sweep { from { transform: rotate(-26deg); } to { transform: rotate(22deg); } }
+  .swing { transform-box: fill-box; transform-origin: 50% 0%; animation: swing 3.4s ease-in-out infinite alternate; }
+  @keyframes swing { from { transform: rotate(-12deg); } to { transform: rotate(12deg); } }
+  .flame { transform-box: fill-box; transform-origin: 50% 0%; animation: flame .32s ease-in-out infinite alternate; }
+  @keyframes flame { from { transform: scaleY(.6); } to { transform: scaleY(1.2); } }
+  .scanb { animation: scanb 2.6s ease-in-out infinite; }
+  @keyframes scanb { 50% { transform: translateY(-58px); } }
+  .win { animation: winf 7s steps(1) infinite; }
+  @keyframes winf { 0%, 60% { opacity: .9; } 61%, 80% { opacity: .15; } 81% { opacity: .9; } }
+  .road-line { stroke-dasharray: 10 12; animation: flow 1.8s linear infinite; }
+  @keyframes flow { to { stroke-dashoffset: -22; } }
   .stage.still *, .stage.still *::before { animation-play-state: paused !important; }
-  .motion { position: absolute; right: 10px; bottom: 10px; z-index: 3; min-height: 34px; padding: 4px 12px; font-size: 13px;
+  .motion { position: absolute; right: 10px; top: 10px; z-index: 3; min-height: 34px; padding: 4px 12px; font-size: 13px;
     background: rgba(13, 19, 40, .85); border: 1px solid var(--line); border-radius: 8px; cursor: pointer; color: var(--muted); }
+  @media (prefers-reduced-motion: reduce) {
+    .bobber, .eyes, .bulb, .beacon, .scan, .twinkle, .beam, .swing, .flame, .scanb, .win, .road-line { animation: none; }
+    .motion { display: none; }
+  }
 
   .selected {
     display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px 16px; align-items: center;
@@ -194,6 +187,19 @@
   .train .panel p { color: var(--muted); font-size: 15px; }
   .train .asks { margin-top: 2px; }
 
+  /* ---------- Briefing ---------- */
+  .brief { display: grid; gap: 12px; }
+  .brief-headline { font-size: 18px; font-weight: 600; }
+  .brief-grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); }
+  .bcard { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; display: grid; gap: 8px; align-content: start; }
+  .bcard h3 { font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  .bcard.hot { border-color: var(--gold); }
+  .bcard.hot h3 { color: var(--gold); }
+  .bcard ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; font-size: 15px; }
+  .bcard li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; align-items: start; overflow-wrap: anywhere; }
+  .bcard li .btn { min-height: 30px; padding: 2px 10px; font-size: 13px; }
+  .stale { color: var(--gold); }
+
   /* ---------- Level ---------- */
   .level { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 16px 20px; align-items: center;
     background: linear-gradient(135deg, rgba(255, 209, 102, .14), rgba(185, 139, 255, .10)); border: 1px solid rgba(255, 209, 102, .45); border-radius: 18px; padding: 18px 20px; }
@@ -234,12 +240,19 @@
     </div>
   </header>
 
-  <section class="block" aria-label="Your agent team">
+  <section class="block" aria-label="Your agent town">
     <div class="stage" id="stage">
-      <svg class="links" id="links" aria-hidden="true"></svg>
+      <svg class="town" id="town" role="group" aria-label="Web Crew Town: each agent's building, linked by roads to Boss HQ. Tap a building or character for details."></svg>
       <button class="motion" id="motion" type="button" aria-pressed="false">Pause motion</button>
     </div>
     <div class="selected" id="selected" aria-live="polite"></div>
+  </section>
+
+  <section class="brief" aria-labelledby="brief-h">
+    <div class="pipe-head"><h2 id="brief-h">Today's briefing</h2><span class="sub" id="briefWhen">Connecting…</span></div>
+    <p class="brief-headline" id="briefHeadline" hidden></p>
+    <div class="brief-grid" id="briefSections"></div>
+    <p class="empty" id="briefEmpty">No briefing yet. The daily run writes one every morning, or say <b>"briefing"</b> in Claude Code any time.</p>
   </section>
 
   <section class="level" aria-labelledby="lvl-h" aria-live="polite">
@@ -276,7 +289,7 @@
       </div>
       <div class="acts"><span class="big">/boss</span><button class="btn" type="button" data-copy-text="/boss ">Copy</button></div>
     </div>
-    <p>Type <code>/boss</code> and say what you want in plain words. boss checks your pipeline, decides which agents to use and in what order, and Claude runs them. When the work's done, boss updates the pipeline and tells you what happens next. With nothing after it, <code>/boss</code> means "what should I do today?"</p>
+    <p>Type <code>/boss</code> and say what you want in plain words. boss checks your pipeline, decides which agents to use and in what order, and Claude runs them. When the work's done, boss updates the pipeline and tells you what happens next. With nothing after it, <code>/boss</code> means "what should I do today?" You can also skip the slash and just type plain words, like <b>"briefing"</b>.</p>
     <div class="asks">
       <span class="chip">/boss</span>
       <span class="chip">/boss find work in Telford</span>
@@ -293,8 +306,11 @@
         <thead><tr><th>Type</th><th>What happens</th><th>Example</th></tr></thead>
         <tbody>
           <tr><td><span class="chip">/boss</span></td><td>boss plans the job, the agents it picks do the work, then it updates the pipeline<small>boss → whoever it picks → boss</small></td><td><code>/boss find work in Telford</code></td></tr>
+          <tr><td><span class="chip">/briefing</span></td><td>Everything you need today: replies, messages to send, Gmail drafts waiting, follow-ups, money and level<small>daily run + boss</small></td><td><code>briefing</code></td></tr>
+          <tr><td><span class="chip">/daily-run</span></td><td>Runs the morning automation by hand: page inbox, replies, new leads, pitches, follow-ups and the briefing<small>boss → idea-creator + critique → boss</small></td><td><code>/daily-run</code></td></tr>
           <tr><td><span class="chip">/find-leads</span></td><td>Finds businesses with no website and writes pitches. critique checks each one, and email pitches are saved as Gmail drafts<small>idea-creator → critique</small></td><td><code>/find-leads Shrewsbury nail salons</code></td></tr>
           <tr><td><span class="chip">/build-site</span></td><td>Builds the site, reviews it, fixes it (up to 2 rounds) and tracks it. Ends with one message asking the client for what's missing<small>web-builder → critique → web-builder → critique → boss</small></td><td><code>/build-site Annie's Nails</code></td></tr>
+          <tr><td><span class="chip">launch</span></td><td>Puts an approved site live: domain, hosting, DNS, live checks, Google setup and the handover message<small>launcher → critique → boss</small></td><td><code>Launch Annie's Nails</code></td></tr>
           <tr><td><span class="chip">/review</span></td><td>critique's verdict on any message, leads file or site<small>critique</small></td><td><code>/review sites/annies-nails</code></td></tr>
           <tr><td><span class="chip">/pipeline</span></td><td>Tell boss what happened: sent, replied, said yes, delivered, paid or not interested<small>boss</small></td><td><code>/pipeline Annie's Nails paid</code></td></tr>
           <tr><td><span class="chip">/status</span></td><td>Who to chase today and what money is due, with messages critique has checked. Email chasers are saved as Gmail drafts<small>boss → critique</small></td><td><code>/status</code></td></tr>
@@ -421,6 +437,30 @@
           <h4>Tools</h4><ul><li>Reads files and runs the screenshot check</li></ul>
         </details>
       </article>
+
+      <article class="card" id="card-launcher" style="--c: var(--launch)">
+        <div class="card-head"><span data-avatar="launch"></span><div><h3>launcher</h3><span>puts sites live · launch pad</span></div></div>
+        <dl class="kv">
+          <div><dt>Job</dt><dd>When a client approves their draft, it gets the site live on its own domain, checks it properly, sets it up for Google and prepares the handover.</dd></div>
+          <div><dt>Say</dt><dd class="say">"Launch Annie's Nails." · "Put Dave's site live."</dd></div>
+          <div><dt>Shortcut</dt><dd><span class="chip">Launch &lt;client&gt;</span></dd></div>
+        </dl>
+        <details>
+          <summary>How it works and its rules</summary>
+          <h4>Before launch</h4>
+          <ul><li>critique has passed the site, there are no placeholders left, the layout check passes, and the client has approved it</li></ul>
+          <h4>Launch</h4>
+          <ul>
+            <li>Suggests domain names (you buy and own them), and prepares the site for its live address: sitemap, robots file, canonical link</li>
+            <li>Hosts it free on GitHub Pages, one repo per client (<code>site-&lt;client&gt;</code>)</li>
+            <li>Gives you the exact DNS records to add at your registrar</li>
+            <li>Checks the live site: HTTPS, redirects, phone and desktop screenshots, every link</li>
+            <li>Sets up Search Console and the Google Business Profile link, and drafts the handover message with the £595 invoice note</li>
+          </ul>
+          <ul class="never"><li>Never launches with placeholders or without critique's approval, never says a domain is available, and never sends messages itself</li></ul>
+          <h4>Tools</h4><ul><li>Reads and writes files, runs the checks and reads web pages</li></ul>
+        </details>
+      </article>
     </div>
   </section>
 
@@ -444,9 +484,20 @@
           <li style="--c: var(--pm)"><b>boss</b><span>Plans the build from the brief</span></li>
           <li style="--c: var(--web)"><b>web-builder</b><span>Builds the site</span></li>
           <li style="--c: var(--crit)"><b>critique</b><span>Reviews it, and web-builder fixes it (2 rounds max)</span></li>
+          <li style="--c: var(--launch)"><b>launcher</b><span>Puts it live on its own domain, checks it, and drafts the handover</span></li>
           <li style="--c: var(--pm)"><b>boss</b><span>Moves it to In progress, then Delivered, then Paid, then £50 a month</span></li>
         </ol>
       </div>
+    </div>
+    <div class="lane">
+      <h3>Every morning, automatically</h3>
+      <ol class="steps">
+        <li style="--c: var(--pm)"><b>boss</b><span>Checks your pages, Gmail replies and what's due today</span></li>
+        <li style="--c: var(--idea)"><b>idea-creator</b><span>Researches 8 new leads, working through your target list town by town</span></li>
+        <li style="--c: var(--crit)"><b>critique</b><span>Checks every new message and reply</span></li>
+        <li style="--c: var(--text)"><b>Gmail</b><span>Emails wait in your drafts. Auto-send is off until you switch it on</span></li>
+        <li style="--c: var(--pm)"><b>boss</b><span>Updates the pipeline and writes today's briefing, here and in Claude Code</span></li>
+      </ol>
     </div>
     <details class="panel">
       <summary>Or spell out the whole chain yourself</summary>
@@ -512,13 +563,16 @@ boss: who do I need to chase?</pre>
         <div><dt>Domains</dt><dd>You buy and own every client's domain</dd></div>
         <div><dt>Targets</dt><dd>Tradesmen, beauty businesses and housing developers in England, with no website and clear demand</dd></div>
         <div><dt>Example</dt><dd><a href="https://sonnybowen-afk.github.io/Revly/annie/" target="_blank" rel="noopener">Annie (beauty)</a>, offered to beauty businesses only</dd></div>
-        <div><dt>Email</dt><dd>Saved as Gmail drafts in sonnybowen07@gmail.com, never sent</dd></div>
+        <div><dt>Email</dt><dd>Saved as Gmail drafts in sonnybowen07@gmail.com. Auto-send is <b>off</b>, and only you can switch it on (limited companies only, max 10 a day, with an opt-out)</dd></div>
+        <div><dt>Hosting</dt><dd>GitHub Pages, one repo per client. You own every domain</dd></div>
+        <div><dt>Daily run</dt><dd>Every morning: new leads, checked pitches, follow-ups, reply check, and today's briefing</dd></div>
       </dl>
     </div>
     <div class="panel">
       <h3>Good to know</h3>
       <ul>
-        <li><b>Nothing is sent without you.</b> Texts, DMs and emails all go out by your hand. Instagram and LinkedIn stay manual</li>
+        <li><b>Nothing is sent without you.</b> Texts, WhatsApps and DMs always go out by your hand, and emails wait in Gmail drafts unless you switch auto-send on</li>
+        <li>Anyone who asks not to be contacted goes on the do-not-contact list, and the agents never message them again</li>
         <li>The pipeline above updates every time boss changes it. It's only as current as what you tell boss</li>
         <li>Agents load when a session starts. In a new My-Team session, type <code>/agents</code> or <code>@</code> to see them</li>
         <li>When an agent is working, a block with its name appears in the chat. Tap it to watch</li>
@@ -532,22 +586,20 @@ boss: who do I need to chase?</pre>
 <script>
 (() => {
   const AGENTS = [
-    { key: "pm", url: "https://claude.ai/artifact/Qperj1e8cxMEMgtFKV55M5", id: "boss", role: "★ MASTER", c: "#b98bff", eye: "#f0e6ff", master: true,
-      pos: { d: [50, 60], m: [50, 60] }, dur: "4.2s",
-      tagline: "The master. Plans every job, picks the agents, keeps the pipeline and tells you who to chase.", cmd: "/boss" },
-    { key: "idea", url: "https://claude.ai/artifact/A4Kdm6smnkdZeEgEkP3wyN", id: "idea-creator", role: "finds leads · writes pitches", c: "#3ddc97", eye: "#d4ffe9",
-      pos: { d: [17, 66], m: [17, 70] }, dur: "3.1s",
-      tagline: "Finds businesses with no website and writes the first message.", cmd: "/find-leads Shrewsbury nail salons" },
-    { key: "web", url: "https://claude.ai/artifact/3BVSpy1fTHfKZ7ZBJsC3c3", id: "web-builder", role: "builds the sites", c: "#4fb3ff", eye: "#dcefff",
-      pos: { d: [83, 66], m: [83, 70] }, dur: "3.5s",
-      tagline: "Turns a client brief into a finished one-page site.", cmd: "/build-site Annie's Nails" },
-    { key: "crit", url: "https://claude.ai/artifact/8gPtTkGHSJpVmUUjUCq5uy", id: "critique", role: "checks everything", c: "#ff6070", eye: "#ffdfe2",
-      pos: { d: [50, 21], m: [50, 19] }, dur: "2.8s",
-      tagline: "Checks every message and site before it reaches you, with exact fixes.", cmd: "/review <file or message>" },
+    { key: "pm", url: "https://claude.ai/artifact/Qperj1e8cxMEMgtFKV55M5", id: "boss", building: "BOSS HQ", c: "#b98bff", eye: "#f0e6ff", master: true, dur: "4.2s",
+      tagline: "The master. Plans every job, picks the agents, keeps the pipeline and tells you who to chase.", cmd: "What should I do today?" },
+    { key: "idea", url: "https://claude.ai/artifact/A4Kdm6smnkdZeEgEkP3wyN", id: "idea-creator", building: "SCOUT TOWER", c: "#3ddc97", eye: "#d4ffe9", dur: "3.1s",
+      tagline: "Finds businesses with no website and clear demand, and writes the first message.", cmd: "Find me plumbers in Shrewsbury" },
+    { key: "web", url: "https://claude.ai/artifact/3BVSpy1fTHfKZ7ZBJsC3c3", id: "web-builder", building: "WORKSHOP", c: "#4fb3ff", eye: "#dcefff", dur: "3.5s",
+      tagline: "Turns a client brief into a finished one-page site in your house style.", cmd: "Build a site for Annie's Nails" },
+    { key: "crit", url: "https://claude.ai/artifact/8gPtTkGHSJpVmUUjUCq5uy", id: "critique", building: "INSPECTION", c: "#ff6070", eye: "#ffdfe2", dur: "2.8s",
+      tagline: "Checks every message, site and line of code before it reaches you, with exact fixes.", cmd: "Check this message: …" },
+    { key: "launch", url: null, id: "launcher", building: "LAUNCH PAD", c: "#ff9f43", eye: "#ffe8d1", dur: "3.3s",
+      tagline: "Puts approved sites live on their own domain, checks them and prepares the handover.", cmd: "Launch Annie's Nails" },
   ];
   const byKey = Object.fromEntries(AGENTS.map((a) => [a.key, a]));
 
-  function avatar(a, still) {
+  function avatarBody(a, still) {
     const c = a.c, eye = a.eye, dark = "#0a0f1f";
     let top = "", face = "", chest = "";
     if (a.key === "pm") {
@@ -563,82 +615,188 @@ boss: who do I need to chase?</pre>
     } else if (a.key === "web") {
       top = `<path d="M26 32 a34 24 0 0 1 68 0 z" fill="#ffd166"/><rect x="56" y="10" width="8" height="22" rx="3" fill="#f4b942"/><rect x="16" y="28" width="88" height="7" rx="3.5" fill="#f4b942"/>`;
       chest = `<text x="60" y="106" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" font-weight="700" fill="${dark}">&lt;/&gt;</text>`;
+    } else if (a.key === "launch") {
+      top = `<line x1="60" y1="26" x2="60" y2="18" stroke="${c}" stroke-width="4" stroke-linecap="round"/>
+        <path d="M60 -8 q9 9 7 24 h-14 q-2 -15 7 -24z" fill="#e9edf9"/><path d="M53 12 l-6 7 h6z M67 12 l6 7 h-6z" fill="${c}"/><circle cx="60" cy="4" r="3" fill="#4fb3ff"/>`;
+      chest = `<path d="M60 94 l9 10 h-6 v8 h-6 v-8 h-6z" fill="${dark}"/>`;
     } else {
       top = `<line x1="60" y1="26" x2="60" y2="15" stroke="${c}" stroke-width="4" stroke-linecap="round"/><circle cx="60" cy="11" r="5" fill="${c}"/>`;
       face = `<circle cx="74" cy="57" r="13" fill="none" stroke="#fff" stroke-width="3"/><path d="M87 60 q8 14 2 30" fill="none" stroke="#fff" stroke-width="2" opacity=".7"/>
         <rect class="${still ? "" : "scan"}" x="26" y="40" width="68" height="3" rx="1.5" fill="${c}" opacity=".7"/>`;
       chest = `<path d="M51 101 l6 6 12 -13" fill="none" stroke="${dark}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>`;
     }
-    return `<svg viewBox="0 -10 120 142" aria-hidden="true">
-      <ellipse cx="60" cy="128" rx="28" ry="5" fill="${c}" opacity=".28"/>
+    return `<ellipse cx="60" cy="128" rx="28" ry="5" fill="${c}" opacity=".28"/>
       <rect x="36" y="88" width="48" height="30" rx="14" fill="${c}" opacity=".9"/>
       <rect x="14" y="26" width="92" height="66" rx="24" fill="${c}"/>
       <rect x="24" y="36" width="72" height="46" rx="16" fill="${dark}"/>
       <g class="${still ? "" : "eyes"}"><rect x="39" y="48" width="12" height="17" rx="6" fill="${eye}"/><rect x="68" y="48" width="12" height="17" rx="6" fill="${eye}"/></g>
       <path d="M51 73 q9 6 18 0" fill="none" stroke="${eye}" stroke-width="3" stroke-linecap="round"/>
-      ${face}${top}${chest}</svg>`;
+      ${face}${top}${chest}`;
   }
+  const avatar = (a, still) => `<svg viewBox="0 -10 120 142" aria-hidden="true">${avatarBody(a, still)}</svg>`;
 
   document.querySelectorAll("[data-avatar]").forEach((el) => { el.innerHTML = avatar(byKey[el.dataset.avatar], true); });
 
-  const stage = document.getElementById("stage");
-  const svg = document.getElementById("links");
-  const selectedEl = document.getElementById("selected");
-  const NS = "http://www.w3.org/2000/svg";
-  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  // Characters: placed and animated by CSS only
-  AGENTS.forEach((a) => {
-    const b = document.createElement("button");
-    b.type = "button";
-    b.className = "bot" + (a.master ? " master" : "");
-    b.style.setProperty("--c", a.c);
-    b.style.setProperty("--d", a.dur);
-    b.setAttribute("aria-pressed", "false");
-    b.setAttribute("aria-label", `${a.id}: ${a.tagline}`);
-    b.innerHTML = `<span class="bot-art">${avatar(a, false)}</span><span class="bot-name">${a.id}</span><span class="bot-role">${a.role}</span>`;
-    b.addEventListener("click", () => select(a.key, true));
-    stage.append(b);
-    a.el = b;
-  });
-
-  // Links: rebuilt only when the stage changes size
-  let mobile = null;
-  function layout() {
-    const W = stage.clientWidth, H = stage.clientHeight;
-    const isMobile = W < 600;
-    svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
-    AGENTS.forEach((a) => {
-      const [x, y] = isMobile ? a.pos.m : a.pos.d;
-      a.el.style.setProperty("--x", x + "%");
-      a.el.style.setProperty("--y", y + "%");
-      a.px = [x / 100 * W, y / 100 * H];
-    });
-    const pm = byKey.pm, others = ["idea", "web", "crit"].map((k) => byKey[k]);
-    let out = "<defs>";
-    others.forEach((o) => {
-      out += `<linearGradient id="g-${o.key}" gradientUnits="userSpaceOnUse" x1="${pm.px[0]}" y1="${pm.px[1]}" x2="${o.px[0]}" y2="${o.px[1]}"><stop offset="0" stop-color="${pm.c}"/><stop offset="1" stop-color="${o.c}"/></linearGradient>`;
-    });
-    out += "</defs>";
-    [["idea", "crit"], ["crit", "web"], ["web", "idea"]].forEach(([p, q]) => {
-      const A = byKey[p].px, B = byKey[q].px;
-      out += `<line class="peer" x1="${A[0]}" y1="${A[1]}" x2="${B[0]}" y2="${B[1]}"/>`;
-    });
-    others.forEach((o, i) => {
-      const A = pm.px, B = o.px, path = `M${A[0]} ${A[1]} L${B[0]} ${B[1]}`;
-      out += `<line class="spoke" stroke="url(#g-${o.key})" x1="${A[0]}" y1="${A[1]}" x2="${B[0]}" y2="${B[1]}"/>`;
-      out += `<line class="flow" x1="${A[0]}" y1="${A[1]}" x2="${B[0]}" y2="${B[1]}"/>`;
-      if (!reduced) {
-        const r = isMobile ? 3.5 : 5;
-        out += `<circle r="${r}" fill="#fff" stroke="${o.c}" stroke-width="2.5"><animateMotion dur="2.6s" begin="${i * 0.8}s" repeatCount="indefinite" path="${path}"/></circle>`;
-        out += `<circle r="${r - 1}" fill="${o.c}"><animateMotion dur="2.6s" begin="${i * 0.8 + 1.3}s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear" path="${path}"/></circle>`;
-      }
-    });
-    svg.innerHTML = out;
-    if (stage.classList.contains("still") && svg.pauseAnimations) svg.pauseAnimations();
-    mobile = isMobile;
+  // ---------- Buildings (drawn around their base centre, y going up) ----------
+  const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;");
+  function hqBuilding(level, name) {
+    const n = Math.min(12, level + 2), fh = 26, H = n * fh;
+    let s = `<rect x="-75" y="${-H}" width="150" height="${H}" rx="4" fill="#241a45" stroke="#b98bff" stroke-width="2"/>`;
+    for (let f = 0; f < n; f++) for (let i = 0; i < 4; i++) {
+      if (f <= 1 && (i === 1 || i === 2)) continue;
+      const lit = (f * 7 + i * 3) % 5 !== 0;
+      s += `<rect class="${(f * 4 + i) % 6 === 0 ? "win" : ""}" x="${-62 + i * 32}" y="${-(f + 1) * fh + 7}" width="20" height="12" rx="2" fill="${lit ? "#ffd166" : "#3b2f63"}" opacity="${lit ? 0.9 : 1}"/>`;
+    }
+    s += `<rect x="-82" y="${-H - 10}" width="164" height="10" rx="3" fill="#b98bff"/>`;
+    s += `<line x1="-62" y1="${-H - 10}" x2="-62" y2="${-H - 40}" stroke="#9ba6c6" stroke-width="2"/><circle class="beacon" cx="-62" cy="${-H - 43}" r="4.5" fill="#ff6070"/>`;
+    const label = `LVL ${level} · ${name.toUpperCase()}`, bw = Math.max(label.length * 6.6 + 16, 110);
+    s += `<rect x="${-bw / 2}" y="${-H - 32}" width="${bw}" height="20" rx="3" fill="#ffd166"/><text x="0" y="${-H - 17.5}" text-anchor="middle" class="sign" font-size="11" fill="#2a1c00">${esc(label)}</text>`;
+    s += `<path transform="translate(-30 ${-H - 45}) scale(.5)" d="M34 26 L40 6 L50 18 L60 1 L70 18 L80 6 L86 26 Z" fill="#ffd166"/>`;
+    s += `<rect x="-40" y="-50" width="80" height="16" rx="3" fill="#0a0f1f" stroke="#b98bff"/><text x="0" y="-38.5" text-anchor="middle" class="sign" font-size="11" fill="#ffd166">BOSS HQ</text>`;
+    s += `<rect x="-16" y="-30" width="32" height="30" rx="3" fill="#0a0f1f" stroke="#ffd166" stroke-width="1.5"/>`;
+    return s;
   }
-  new ResizeObserver(layout).observe(stage);
+  function lighthouse(c) {
+    const hw = (y) => 30 - (12 * -y) / 170;
+    const band = (y1, y2) => `<polygon points="${-hw(y1)},${y1} ${hw(y1)},${y1} ${hw(y2)},${y2} ${-hw(y2)},${y2}" fill="${c}"/>`;
+    return `<polygon points="-30,0 30,0 18,-170 -18,-170" fill="#e9edf9"/>${band(-30, -55)}${band(-95, -120)}${band(-150, -170)}
+      <rect x="-24" y="-176" width="48" height="8" rx="2" fill="#1b2a44"/>
+      <rect x="-17" y="-204" width="34" height="28" rx="3" fill="#0a0f1f" stroke="${c}" stroke-width="2"/>
+      <polygon class="beam" points="0,-190 170,-216 170,-164" fill="url(#beamGrad)"/>
+      <circle class="bulb" cx="0" cy="-190" r="8" fill="#fff6b8"/>
+      <polygon points="-22,-204 22,-204 0,-226" fill="${c}"/>
+      <rect x="-9" y="-26" width="18" height="26" rx="3" fill="#0a0f1f"/>`;
+  }
+  function workshop(c) {
+    let s = `<rect x="-90" y="-88" width="180" height="88" fill="#15294a" stroke="${c}" stroke-width="2"/>
+      <path d="M-90,-88 L-90,-112 L-45,-88 L-45,-112 L0,-88 L0,-112 L45,-88 L45,-112 L90,-88 Z" fill="${c}"/>
+      <rect x="-36" y="-58" width="72" height="58" rx="3" fill="#0a0f1f" stroke="${c}" stroke-width="1.5"/>`;
+    for (let y = -48; y < 0; y += 10) s += `<line x1="-34" y1="${y}" x2="34" y2="${y}" stroke="#22385f" stroke-width="2"/>`;
+    s += `<rect x="-80" y="-72" width="32" height="22" rx="3" fill="#0a0f1f" stroke="${c}"/><text x="-64" y="-57" text-anchor="middle" font-size="10" class="mono" fill="${c}">&lt;/&gt;</text>
+      <rect x="50" y="-72" width="28" height="22" rx="3" fill="#ffd166" opacity=".85"/>
+      <line x1="105" y1="0" x2="105" y2="-150" stroke="#ffd166" stroke-width="4"/>
+      <polyline points="99,-10 111,-30 99,-50 111,-70 99,-90 111,-110 99,-130 111,-148" fill="none" stroke="#ffd166" stroke-width="1.5" opacity=".7"/>
+      <line x1="40" y1="-150" x2="128" y2="-150" stroke="#ffd166" stroke-width="4"/>
+      <g class="swing"><line x1="62" y1="-150" x2="62" y2="-104" stroke="#9ba6c6" stroke-width="1.5"/><rect x="53" y="-104" width="18" height="13" rx="2" fill="${c}"/></g>`;
+    return s;
+  }
+  function inspection(c) {
+    let s = `<rect x="-88" y="-10" width="176" height="10" fill="#3a2230"/><rect x="-78" y="-18" width="156" height="8" fill="#4a2a3a"/>
+      <rect x="-72" y="-86" width="144" height="68" fill="#2b1824" stroke="${c}" stroke-width="2"/>`;
+    [-58, -28, 14, 44].forEach((x) => (s += `<rect x="${x}" y="-86" width="14" height="68" fill="#ffdfe2" opacity=".85"/>`));
+    s += `<polygon points="-86,-86 86,-86 0,-124" fill="${c}"/>
+      <circle cx="-4" cy="-104" r="8" fill="none" stroke="#fff" stroke-width="3"/><line x1="2" y1="-98" x2="9" y2="-91" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+      <rect x="-12" y="-52" width="24" height="34" rx="3" fill="#0a0f1f"/>
+      <rect class="scanb" x="-72" y="-22" width="144" height="2.5" fill="${c}" opacity=".8"/>`;
+    return s;
+  }
+  function launchpad(c) {
+    let s = `<rect x="-78" y="-12" width="156" height="12" rx="2" fill="#3a2a1a" stroke="${c}" stroke-width="1.5"/>
+      <rect x="-66" y="-172" width="22" height="160" fill="none" stroke="${c}" stroke-width="2.5"/>`;
+    for (let y = -172; y < -12; y += 20) s += `<line x1="-66" y1="${y}" x2="-44" y2="${y + 20}" stroke="${c}" stroke-width="1.5" opacity=".7"/>`;
+    s += `<line x1="-44" y1="-120" x2="-4" y2="-120" stroke="${c}" stroke-width="3"/>
+      <g transform="translate(12 0)">
+        <path class="flame" d="M-10,-16 Q0,8 10,-16 Z" fill="#ffd166"/>
+        <path d="M-16,-16 L-16,-128 Q0,-172 16,-128 L16,-16 Z" fill="#e9edf9" stroke="${c}" stroke-width="2"/>
+        <rect x="-16" y="-62" width="32" height="10" fill="${c}"/>
+        <circle cx="0" cy="-106" r="7" fill="#4fb3ff" stroke="#0a0f1f" stroke-width="2"/>
+        <path d="M-16,-42 L-30,-14 L-16,-20 Z M16,-42 L30,-14 L16,-20 Z" fill="${c}"/>
+      </g>`;
+    return s;
+  }
+
+  // ---------- Town layouts (SVG coordinates) ----------
+  const LAYOUT = {
+    d: { w: 1000, h: 600, horizon: 175, charW: 62, bossW: 78, scale: 1, font: 14, courier: 24,
+      trees: [[40, 565], [330, 575], [415, 330], [598, 322], [965, 565], [690, 580], [175, 262], [830, 262]],
+      pm: { b: [500, 430], c: [598, 462] }, crit: { b: [250, 285], c: [352, 302] }, launch: { b: [750, 285], c: [648, 302] },
+      idea: { b: [120, 480], c: [205, 505] }, web: { b: [870, 480], c: [760, 505] } },
+    m: { w: 600, h: 820, horizon: 150, charW: 60, bossW: 74, scale: 0.8, font: 17, courier: 30,
+      trees: [[28, 470], [572, 470], [40, 650], [562, 640]],
+      pm: { b: [300, 575], c: [385, 605] }, crit: { b: [150, 330], c: [238, 350] }, launch: { b: [450, 330], c: [362, 350] },
+      idea: { b: [95, 752], c: [172, 768] }, web: { b: [490, 752], c: [400, 768] } },
+  };
+  const ORDER = ["crit", "launch", "pm", "idea", "web"]; // back to front
+
+  const stage = document.getElementById("stage");
+  const svg = document.getElementById("town");
+  const selectedEl = document.getElementById("selected");
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let townLevel = 1, townName = "Rookie", selectedKey = "pm", layoutKey = null;
+
+  function rand(seed) { let x = seed; return () => ((x = (x * 16807) % 2147483647) / 2147483647); }
+
+  function plate(a, x, y, f) {
+    const t1 = a.id + (a.master ? " ★" : ""), t2 = a.building;
+    const w = Math.max(t1.length * f * 0.62, t2.length * f * 0.52) + 22;
+    return `<g transform="translate(${x} ${y})"><rect x="${-w / 2}" y="0" width="${w}" height="${f * 2.35}" rx="7" fill="rgba(10,15,31,.88)" stroke="${a.c}" stroke-opacity=".55"/>
+      <text x="0" y="${f * 1.08}" text-anchor="middle" class="sign" font-size="${f}" fill="${a.c}">${esc(t1)}</text>
+      <text x="0" y="${f * 1.98}" text-anchor="middle" font-size="${f * 0.68}" fill="#9ba6c6" letter-spacing="1.5">${esc(t2)}</text></g>`;
+  }
+
+  function drawTown() {
+    const m = stage.clientWidth < 600;
+    layoutKey = m ? "m" : "d";
+    const L = LAYOUT[layoutKey], W = L.w, H = L.h, hz = L.horizon;
+    svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+    const r = rand(7);
+    let o = `<defs>
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#070b1c"/><stop offset="1" stop-color="#1a1840"/></linearGradient>
+      <linearGradient id="grass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#132341"/><stop offset="1" stop-color="#0c1630"/></linearGradient>
+      <linearGradient id="beamGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff6b8" stop-opacity=".55"/><stop offset="1" stop-color="#fff6b8" stop-opacity="0"/></linearGradient>
+    </defs>
+    <rect width="${W}" height="${hz}" fill="url(#sky)"/>`;
+    for (let i = 0; i < 46; i++) {
+      const x = r() * W, y = r() * (hz - 20), rr = r() * 1.4 + 0.5;
+      o += `<circle class="${i % 3 === 0 ? "twinkle" : ""}" style="animation-delay:${(r() * 3).toFixed(2)}s" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${rr.toFixed(2)}" fill="#e9edf9" opacity="${(0.4 + r() * 0.6).toFixed(2)}"/>`;
+    }
+    o += `<circle cx="${m ? W * 0.52 : W - 150}" cy="66" r="24" fill="#fff3c4"/><circle cx="${(m ? W * 0.52 : W - 150) + 10}" cy="59" r="22" fill="#0b1024"/>
+      <path d="M0,${hz} L0,${hz - 18} Q${W * 0.14},${hz - 58} ${W * 0.3},${hz - 26} T${W * 0.62},${hz - 30} T${W},${hz - 22} L${W},${hz} Z" fill="#141c3a"/>
+      <rect y="${hz}" width="${W}" height="${H - hz}" fill="url(#grass)"/>
+      <text x="16" y="28" class="sign" font-size="${m ? 18 : 13}" fill="#9ba6c6">WEB CREW TOWN · POP. 5</text>`;
+
+    // roads from each building to Boss HQ
+    const hq = L.pm.b;
+    ORDER.filter((k) => k !== "pm").forEach((k) => {
+      const [x1, y1] = L[k].b, [x2, y2] = hq;
+      const d = `M${x1},${y1 + 5} Q${(x1 + x2) / 2},${Math.max(y1, y2) + 36} ${x2},${y2 + 5}`;
+      o += `<path id="road-${k}" d="${d}" fill="none" stroke="#1d2848" stroke-width="${m ? 22 : 18}" stroke-linecap="round"/>
+        <path class="road-line" d="${d}" fill="none" stroke="${byKey[k].c}" stroke-opacity=".55" stroke-width="2"/>`;
+    });
+    L.trees.forEach(([x, y]) => (o += `<rect x="${x - 2}" y="${y - 14}" width="4" height="14" fill="#3a2a1a"/><circle cx="${x}" cy="${y - 22}" r="11" fill="#1c5c43"/><circle cx="${x - 5}" cy="${y - 26}" r="6" fill="#23714f"/>`));
+
+    // couriers walking work between the agents and Boss HQ
+    if (!reduced) {
+      ORDER.filter((k) => k !== "pm").forEach((k, i) => {
+        const a = byKey[k], s = L.courier;
+        o += `<g aria-hidden="true"><svg x="${-s / 2}" y="${-s * 1.18}" width="${s}" height="${s * 1.18}" viewBox="0 -10 120 142">${avatarBody(a, true)}</svg>
+          <rect x="-6" y="${-s * 1.18 - 9}" width="12" height="8" rx="1" fill="#fff"/><path d="M-6,${-s * 1.18 - 9} L0,${-s * 1.18 - 5} L6,${-s * 1.18 - 9}" stroke="#9ba6c6" fill="none"/>
+          <animateMotion dur="11s" begin="${i * 2.6}s" repeatCount="indefinite" keyPoints="0;1;1;0;0" keyTimes="0;0.42;0.5;0.92;1" calcMode="linear"><mpath href="#road-${k}"/></animateMotion></g>`;
+      });
+    }
+
+    // buildings + characters, back to front
+    ORDER.forEach((k) => {
+      const a = byKey[k], P = L[k], [bx, by] = P.b, [cx, cy] = P.c;
+      const inner = k === "pm" ? hqBuilding(townLevel, townName) : k === "idea" ? lighthouse(a.c) : k === "web" ? workshop(a.c) : k === "crit" ? inspection(a.c) : launchpad(a.c);
+      const w = a.master ? L.bossW : L.charW, h = w * (142 / 120);
+      o += `<g class="spot${k === selectedKey ? " on" : ""}" data-key="${k}" tabindex="0" role="button" aria-label="${esc(a.id)}, ${esc(a.building.toLowerCase())}: ${esc(a.tagline)}">
+        <g transform="translate(${bx} ${by}) scale(${L.scale})">${inner}</g>
+        <ellipse class="ring" cx="${cx}" cy="${cy + 2}" rx="${w * 0.62}" ry="9" fill="none" stroke="${a.c}" stroke-width="3"/>
+        <g class="bobber" style="--d:${a.dur}"><svg x="${cx - w / 2}" y="${cy - h}" width="${w}" height="${h}" viewBox="0 -10 120 142" overflow="visible">${avatarBody(a, false)}</svg></g>
+        ${plate(a, cx, cy + 8, L.font)}
+      </g>`;
+    });
+    svg.innerHTML = o;
+    svg.querySelectorAll(".spot").forEach((g) => {
+      g.addEventListener("click", () => select(g.dataset.key));
+      g.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); select(g.dataset.key); } });
+    });
+    if (stage.classList.contains("still") && svg.pauseAnimations) svg.pauseAnimations();
+  }
+  new ResizeObserver(() => { const k = stage.clientWidth < 600 ? "m" : "d"; if (k !== layoutKey) drawTown(); }).observe(stage);
+  drawTown();
+  function setTownLevel(level, name) { if (level !== townLevel || name !== townName) { townLevel = level; townName = name; drawTown(); } }
 
   const motion = document.getElementById("motion");
   motion.addEventListener("click", () => {
@@ -648,13 +806,14 @@ boss: who do I need to chase?</pre>
     motion.setAttribute("aria-pressed", String(still));
   });
 
-  function select(key, fromClick) {
+  function select(key) {
+    selectedKey = key;
     const a = byKey[key];
-    AGENTS.forEach((x) => x.el.setAttribute("aria-pressed", String(x.key === key)));
+    svg.querySelectorAll(".spot").forEach((g) => g.classList.toggle("on", g.dataset.key === key));
     document.querySelectorAll(".card").forEach((c) => c.classList.toggle("on", c.id === "card-" + a.id));
     selectedEl.style.setProperty("--c", a.c);
-    selectedEl.innerHTML = `<div><strong></strong><p></p></div><div class="acts"><span class="chip"></span><button class="btn" type="button">Copy</button><a href="${a.url}" target="_blank" rel="noopener">Open ${a.id}'s page ↗</a><a href="#card-${a.id}">Full card ↓</a></div>`;
-    selectedEl.querySelector("strong").textContent = a.id + (a.master ? " · master" : "");
+    selectedEl.innerHTML = `<div><strong></strong><p></p></div><div class="acts"><span class="chip"></span><button class="btn" type="button">Copy</button>${a.url ? `<a href="${a.url}" target="_blank" rel="noopener">Open ${a.id}'s page ↗</a>` : ""}<a href="#card-${a.id}">Full card ↓</a></div>`;
+    selectedEl.querySelector("strong").textContent = `${a.id} · ${a.building.toLowerCase()}${a.master ? " · master" : ""}`;
     selectedEl.querySelector("p").textContent = a.tagline;
     const chip = selectedEl.querySelector(".chip"); chip.textContent = a.cmd;
     const btn = selectedEl.querySelector("button");
@@ -679,7 +838,7 @@ boss: who do I need to chase?</pre>
     btn.addEventListener("click", () => copy(btn.dataset.copyText, btn, btn.previousElementSibling));
   });
 
-  select("pm", false);
+  select("pm");
 
   // ---------- Live pipeline (read-only; Claude writes it after every pipeline change) ----------
   const STAGES = [
@@ -722,6 +881,7 @@ boss: who do I need to chase?</pre>
     let i = 0; while (i + 1 < LEVELS.length && earned >= LEVELS[i + 1][0]) i++;
     const [from, name] = LEVELS[i], next = LEVELS[i + 1];
     document.getElementById("lvlNum").textContent = i + 1;
+    setTownLevel(i + 1, name);
     document.getElementById("lvl-h").textContent = name;
     const monthly = clients.filter((c) => c.stage === "maintenance").length * 50;
     document.getElementById("lvlSub").textContent = `£${earned.toLocaleString("en-GB")} earned so far · £${monthly} a month coming in`;
@@ -810,9 +970,53 @@ boss: who do I need to chase?</pre>
   }
   render(null);
 
+  // ---------- Today's briefing (written by the daily run and by "briefing" in Claude Code) ----------
+  function renderBriefing(b) {
+    const whenEl = document.getElementById("briefWhen"), headEl = document.getElementById("briefHeadline");
+    const grid = document.getElementById("briefSections"), empty = document.getElementById("briefEmpty");
+    grid.replaceChildren();
+    const sections = b && Array.isArray(b.sections) ? b.sections.filter((x) => x && x.title && Array.isArray(x.items) && x.items.length) : [];
+    if (!b || (!sections.length && !b.headline)) { headEl.hidden = true; empty.hidden = false; whenEl.textContent = "Nothing yet"; return; }
+    empty.hidden = true;
+    const isToday = b.date === today;
+    whenEl.textContent = b.date ? `${isToday ? "Today" : fmt(b.date)}${b.generated ? " · " + b.generated : ""}` : "";
+    whenEl.classList.toggle("stale", !isToday);
+    if (!isToday && b.date) whenEl.textContent += " (not today's: say \"briefing\" in Claude Code to refresh)";
+    headEl.hidden = !b.headline; headEl.textContent = b.headline || "";
+    const hot = new Set(["Needs you", "Replies", "Send today"]);
+    const copyable = new Set(["Send today", "Follow-ups and chasers due", "Replies"]);
+    sections.forEach((sec) => {
+      const card = document.createElement("article");
+      card.className = "bcard" + (hot.has(sec.title) ? " hot" : "");
+      const h = document.createElement("h3"); h.textContent = sec.title;
+      const ul = document.createElement("ul");
+      sec.items.forEach((item) => {
+        const text = String(item);
+        const li = document.createElement("li");
+        const span = document.createElement("span"); span.textContent = text;
+        li.append(span);
+        if (copyable.has(sec.title) && text.length > 40) {
+          const cut = text.indexOf("): ");
+          const toCopy = cut > -1 ? text.slice(cut + 3) : text;
+          const btn = document.createElement("button"); btn.type = "button"; btn.className = "btn"; btn.textContent = "Copy";
+          btn.addEventListener("click", () => copy(toCopy, btn, span));
+          li.append(btn);
+        }
+        ul.append(li);
+      });
+      card.append(h, ul);
+      grid.append(card);
+    });
+  }
+  renderBriefing(null);
+
   (async () => {
     const db = typeof claude !== "undefined" && claude.use ? await claude.use("db") : null;
-    if (!db) { updatedEl.textContent = "Open this page in Claude to see your live pipeline"; return; }
+    if (!db) { updatedEl.textContent = "Open this page in Claude to see your live pipeline"; document.getElementById("briefWhen").textContent = "Open this page in Claude to see today's briefing"; return; }
+    db.doc("briefing/today").onSnapshot(
+      (snap) => renderBriefing(snap.exists ? snap.data() : null),
+      () => { document.getElementById("briefWhen").textContent = "Couldn't load the briefing. Reload the page to try again"; }
+    );
     db.doc("pipeline/current").onSnapshot(
       (snap) => render(snap.exists ? snap.data() : null),
       () => { updatedEl.textContent = "Couldn't load the pipeline. Reload the page to try again"; }

@@ -1,3 +1,4 @@
 node_modules/
 sites/*/screenshots/
 .DS_Store
+screenshots/
