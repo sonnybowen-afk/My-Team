@@ -127,6 +127,7 @@ Subject: Re: Website for Snailz?
 > Sonny
 
 ### Before sending
+- **Sonny's channel preference (2026-09-24): email first, then text, and no Instagram DMs.** None of these leads has a public email. Abbie has an unconfirmed mobile (07414 989484), so her pitch could go by text once it's confirmed. The Nail Nook, Creator Nails and Perfect 10 are Instagram-only, with just landlines, so they need an email found first, or skip them.
 - **All leads:** open each profile and check there's a post in about the last week. If there isn't, drop the lead. (Still not verified by me.)
 - **Ivy's:** check the number is on WhatsApp. If it isn't, use the SMS version.
 - **Jenny's:** check what name the shop uses now on its IG/FB (Classy Nails & Beauty or Nails & Spa). The new greeting works either way.

@@ -8,11 +8,12 @@ Run the lead-finding workflow for: $ARGUMENTS
 2. Use the **critique** subagent to review every message in that file (Mode 1: messages).
 3. Replace each message the critique didn't PASS with the critique's revised version, in the leads file. If a lead still FAILs a hard rule after revision, drop it from the file and say why.
 4. **Gmail drafts.** For every lead whose channel is email, use the Gmail connector's `create_draft` tool to save the final message as a draft in my Gmail: `to` is the business's email, the subject line goes in `subject`, and the body is plain text (no markdown, no quote marks). **Never send anything.** Only create drafts. If the Gmail connector isn't available, skip this step and say so.
-5. Show me:
+5. **Sync the leads** to the idea-creator page as described under "Leads sync" in `CLAUDE.md` (update `leads/<name>.json` with the final messages first).
+6. Show me:
    - The lead table, High priority first
    - The final ready-to-send first messages, each with its number/email/handle so I can copy it straight into my phone
    - Which leads now have a Gmail draft waiting
    - The critique's tally (e.g. "8 messages: 5 passed, 3 fixed")
    - Anything idea-creator couldn't verify
 
-Don't touch the pipeline yet. Finish with one line telling me to run `/pipeline sent <numbers> from <leads file>` once I've actually sent them.
+Don't touch the pipeline yet. Finish with one line telling me to tap "I sent it" on the idea-creator page (or run `/pipeline sent <numbers> from <leads file>`) once I've actually sent them.
