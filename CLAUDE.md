@@ -104,6 +104,7 @@ The HQ town shows each agent working at its building while it's busy. To make th
 - **Start:** `update` doc `activity/now` with `{"agents": {"<agent>": {"state": "working", "task": "<what it's doing, 60 characters max>", "since": "<ISO time>"}}, "updated": "<ISO time>"}`, and `set` doc `activity_log/<YYYYMMDD-HHMMSS>-<agent>` to `{"at": "<ISO time>", "agent": "<agent>", "text": "Started: <task>"}`.
 - **Finish:** the same, with `"state": "idle"` and a log line starting `Done: ` that says what came out of it (e.g. "Done: 8 leads, 6 pitches").
 - `<agent>` is one of `boss`, `idea-creator`, `web-builder`, `critique`, `launcher`. Agents running in parallel all go in one batch.
+- `activity/now` already exists, so `get` it first and pass its `version` as `if_version` on the update (then use the version the write returns for the next one).
 - Plain words only. Never put phone numbers, emails or message text in a task or log line.
 - If `ArtifactData` isn't available, skip this silently. It's only the display.
 
