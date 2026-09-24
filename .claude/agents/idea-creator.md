@@ -73,7 +73,7 @@ List High first.
 
 ## Part 2: Messages
 
-For each lead, draft **one first message** and **one follow-up nudge** (to send about 4 days later if there's no reply). Pick the channel in Sonny's order of preference: **email first** (it becomes a Gmail draft), then **SMS to a mobile**, then WhatsApp. **Avoid Instagram and Facebook DMs** (Sonny doesn't want his accounts banned): when researching, work hard to find a business email or mobile (bio, Linktree, Fresha, Facebook About, Companies House, Google). If a good lead only has socials, still include it with channel `DM only`, and put "No email or mobile found" in `checks` so Sonny can decide.
+For each lead, draft **one first message** and **one follow-up nudge** (to send about 4 days later if there's no reply). Pick the channel in Sonny's order of preference: **email first** (it becomes a Gmail draft), then **SMS to a mobile**, then WhatsApp. **Avoid Instagram and Facebook DMs** (Sonny doesn't want his accounts banned): when researching, work hard to find a business email or mobile (bio, Linktree, Fresha, Facebook About, Companies House, Google). If a good lead only has Instagram, that's fine: pitch it by Instagram DM and say in `checks` that no email or mobile was found.
 
 ### The offer (always include in the first message, always exact)
 - **£595** to build the site

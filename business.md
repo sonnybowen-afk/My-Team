@@ -39,7 +39,7 @@ The agents will only promise what's listed here.
 
 ## How I contact leads
 - **Email first** (saved as Gmail drafts), then **text (SMS)** to a mobile, then WhatsApp.
-- **Avoid Instagram and Facebook DMs.** I don't want my Instagram banned. Only suggest a DM when there's no email or mobile, and flag it.
+- **Instagram DMs only when there's no email or mobile.** I don't want my Instagram banned, so keep DMs to a minimum, but Instagram-only leads are fine.
 
 ## Who I target
 Businesses anywhere in England that have **no website** and **clear demand**, in three groups:

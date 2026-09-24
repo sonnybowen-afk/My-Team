@@ -11,7 +11,7 @@ Add to it yourself any time with `/train`. Keep at most 20 entries under each he
 ## Sonny's preferences
 Rules Sonny has taught the team. These override the defaults in the agent files.
 
-- **Contact channel (2026-09-24):** email first (saved as a Gmail draft), then a text (SMS) to a mobile. Avoid Instagram and Facebook DMs, because Sonny doesn't want his Instagram banned. Only suggest a DM if a lead has no email and no mobile, and flag it so Sonny can decide. WhatsApp is fine as a backup when there's no email.
+- **Contact channel (2026-09-24):** email first (saved as a Gmail draft), then a text (SMS) to a mobile. Avoid Instagram and Facebook DMs, because Sonny doesn't want his Instagram banned. Instagram-only leads are fine to keep: when there's no email or mobile, pitch by Instagram DM. WhatsApp is fine as a backup when there's no email.
 
 ## Pitches that got a reply
 The exact message that was sent, plus the trade, town and channel. Model new pitches on these, but never copy one word for word.

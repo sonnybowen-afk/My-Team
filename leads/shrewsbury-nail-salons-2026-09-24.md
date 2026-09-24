@@ -78,14 +78,36 @@ First critique on 2026-09-24: 16 messages, 7 passed, 9 fixed. **Second pass chan
 **Follow-up (SMS, 2026-09-28)**
 > Hiya, only checking my text about a website reached you. Happy to leave it if now's not the time. Sonny
 
-### 3. Shrewsbury Nails, Abbie (Channel: Instagram DM, @shrewsburynails)
+### 3. Shrewsbury Nails, Abbie (Channel: Email, ShrewsburyNails@hotmail.com). GMAIL DRAFT SAVED
 
-**First message (Instagram DM)**
-> Hi Abbie, I'm Sonny, a local web designer. HEMA-free options are the sort of thing people like to check before booking, so a simple site with your menu, prices and Fresha link could help. £595 to build and £50 a month after. Want me to send an example over?
+**First message (Email, saved as a Gmail draft)**
+
+Subject: website for Shrewsbury Nails?
+
+> Hi Abbie,
+>
+> Sonny Bowen here, I'm a web designer in Shrewsbury. HEMA-free options are the kind of thing people want to check before they book, so I thought a simple site could help. It'd put your menu, prices, the HEMA-free info and your Fresha link all in one place.
+>
+> It'd be £595 to build and then £50 a month to keep it running. That covers hosting, the domain and small updates when you need them, like new prices or photos.
+>
+> There's an example of a beauty site here: https://sonnybowen-afk.github.io/Revly/annie/
+>
+> Would it be worth a quick chat?
+>
+> Sonny
+> 07944 539622
+
+**Follow-up (Email, 2026-09-28)**
+
+Subject: Re: website for Shrewsbury Nails?
+
+> Hi Abbie, just following up on my email below about a website. No worries if now's not the time.
+>
 > Sonny
 
-**Follow-up (Instagram DM, 2026-09-28)**
-> Hi Abbie, just bumping this in case it got lost in your message requests. No pressure at all. Sonny
+**Backup (Instagram DM, only if the email bounces)**
+> Hi Abbie, I'm Sonny, a local web designer. HEMA-free options are the sort of thing people like to check before booking, so a simple site with your menu, prices and Fresha link could help. £595 to build and £50 a month after. Want me to send an example over?
+> Sonny
 
 ### 4. The Nail Nook & Co (Channel: Instagram DM, @thenailnookco)
 
@@ -127,7 +149,7 @@ Subject: Re: Website for Snailz?
 > Sonny
 
 ### Before sending
-- **Sonny's channel preference (2026-09-24): email first, then text, and no Instagram DMs.** None of these leads has a public email. Abbie has an unconfirmed mobile (07414 989484), so her pitch could go by text once it's confirmed. The Nail Nook, Creator Nails and Perfect 10 are Instagram-only, with just landlines, so they need an email found first, or skip them.
+- **Sonny's channel preference (2026-09-24): email first, then text. Instagram is OK when there's no email.** Email hunt (2026-09-24): **Abbie: ShrewsburyNails@hotmail.com** (her Nextdoor business page), plus her mobile 07414 989484 confirmed on her own Fresha page. Her email pitch was checked by critique (1 fix: removed an unverified claim about her bio) and **saved as a Gmail draft**. No email found for The Nail Nook, Creator Nails or Perfect 10 (checked Fresha, Nextdoor, Original Shrewsbury, Nail Salon Direct, Facebook, TikTok and web search), so they stay as Instagram DMs.
 - **All leads:** open each profile and check there's a post in about the last week. If there isn't, drop the lead. (Still not verified by me.)
 - **Ivy's:** check the number is on WhatsApp. If it isn't, use the SMS version.
 - **Jenny's:** check what name the shop uses now on its IG/FB (Classy Nails & Beauty or Nails & Spa). The new greeting works either way.
