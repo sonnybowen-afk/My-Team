@@ -199,6 +199,17 @@
   .bcard ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; font-size: 15px; }
   .bcard li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; align-items: start; overflow-wrap: anywhere; }
   .bcard li .btn { min-height: 30px; padding: 2px 10px; font-size: 13px; }
+  .bcard li.task { grid-template-columns: auto minmax(0, 1fr) auto; }
+  .bcard li.task label { display: contents; cursor: pointer; }
+  .bcard li.task input { width: 22px; height: 22px; margin: 1px 0 0; accent-color: var(--idea); cursor: pointer; }
+  .bcard li.done span { color: var(--muted); text-decoration: line-through; text-decoration-color: rgba(155, 166, 198, .6); }
+  .bcard li.done .btn { opacity: .55; }
+  .bcard.all-done { border-color: var(--idea); }
+  .bcard.all-done h3::after { content: " · all done ✓"; color: var(--idea); }
+  .brief-progress { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--muted); }
+  .brief-progress .track { flex: 1; max-width: 260px; height: 8px; border-radius: 99px; background: var(--panel-2); border: 1px solid var(--line); overflow: hidden; }
+  .brief-progress .track i { display: block; height: 100%; width: 0; background: var(--idea); transition: width .3s; }
+  .brief-progress.complete b { color: var(--idea); }
   .stale { color: var(--gold); }
 
   /* ---------- Level ---------- */
@@ -260,6 +271,7 @@
   <section class="brief" aria-labelledby="brief-h">
     <div class="pipe-head"><h2 id="brief-h">Today's briefing</h2><span class="sub" id="briefWhen">Connecting…</span></div>
     <p class="brief-headline" id="briefHeadline" hidden></p>
+    <div class="brief-progress" id="briefProgress" hidden><b id="briefCount"></b><span class="track" aria-hidden="true"><i id="briefFill"></i></span></div>
     <div class="brief-grid" id="briefSections"></div>
     <p class="empty" id="briefEmpty">No briefing yet. The daily run writes one every morning, or say <b>"briefing"</b> in Claude Code any time.</p>
   </section>
@@ -1288,6 +1300,8 @@ boss: who do I need to chase?</pre>
     headEl.hidden = !b.headline; headEl.textContent = b.headline || "";
     const hot = new Set(["Needs you", "Replies", "Send today"]);
     const copyable = new Set(["Send today", "Follow-ups and chasers due", "Replies"]);
+    const notTasks = new Set(["Money", "Research"]); // information, not jobs to tick off
+    ticks.date = b.date || ""; ticks.items = [];
     sections.forEach((sec) => {
       const card = document.createElement("article");
       card.className = "bcard" + (hot.has(sec.title) ? " hot" : "");
@@ -1297,7 +1311,16 @@ boss: who do I need to chase?</pre>
         const text = String(item);
         const li = document.createElement("li");
         const span = document.createElement("span"); span.textContent = text;
-        li.append(span);
+        if (notTasks.has(sec.title)) li.append(span);
+        else {
+          const key = tickKey(sec.title, text);
+          const label = document.createElement("label");
+          const box = document.createElement("input"); box.type = "checkbox";
+          box.setAttribute("aria-label", `Done: ${text.slice(0, 80)}`);
+          box.addEventListener("change", () => setTick(key, sec.title, text, box.checked));
+          label.append(box, span); li.append(label); li.className = "task";
+          ticks.items.push({ key, li, box, card });
+        }
         if (copyable.has(sec.title) && text.length > 40) {
           const cut = text.indexOf("): ");
           const toCopy = cut > -1 ? text.slice(cut + 3) : text;
@@ -1310,12 +1333,61 @@ boss: who do I need to chase?</pre>
       card.append(h, ul);
       grid.append(card);
     });
+    applyTicks();
+    watchTicks();
+  }
+
+  // ---------- Ticking off the briefing (saved in briefing_done/<date>, which Claude reads) ----------
+  const ticks = { date: "", items: [], done: {}, db: null, unsub: null, watching: "", queue: Promise.resolve(), exists: false };
+  function tickKey(title, text) {
+    let h = 5381; const str = title + "|" + text;
+    for (let i = 0; i < str.length; i++) h = ((h << 5) + h + str.charCodeAt(i)) >>> 0;
+    return "t" + h.toString(36);
+  }
+  function applyTicks() {
+    const cards = new Map();
+    ticks.items.forEach(({ key, li, box, card }) => {
+      const on = !!(ticks.done[key] && typeof ticks.done[key] === "object");
+      box.checked = on; li.classList.toggle("done", on);
+      const c = cards.get(card) || { n: 0, d: 0 }; c.n++; if (on) c.d++; cards.set(card, c);
+    });
+    cards.forEach((c, card) => card.classList.toggle("all-done", c.n > 0 && c.d === c.n));
+    const n = ticks.items.length, d = ticks.items.filter((t) => t.box.checked).length;
+    const prog = document.getElementById("briefProgress");
+    prog.hidden = n === 0;
+    prog.classList.toggle("complete", n > 0 && d === n);
+    document.getElementById("briefCount").textContent = n && d === n ? `All ${n} done. Nice work.` : `${d} of ${n} done`;
+    document.getElementById("briefFill").style.width = n ? `${Math.round((d / n) * 100)}%` : "0";
+  }
+  function watchTicks() {
+    if (!ticks.db || !ticks.date || ticks.watching === ticks.date) return;
+    if (ticks.unsub) ticks.unsub();
+    ticks.watching = ticks.date; ticks.done = {}; ticks.exists = false;
+    ticks.unsub = ticks.db.doc("briefing_done/" + ticks.date).onSnapshot(
+      (snap) => { ticks.exists = snap.exists; ticks.done = (snap.exists && snap.data().done) || {}; applyTicks(); },
+      () => {}
+    );
+  }
+  function setTick(key, section, text, on) {
+    const value = on ? { section, text, at: new Date().toISOString() } : false, before = ticks.done[key] || false;
+    ticks.done = { ...ticks.done, [key]: value }; applyTicks();
+    if (!ticks.db || !ticks.date) return;
+    const ref = ticks.db.doc("briefing_done/" + ticks.date), date = ticks.date;
+    // one write at a time to this doc
+    ticks.queue = ticks.queue.then(async () => {
+      if (ticks.exists) await ref.update({ done: { [key]: value } });
+      else { await ref.set({ date, done: { [key]: value } }); ticks.exists = true; }
+    }).catch(() => {
+      ticks.done = { ...ticks.done, [key]: before }; applyTicks();
+      document.getElementById("briefCount").textContent = "Couldn't save that tick. Try again.";
+    });
   }
   renderBriefing(null);
 
   (async () => {
     const db = typeof claude !== "undefined" && claude.use ? await claude.use("db") : null;
     if (!db) { updatedEl.textContent = "Open this page in Claude to see your live pipeline"; document.getElementById("briefWhen").textContent = "Open this page in Claude to see today's briefing"; return; }
+    ticks.db = db; watchTicks();
     db.doc("briefing/today").onSnapshot(
       (snap) => renderBriefing(snap.exists ? snap.data() : null),
       () => { document.getElementById("briefWhen").textContent = "Couldn't load the briefing. Reload the page to try again"; }
