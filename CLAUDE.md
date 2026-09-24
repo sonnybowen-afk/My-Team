@@ -6,24 +6,27 @@ This file gives Claude Code guidance for working in this repository.
 
 The toolkit for a one-person UK freelance web design business: find local businesses with no website, pitch them (**£595 build + £50/month maintenance**), build simple one-page sites, and track every client from pitch to paid.
 
-The work is done by four subagents in `.claude/agents/`. **boss is the master**: every job starts and ends with it.
+The work is done by five subagents in `.claude/agents/`. **boss is the master**: every job starts and ends with it.
 
 | Agent | Job |
 |-------|-----|
 | `idea-creator` | Researches a town and industry for businesses with no website, and drafts casual pitches and follow-ups |
 | `web-builder` | Builds `sites/<slug>/index.html` from a brief using the house template |
 | `critique` | Reviews messages and sites (including screenshots) and gives exact fixes |
+| `launcher` | Puts approved sites live: domain, GitHub Pages hosting, DNS, live checks, Google setup and the handover |
 | `boss` | **Master.** Plans each job and picks the agents, keeps `clients/pipeline.md` up to date, says who to chase, and drafts chase messages |
 
 ## Repository structure
 
-- `.claude/agents/`: the four subagents
-- `.claude/commands/`: slash commands that chain them (`/boss`, `/find-leads`, `/build-site`, `/review`, `/pipeline`, `/status`, `/email-drafts`, `/train`)
+- `.claude/agents/`: the five subagents
+- `.claude/commands/`: slash commands that chain them (`/boss`, `/briefing`, `/daily-run`, `/find-leads`, `/build-site`, `/review`, `/pipeline`, `/status`, `/email-drafts`, `/train`)
 - `business.md`: the user's name, area, pricing, what the monthly fee covers, and payment terms. Every agent reads this.
 - `playbook.md`: what the team has learned: Sonny's preferences, pitches that got replies, and client feedback. The agents read it, boss adds real results, and `/train` adds lessons.
 - `templates/site-template.html`: the house site template. Every client site starts as a copy of it.
 - `templates/client-brief.md`: the brief layout
-- `clients/pipeline.md`: the pipeline and single source of truth
+- `clients/pipeline.md`: the pipeline and single source of truth, plus the Earnings log
+- `clients/do-not-contact.md`: people who must never be contacted
+- `briefings/<date>.md`: the daily briefing, written by the automated daily run
 - `clients/briefs/<slug>.md`: one brief per client
 - `leads/<town>-<industry>-<date>.md`: idea-creator output
 - `sites/<slug>/`: client sites (`index.html` and `images/`; `screenshots/` is git-ignored)
@@ -57,7 +60,9 @@ node scripts/screenshot.mjs sites/<slug>/index.html   # screenshots + layout che
 
 - Outreach must **never** mention a business's reviews, ratings or stars, and must quote exactly £595 + £50/month.
 - Messages must sound like a real person texting: short, casual, no AI or sales-template phrasing.
-- Never send messages on the user's behalf. Draft them for the user to send. For email, save them as Gmail drafts with the Gmail connector's `create_draft` tool, and never use `send_message` or reply tools.
+- **Sending:** texts, WhatsApps and DMs are always sent by Sonny himself. Emails are saved as Gmail drafts (`create_draft`). The only exception is when "Auto-send cold emails" is ON in `business.md`: the automated run may then send, but only within the rules listed there. Never send replies to clients automatically, and never contact anyone in `clients/do-not-contact.md`.
+- **Briefings:** when Sonny says "briefing", "morning briefing" or "what do I need to know today", follow `.claude/commands/briefing.md`.
+- **Daily automation:** a scheduled Routine runs `.claude/commands/daily-run.md` every morning.
 - Don't automate Instagram or LinkedIn messages. The user sends DMs by hand.
 - Always run messages and sites past `critique` before calling them done.
 - Keep `clients/pipeline.md` updated through `boss`, not by hand-editing in other workflows.

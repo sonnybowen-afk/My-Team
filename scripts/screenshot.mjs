@@ -1,20 +1,23 @@
 // Screenshots a site draft at phone and desktop size and runs quick layout checks.
-// Usage: node scripts/screenshot.mjs sites/<slug>/index.html
-// Writes sites/<slug>/screenshots/{mobile,desktop}.png and prints a short report.
+// Usage: node scripts/screenshot.mjs sites/<slug>/index.html   (a local draft)
+//        node scripts/screenshot.mjs https://example.co.uk/      (a live site)
+// Writes sites/<slug>/screenshots/{mobile,desktop}.png (or screenshots/live-<host>/ for a URL)
+// and prints a short report.
 import { chromium } from 'playwright';
 import { mkdirSync, existsSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 const file = process.argv[2];
-if (!file || !existsSync(file)) {
-  console.error('Usage: node scripts/screenshot.mjs sites/<slug>/index.html');
+const isUrl = /^https?:\/\//i.test(file || '');
+if (!file || (!isUrl && !existsSync(file))) {
+  console.error('Usage: node scripts/screenshot.mjs sites/<slug>/index.html  |  https://example.co.uk/');
   process.exit(1);
 }
 
-const outDir = join(dirname(file), 'screenshots');
+const outDir = isUrl ? join('screenshots', 'live-' + new URL(file).host) : join(dirname(file), 'screenshots');
 mkdirSync(outDir, { recursive: true });
-const url = pathToFileURL(resolve(file)).href;
+const url = isUrl ? file : pathToFileURL(resolve(file)).href;
 
 const viewports = [
   { name: 'mobile', width: 390, height: 844, isMobile: true, hasTouch: true, deviceScaleFactor: 2 },
@@ -33,7 +36,8 @@ for (const vp of viewports) {
   });
   const failed = [];
   page.on('requestfailed', (req) => {
-    if (req.url().startsWith('file:')) failed.push(req.url().replace(/^.*\//, ''));
+    const u = req.url();
+    if (u.startsWith('file:') || (isUrl && new URL(u).host === new URL(url).host)) failed.push(u.replace(/^.*\//, '') || u);
   });
   await page.goto(url, { waitUntil: 'load', timeout: 20000 }).catch(() => {});
   await page.waitForTimeout(500);
