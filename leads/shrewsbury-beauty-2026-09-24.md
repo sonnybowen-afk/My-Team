@@ -20,7 +20,7 @@ Only 4 leads qualified. See "Left out" for why the other candidates didn't make 
 ### 1. Ivy's Nails Shrewsbury (SMS: 07564 658888)
 
 **First message**
-> Hi Ivy's Nails, Sonny here, I'm a local web designer in Shrewsbury. Anyone looking you up online gets Facebook, Fresha and a few directory pages that don't all match. I could make you one simple site with your prices, hours and a call button, £595 to build and then £50 a month after that. Want me to send an example?
+> Hi there, Sonny here. I build websites for businesses round Shrewsbury. Anyone searching Ivy's Nails gets Facebook, Fresha and a few directory pages that don't all match. One simple site would put your prices and a call button in one place, £595 to build and then £50 a month. Happy to send an example if you like.
 
 **Follow-up (about 4 days later)**
 > Hi, Sonny again. Just checking my text about a website got through. No worries if it's not for you.
@@ -28,10 +28,10 @@ Only 4 leads qualified. See "Left out" for why the other candidates didn't make 
 ### 2. Beauty 2 U (WhatsApp: 07504 879098)
 
 **First message**
-> Hi Jo, this is Sonny's WhatsApp (calls on 07944 539622). I'm a web designer in Shrewsbury too. As you're mobile, a simple site could show which areas you cover, your treatments and prices, and a book button. It's £595 to build it and £50 a month after that. Want me to send you an example beauty site?
+> Hi Jo, this is Sonny's WhatsApp (calls on 07944 539622). I build websites and I'm based in Shrewsbury too. As you're mobile, a simple site could show clearly which areas you cover and link straight to your Fresha bookings. It's £595 to build and then £50 a month. Want me to send you an example beauty site?
 
 **Follow-up (about 4 days later)**
-> Hi Jo, quick nudge on my website message the other day. No pressure at all, Sonny
+> Hi Jo, quick nudge on my website message the other day. No pressure at all. Sonny
 
 ### 3. Minola Moss Lash Boutique (Instagram DM: @minolamosslashboutique)
 
@@ -39,15 +39,15 @@ Only 4 leads qualified. See "Left out" for why the other candidates didn't make 
 > Hiya Minola, I'm Sonny, a web designer here in Shrewsbury. People after lashes or your training courses have to hop between Instagram and Booksy at the minute. I could put it all on one simple site, £595 to build and £50 a month after that. Fancy seeing an example?
 
 **Follow-up (about 4 days later)**
-> Hi Minola, just bumping this in case it got buried. No worries either way, Sonny
+> Hi Minola, just bumping this in case it got buried. No worries either way.
 
 ### 4. Becki With The Good Nails (Facebook DM: facebook.com/p/Becki-with-the-good-nails-100076744615040)
 
 **First message**
-> Hi Becki, your hours change day to day, so a simple page with your times, services and Booksy link would make booking easy. I'm Sonny, a Shrewsbury web designer. It'd be £595 to build and then £50 a month to keep it going. Want a look at an example?
+> Hi Becki, your hours are different most days, so a simple page with your times and Booksy link would make booking easier. I'm Sonny, a web designer in Shrewsbury. It'd be £595 to build and then £50 a month to keep it going. Want a look at an example?
 
 **Follow-up (about 4 days later)**
-> Becki, did my message about a website reach you? Totally fine if not, Sonny
+> Hi Becki, did my message about a website reach you? Totally fine if it's not for you.
 
 Example site to send when anyone says yes: https://sonnybowen-afk.github.io/Revly/annie/
 
@@ -71,3 +71,7 @@ Example site to send when anyone says yes: https://sonnybowen-afk.github.io/Revl
 - **Couldn't confirm demand or it's hard to contact:** Cute-Ickle Nailz (mobile 07583 259648, but no sign of recent activity found), Apollo Nails (landline only, no recent activity seen), Perfect10 Nails (landline only), At Your Fingertips by Emma (Facebook only, no activity seen), Richmond Beauty (small Instagram, no contact found), Dreamy Lash Co (Fresha shows two addresses, Ditherington Road and Alberbury, so it may have moved out of town).
 - **Not confirmed as the same business / possible own site:** Beauty by Claire at Carma Salon (a beautybyclaire.co.uk exists, but I couldn't confirm it's hers).
 - **Not checked further:** The Nail Studio by Lauren (Pontesbury, a village just outside Shrewsbury, on Booksy). It's a possible future lead.
+
+---
+
+_Critique review applied 2026-09-24: 8 messages, 2 passed, 6 fixed._
