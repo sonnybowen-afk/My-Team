@@ -23,6 +23,11 @@ A short note on the message and what might have put them off.
 
 - (none yet)
 
+## Pitches sent, waiting on results
+Batches worth tracking. Move the outcome into the sections above once replies (or silence) come in.
+
+- **2026-09-24:** 8 SMS/DM pitches sent to Shrewsbury plumbers and electricians. critique rewrote them from one shared template into individual messages that each name a specific gap (no prices, no booking, a free builder page, no phone number). Watch which ones get replies.
+
 ## Site preferences and client feedback
 What clients liked, asked to change, or complained about.
 

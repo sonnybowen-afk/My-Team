@@ -57,7 +57,9 @@ Write `briefings/<date>.md` and put the same content on the HQ page. Use `Artifa
 }
 ```
 
-Leave out any section with nothing in it, but always include "Money" and "Research". Keep every item short, except the ready-to-send messages, which go in full.
+Leave out any section with nothing in it, but always include "Money" and "Research". Carry over anything from yesterday's "Needs you" and "Send today" that Sonny didn't tick in `briefing_done/<yesterday>` and that still matters, marked "(from yesterday)". Keep every item short, except the ready-to-send messages, which go in full.
+
+Throughout the run, report each agent's start and finish to the HQ town as described in "Live activity" in `CLAUDE.md`. At the end, `delete` any `activity_log` docs older than 14 days and make sure every agent in `activity/now` is `idle`.
 
 ## 8. Save everything
 Commit the run's changes (leads, pipeline, playbook, briefing), push, then open a pull request into the default branch and merge it, so tomorrow's run and Sonny's next session start from today's work.

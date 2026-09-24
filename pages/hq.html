@@ -34,45 +34,46 @@
   .price b { display: block; font-family: var(--display); font-size: 22px; color: var(--gold); font-variant-numeric: tabular-nums; }
   .price span { font-size: 13px; color: var(--muted); }
 
-  /* ---------- Agent town ---------- */
-  .stage { position: relative; width: 100%; aspect-ratio: 1000 / 600; overflow: hidden; border: 1px solid var(--line); border-radius: 18px; background: #0b1226; }
-  @media (max-width: 599px) { .stage { aspect-ratio: 600 / 820; } }
-  .stage > svg.town { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-  .town .sign { font-family: var(--display); font-weight: 700; letter-spacing: .06em; }
-  .town .mono { font-family: var(--mono); font-weight: 700; }
-  .spot { cursor: pointer; outline: none; }
-  .spot .ring { opacity: 0; transition: opacity .25s; }
-  .spot:hover .ring, .spot.on .ring { opacity: 1; }
-  .spot:focus-visible .ring { opacity: 1; stroke: var(--gold); }
-  .bobber { animation: bob var(--d, 3.2s) ease-in-out infinite; }
-  @keyframes bob { 50% { transform: translateY(-5px); } }
-  .eyes { animation: blink 5.2s infinite; transform-box: fill-box; transform-origin: center; }
-  @keyframes blink { 0%, 93%, 100% { transform: scaleY(1); } 96% { transform: scaleY(.1); } }
-  .bulb, .beacon { animation: glow 2s ease-in-out infinite; }
-  @keyframes glow { 50% { opacity: .4; } }
-  .scan { animation: scan 2.2s ease-in-out infinite; }
-  @keyframes scan { 50% { transform: translateY(34px); } }
-  .twinkle { animation: twinkle 3.4s ease-in-out infinite; }
-  @keyframes twinkle { 50% { opacity: .15; } }
-  .beam { transform-box: fill-box; transform-origin: 0% 50%; animation: sweep 5s ease-in-out infinite alternate; }
-  @keyframes sweep { from { transform: rotate(-26deg); } to { transform: rotate(22deg); } }
-  .swing { transform-box: fill-box; transform-origin: 50% 0%; animation: swing 3.4s ease-in-out infinite alternate; }
-  @keyframes swing { from { transform: rotate(-12deg); } to { transform: rotate(12deg); } }
-  .flame { transform-box: fill-box; transform-origin: 50% 0%; animation: flame .32s ease-in-out infinite alternate; }
-  @keyframes flame { from { transform: scaleY(.6); } to { transform: scaleY(1.2); } }
-  .scanb { animation: scanb 2.6s ease-in-out infinite; }
-  @keyframes scanb { 50% { transform: translateY(-58px); } }
-  .win { animation: winf 7s steps(1) infinite; }
-  @keyframes winf { 0%, 60% { opacity: .9; } 61%, 80% { opacity: .15; } 81% { opacity: .9; } }
-  .road-line { stroke-dasharray: 10 12; animation: flow 1.8s linear infinite; }
-  @keyframes flow { to { stroke-dashoffset: -22; } }
-  .stage.still *, .stage.still *::before { animation-play-state: paused !important; }
-  .motion { position: absolute; right: 10px; top: 10px; z-index: 3; min-height: 34px; padding: 4px 12px; font-size: 13px;
-    background: rgba(13, 19, 40, .85); border: 1px solid var(--line); border-radius: 8px; cursor: pointer; color: var(--muted); }
-  @media (prefers-reduced-motion: reduce) {
-    .bobber, .eyes, .bulb, .beacon, .scan, .twinkle, .beam, .swing, .flame, .scanb, .win, .road-line { animation: none; }
-    .motion { display: none; }
-  }
+  /* ---------- Agent town: a 2D pixel game ---------- */
+  .stage { position: relative; width: 100%; aspect-ratio: 400 / 240; overflow: hidden; border: 3px solid #1a1426; border-radius: 6px; background: #0b1226; box-shadow: 0 0 0 1px var(--line), 0 10px 30px rgba(0,0,0,.35); }
+  @media (max-width: 599px) { .stage { aspect-ratio: 240 / 352; } }
+  #game { position: absolute; inset: 0; width: 100%; height: 100%; display: block; image-rendering: pixelated; image-rendering: crisp-edges; cursor: pointer; }
+  .overlay { position: absolute; inset: 0; pointer-events: none; }
+  .tag, .bub, .lvltag { position: absolute; transform: translate(-50%, 0); white-space: nowrap; font-family: var(--mono); font-size: 11px; line-height: 1; }
+  .tag { margin-top: 3px; padding: 2px 4px; background: rgba(10, 12, 30, .72); color: var(--c); border: 1px solid rgba(0,0,0,.4); }
+  .tag.on { background: var(--c); color: #120d1f; }
+  .bub { transform: translate(-50%, -100%); max-width: 190px; overflow: hidden; text-overflow: ellipsis; padding: 4px 6px; background: #fff; color: #1a1426; border: 2px solid #1a1426; box-shadow: 2px 2px 0 #1a1426; font-weight: 700; }
+  .bub::after { content: none; position: absolute; left: 50%; bottom: -6px; width: 6px; height: 6px; background: #fff; border: 2px solid #1a1426; border-top: 0; border-left: 0; transform: translateX(-50%) rotate(45deg); }
+  .lvltag { left: 8px; top: 8px; transform: none; padding: 5px 8px; background: var(--gold); color: #1b1300; border: 2px solid #1a1426; font-weight: 700; font-family: var(--display); font-size: 12px; letter-spacing: .04em; }
+  @media (max-width: 599px) { .tag, .bub { font-size: 10px; } .bub { max-width: 140px; } }
+  .motion { position: absolute; right: 8px; top: 8px; z-index: 3; min-height: 32px; padding: 4px 10px; font-size: 12px; font-family: var(--mono);
+    background: rgba(13, 19, 40, .85); border: 2px solid #1a1426; border-radius: 4px; cursor: pointer; color: var(--text); }
+  @media (prefers-reduced-motion: reduce) { .motion { display: none; } }
+  img.pix { image-rendering: pixelated; image-rendering: crisp-edges; display: block; }
+
+  .now { display: flex; gap: 10px; align-items: center; font-size: 14px; color: var(--muted); }
+  .now i { width: 10px; height: 10px; border-radius: 50%; background: #58607e; flex: none; }
+  .now i.live { background: var(--idea); box-shadow: 0 0 0 0 rgba(61,220,151,.6); animation: ping 1.6s infinite; }
+  @keyframes ping { 70% { box-shadow: 0 0 0 8px rgba(61,220,151,0); } 100% { box-shadow: 0 0 0 0 rgba(61,220,151,0); } }
+  @media (prefers-reduced-motion: reduce) { .now i.live { animation: none; } }
+  .crew { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
+  @media (max-width: 760px) { .crew { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); } }
+  .crew button { display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: 8px; align-items: center; text-align: left; min-height: 52px; padding: 6px 10px; cursor: pointer;
+    background: var(--panel); border: 2px solid var(--line); border-radius: 6px; }
+  .crew button img { width: 32px; height: 44px; }
+  .crew button b { display: block; font-family: var(--mono); font-size: 13px; color: var(--c); }
+  .crew button span { display: block; font-size: 12px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .crew button.working { border-color: var(--c); }
+  .crew button.working span { color: var(--text); }
+  .crew button[aria-pressed="true"] { background: var(--panel-2); box-shadow: inset 0 0 0 1px var(--c); }
+  .log { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; }
+  .log h3 { font-size: 15px; margin-bottom: 6px; }
+  .log ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font-size: 14px; }
+  .log li { display: grid; grid-template-columns: 92px 104px minmax(0, 1fr); gap: 8px; }
+  .log time { color: var(--muted); font-family: var(--mono); font-size: 12px; padding-top: 2px; }
+  .log b { font-family: var(--mono); font-size: 13px; }
+  @media (max-width: 520px) { .log li { grid-template-columns: minmax(0, 1fr); gap: 0; padding-bottom: 4px; border-bottom: 1px solid var(--line); } }
+  .log p { color: var(--muted); font-size: 14px; }
 
   .selected {
     display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px 16px; align-items: center;
@@ -108,7 +109,7 @@
   .card { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 18px; display: grid; gap: 12px; align-content: start; scroll-margin-top: 16px; transition: border-color .25s, box-shadow .25s; }
   .card.on { border-color: var(--c); box-shadow: 0 0 0 1px var(--c); }
   .card-head { display: grid; grid-template-columns: 48px minmax(0, 1fr); gap: 12px; align-items: center; }
-  .card-head svg { width: 48px; height: auto; overflow: visible; }
+  .card-head img.pix { width: 40px; height: auto; margin-inline: auto; }
   .card-head h3 { color: var(--c); font-size: 20px; }
   .card-head span { font-size: 13px; color: var(--muted); }
   .card-head .crown { color: var(--gold); font-family: var(--display); font-weight: 600; letter-spacing: .08em; }
@@ -198,6 +199,17 @@
   .bcard ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; font-size: 15px; }
   .bcard li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; align-items: start; overflow-wrap: anywhere; }
   .bcard li .btn { min-height: 30px; padding: 2px 10px; font-size: 13px; }
+  .bcard li.task { grid-template-columns: auto minmax(0, 1fr) auto; }
+  .bcard li.task label { display: contents; cursor: pointer; }
+  .bcard li.task input { width: 22px; height: 22px; margin: 1px 0 0; accent-color: var(--idea); cursor: pointer; }
+  .bcard li.done span { color: var(--muted); text-decoration: line-through; text-decoration-color: rgba(155, 166, 198, .6); }
+  .bcard li.done .btn { opacity: .55; }
+  .bcard.all-done { border-color: var(--idea); }
+  .bcard.all-done h3::after { content: " · all done ✓"; color: var(--idea); }
+  .brief-progress { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--muted); }
+  .brief-progress .track { flex: 1; max-width: 260px; height: 8px; border-radius: 99px; background: var(--panel-2); border: 1px solid var(--line); overflow: hidden; }
+  .brief-progress .track i { display: block; height: 100%; width: 0; background: var(--idea); transition: width .3s; }
+  .brief-progress.complete b { color: var(--idea); }
   .stale { color: var(--gold); }
 
   /* ---------- Level ---------- */
@@ -242,15 +254,24 @@
 
   <section class="block" aria-label="Your agent town">
     <div class="stage" id="stage">
-      <svg class="town" id="town" role="group" aria-label="Web Crew Town: each agent's building, linked by roads to Boss HQ. Tap a building or character for details."></svg>
-      <button class="motion" id="motion" type="button" aria-pressed="false">Pause motion</button>
+      <canvas id="game" width="400" height="240" role="img" aria-label="Web Crew Town: a pixel-art town where each agent has a building linked to Boss HQ. Agents walk about when idle and work at their building when busy. Use the crew buttons below to pick an agent."></canvas>
+      <div class="overlay" id="overlay" aria-hidden="true"></div>
+      <button class="motion" id="motion" type="button" aria-pressed="false">Pause</button>
     </div>
+    <p class="now" aria-live="polite"><i id="nowDot"></i><span id="nowText">Loading the crew…</span></p>
+    <div class="crew" id="crew" role="group" aria-label="The crew"></div>
     <div class="selected" id="selected" aria-live="polite"></div>
+    <div class="log">
+      <h3>Recent activity</h3>
+      <ol id="logList"></ol>
+      <p id="logEmpty">Nothing yet. Every job the crew does in Claude Code shows up here.</p>
+    </div>
   </section>
 
   <section class="brief" aria-labelledby="brief-h">
     <div class="pipe-head"><h2 id="brief-h">Today's briefing</h2><span class="sub" id="briefWhen">Connecting…</span></div>
     <p class="brief-headline" id="briefHeadline" hidden></p>
+    <div class="brief-progress" id="briefProgress" hidden><b id="briefCount"></b><span class="track" aria-hidden="true"><i id="briefFill"></i></span></div>
     <div class="brief-grid" id="briefSections"></div>
     <p class="empty" id="briefEmpty">No briefing yet. The daily run writes one every morning, or say <b>"briefing"</b> in Claude Code any time.</p>
   </section>
@@ -585,239 +606,497 @@ boss: who do I need to chase?</pre>
 
 <script>
 (() => {
+  // ================= Web Crew Town: a 2D pixel game that mirrors the real agents =================
   const AGENTS = [
-    { key: "pm", url: "https://claude.ai/artifact/Qperj1e8cxMEMgtFKV55M5", id: "boss", building: "BOSS HQ", c: "#b98bff", eye: "#f0e6ff", master: true, dur: "4.2s",
+    { key: "pm", id: "boss", url: "https://claude.ai/artifact/Qperj1e8cxMEMgtFKV55M5", building: "BOSS HQ", c: "#b98bff", master: true,
+      pal: { h: "#3a2466", s: "#e0ac69", e: "#1a1426", b: "#7b4fd6", a: "#ffd166", l: "#2a1f4d", k: "#1a1426" },
       tagline: "The master. Plans every job, picks the agents, keeps the pipeline and tells you who to chase.", cmd: "What should I do today?" },
-    { key: "idea", url: "https://claude.ai/artifact/A4Kdm6smnkdZeEgEkP3wyN", id: "idea-creator", building: "SCOUT TOWER", c: "#3ddc97", eye: "#d4ffe9", dur: "3.1s",
+    { key: "idea", id: "idea-creator", url: "https://claude.ai/artifact/A4Kdm6smnkdZeEgEkP3wyN", building: "SCOUT TOWER", c: "#3ddc97",
+      pal: { h: "#2f9e6e", s: "#f1c27d", e: "#1a1426", b: "#3ddc97", a: "#e9edf9", l: "#264653", k: "#1a1426" },
       tagline: "Finds businesses with no website and clear demand, and writes the first message.", cmd: "Find me plumbers in Shrewsbury" },
-    { key: "web", url: "https://claude.ai/artifact/3BVSpy1fTHfKZ7ZBJsC3c3", id: "web-builder", building: "WORKSHOP", c: "#4fb3ff", eye: "#dcefff", dur: "3.5s",
+    { key: "web", id: "web-builder", url: "https://claude.ai/artifact/3BVSpy1fTHfKZ7ZBJsC3c3", building: "WORKSHOP", c: "#4fb3ff",
+      pal: { h: "#f4b942", s: "#c68642", e: "#1a1426", b: "#4fb3ff", a: "#f28c28", l: "#2b4a7a", k: "#1a1426" },
       tagline: "Turns a client brief into a finished one-page site in your house style.", cmd: "Build a site for Annie's Nails" },
-    { key: "crit", url: "https://claude.ai/artifact/8gPtTkGHSJpVmUUjUCq5uy", id: "critique", building: "INSPECTION", c: "#ff6070", eye: "#ffdfe2", dur: "2.8s",
+    { key: "crit", id: "critique", url: "https://claude.ai/artifact/8gPtTkGHSJpVmUUjUCq5uy", building: "INSPECTION", c: "#ff6070",
+      pal: { h: "#2b1d1d", s: "#ffdbac", e: "#1a1426", b: "#e0485a", a: "#ffffff", l: "#3a2230", k: "#1a1426" },
       tagline: "Checks every message, site and line of code before it reaches you, with exact fixes.", cmd: "Check this message: …" },
-    { key: "launch", url: null, id: "launcher", building: "LAUNCH PAD", c: "#ff9f43", eye: "#ffe8d1", dur: "3.3s",
+    { key: "launch", id: "launcher", url: null, building: "LAUNCH PAD", c: "#ff9f43",
+      pal: { h: "#e9edf9", s: "#8d5524", e: "#1a1426", b: "#ff9f43", a: "#e9edf9", l: "#b45f16", k: "#1a1426" },
       tagline: "Puts approved sites live on their own domain, checks them and prepares the handover.", cmd: "Launch Annie's Nails" },
   ];
   const byKey = Object.fromEntries(AGENTS.map((a) => [a.key, a]));
+  const byId = Object.fromEntries(AGENTS.map((a) => [a.id, a]));
 
-  function avatarBody(a, still) {
-    const c = a.c, eye = a.eye, dark = "#0a0f1f";
-    let top = "", face = "", chest = "";
-    if (a.key === "pm") {
-      top = `<path d="M34 26 L40 6 L50 18 L60 1 L70 18 L80 6 L86 26 Z" fill="#ffd166"/><circle cx="60" cy="4" r="3.5" fill="#fff4cf"/>
-        <path d="M12 58 a48 48 0 0 1 96 0" fill="none" stroke="${dark}" stroke-width="4" opacity=".55"/>
-        <rect x="6" y="52" width="10" height="20" rx="5" fill="${dark}"/><rect x="104" y="52" width="10" height="20" rx="5" fill="${dark}"/>
-        <path d="M11 70 q2 18 22 18" fill="none" stroke="${dark}" stroke-width="3"/><circle cx="35" cy="88" r="4" fill="${dark}"/>`;
-      chest = `<path d="M60 94 l3 6 6.5 .8 -4.8 4.4 1.3 6.4 -6 -3.2 -6 3.2 1.3 -6.4 -4.8 -4.4 6.5 -.8z" fill="#ffd166"/>`;
-    } else if (a.key === "idea") {
-      top = `<line x1="60" y1="26" x2="60" y2="13" stroke="${c}" stroke-width="4" stroke-linecap="round"/><circle class="${still ? "" : "bulb"}" cx="60" cy="8" r="8" fill="#fff6b8"/>
-        <g stroke="#fff6b8" stroke-width="2.5" stroke-linecap="round" opacity=".8"><line x1="46" y1="4" x2="42" y2="1"/><line x1="74" y1="4" x2="78" y2="1"/><line x1="60" y1="-4" x2="60" y2="-8"/></g>`;
-      chest = `<circle cx="57" cy="100" r="6" fill="none" stroke="${dark}" stroke-width="3"/><line x1="61.5" y1="104.5" x2="67" y2="110" stroke="${dark}" stroke-width="3.5" stroke-linecap="round"/>`;
-    } else if (a.key === "web") {
-      top = `<path d="M26 32 a34 24 0 0 1 68 0 z" fill="#ffd166"/><rect x="56" y="10" width="8" height="22" rx="3" fill="#f4b942"/><rect x="16" y="28" width="88" height="7" rx="3.5" fill="#f4b942"/>`;
-      chest = `<text x="60" y="106" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" font-weight="700" fill="${dark}">&lt;/&gt;</text>`;
-    } else if (a.key === "launch") {
-      top = `<line x1="60" y1="26" x2="60" y2="18" stroke="${c}" stroke-width="4" stroke-linecap="round"/>
-        <path d="M60 -8 q9 9 7 24 h-14 q-2 -15 7 -24z" fill="#e9edf9"/><path d="M53 12 l-6 7 h6z M67 12 l6 7 h-6z" fill="${c}"/><circle cx="60" cy="4" r="3" fill="#4fb3ff"/>`;
-      chest = `<path d="M60 94 l9 10 h-6 v8 h-6 v-8 h-6z" fill="${dark}"/>`;
-    } else {
-      top = `<line x1="60" y1="26" x2="60" y2="15" stroke="${c}" stroke-width="4" stroke-linecap="round"/><circle cx="60" cy="11" r="5" fill="${c}"/>`;
-      face = `<circle cx="74" cy="57" r="13" fill="none" stroke="#fff" stroke-width="3"/><path d="M87 60 q8 14 2 30" fill="none" stroke="#fff" stroke-width="2" opacity=".7"/>
-        <rect class="${still ? "" : "scan"}" x="26" y="40" width="68" height="3" rx="1.5" fill="${c}" opacity=".7"/>`;
-      chest = `<path d="M51 101 l6 6 12 -13" fill="none" stroke="${dark}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>`;
-    }
-    return `<ellipse cx="60" cy="128" rx="28" ry="5" fill="${c}" opacity=".28"/>
-      <rect x="36" y="88" width="48" height="30" rx="14" fill="${c}" opacity=".9"/>
-      <rect x="14" y="26" width="92" height="66" rx="24" fill="${c}"/>
-      <rect x="24" y="36" width="72" height="46" rx="16" fill="${dark}"/>
-      <g class="${still ? "" : "eyes"}"><rect x="39" y="48" width="12" height="17" rx="6" fill="${eye}"/><rect x="68" y="48" width="12" height="17" rx="6" fill="${eye}"/></g>
-      <path d="M51 73 q9 6 18 0" fill="none" stroke="${eye}" stroke-width="3" stroke-linecap="round"/>
-      ${face}${top}${chest}`;
-  }
-  const avatar = (a, still) => `<svg viewBox="0 -10 120 142" aria-hidden="true">${avatarBody(a, still)}</svg>`;
-
-  document.querySelectorAll("[data-avatar]").forEach((el) => { el.innerHTML = avatar(byKey[el.dataset.avatar], true); });
-
-  // ---------- Buildings (drawn around their base centre, y going up) ----------
-  const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;");
-  function hqBuilding(level, name) {
-    const n = Math.min(12, level + 2), fh = 26, H = n * fh;
-    let s = `<rect x="-75" y="${-H}" width="150" height="${H}" rx="4" fill="#241a45" stroke="#b98bff" stroke-width="2"/>`;
-    for (let f = 0; f < n; f++) for (let i = 0; i < 4; i++) {
-      if (f <= 1 && (i === 1 || i === 2)) continue;
-      const lit = (f * 7 + i * 3) % 5 !== 0;
-      s += `<rect class="${(f * 4 + i) % 6 === 0 ? "win" : ""}" x="${-62 + i * 32}" y="${-(f + 1) * fh + 7}" width="20" height="12" rx="2" fill="${lit ? "#ffd166" : "#3b2f63"}" opacity="${lit ? 0.9 : 1}"/>`;
-    }
-    s += `<rect x="-82" y="${-H - 10}" width="164" height="10" rx="3" fill="#b98bff"/>`;
-    s += `<line x1="-62" y1="${-H - 10}" x2="-62" y2="${-H - 40}" stroke="#9ba6c6" stroke-width="2"/><circle class="beacon" cx="-62" cy="${-H - 43}" r="4.5" fill="#ff6070"/>`;
-    const label = `LVL ${level} · ${name.toUpperCase()}`, bw = Math.max(label.length * 6.6 + 16, 110);
-    s += `<rect x="${-bw / 2}" y="${-H - 32}" width="${bw}" height="20" rx="3" fill="#ffd166"/><text x="0" y="${-H - 17.5}" text-anchor="middle" class="sign" font-size="11" fill="#2a1c00">${esc(label)}</text>`;
-    s += `<path transform="translate(-30 ${-H - 45}) scale(.5)" d="M34 26 L40 6 L50 18 L60 1 L70 18 L80 6 L86 26 Z" fill="#ffd166"/>`;
-    s += `<rect x="-40" y="-50" width="80" height="16" rx="3" fill="#0a0f1f" stroke="#b98bff"/><text x="0" y="-38.5" text-anchor="middle" class="sign" font-size="11" fill="#ffd166">BOSS HQ</text>`;
-    s += `<rect x="-16" y="-30" width="32" height="30" rx="3" fill="#0a0f1f" stroke="#ffd166" stroke-width="1.5"/>`;
-    return s;
-  }
-  function lighthouse(c) {
-    const hw = (y) => 30 - (12 * -y) / 170;
-    const band = (y1, y2) => `<polygon points="${-hw(y1)},${y1} ${hw(y1)},${y1} ${hw(y2)},${y2} ${-hw(y2)},${y2}" fill="${c}"/>`;
-    return `<polygon points="-30,0 30,0 18,-170 -18,-170" fill="#e9edf9"/>${band(-30, -55)}${band(-95, -120)}${band(-150, -170)}
-      <rect x="-24" y="-176" width="48" height="8" rx="2" fill="#1b2a44"/>
-      <rect x="-17" y="-204" width="34" height="28" rx="3" fill="#0a0f1f" stroke="${c}" stroke-width="2"/>
-      <polygon class="beam" points="0,-190 170,-216 170,-164" fill="url(#beamGrad)"/>
-      <circle class="bulb" cx="0" cy="-190" r="8" fill="#fff6b8"/>
-      <polygon points="-22,-204 22,-204 0,-226" fill="${c}"/>
-      <rect x="-9" y="-26" width="18" height="26" rx="3" fill="#0a0f1f"/>`;
-  }
-  function workshop(c) {
-    let s = `<rect x="-90" y="-88" width="180" height="88" fill="#15294a" stroke="${c}" stroke-width="2"/>
-      <path d="M-90,-88 L-90,-112 L-45,-88 L-45,-112 L0,-88 L0,-112 L45,-88 L45,-112 L90,-88 Z" fill="${c}"/>
-      <rect x="-36" y="-58" width="72" height="58" rx="3" fill="#0a0f1f" stroke="${c}" stroke-width="1.5"/>`;
-    for (let y = -48; y < 0; y += 10) s += `<line x1="-34" y1="${y}" x2="34" y2="${y}" stroke="#22385f" stroke-width="2"/>`;
-    s += `<rect x="-80" y="-72" width="32" height="22" rx="3" fill="#0a0f1f" stroke="${c}"/><text x="-64" y="-57" text-anchor="middle" font-size="10" class="mono" fill="${c}">&lt;/&gt;</text>
-      <rect x="50" y="-72" width="28" height="22" rx="3" fill="#ffd166" opacity=".85"/>
-      <line x1="105" y1="0" x2="105" y2="-150" stroke="#ffd166" stroke-width="4"/>
-      <polyline points="99,-10 111,-30 99,-50 111,-70 99,-90 111,-110 99,-130 111,-148" fill="none" stroke="#ffd166" stroke-width="1.5" opacity=".7"/>
-      <line x1="40" y1="-150" x2="128" y2="-150" stroke="#ffd166" stroke-width="4"/>
-      <g class="swing"><line x1="62" y1="-150" x2="62" y2="-104" stroke="#9ba6c6" stroke-width="1.5"/><rect x="53" y="-104" width="18" height="13" rx="2" fill="${c}"/></g>`;
-    return s;
-  }
-  function inspection(c) {
-    let s = `<rect x="-88" y="-10" width="176" height="10" fill="#3a2230"/><rect x="-78" y="-18" width="156" height="8" fill="#4a2a3a"/>
-      <rect x="-72" y="-86" width="144" height="68" fill="#2b1824" stroke="${c}" stroke-width="2"/>`;
-    [-58, -28, 14, 44].forEach((x) => (s += `<rect x="${x}" y="-86" width="14" height="68" fill="#ffdfe2" opacity=".85"/>`));
-    s += `<polygon points="-86,-86 86,-86 0,-124" fill="${c}"/>
-      <circle cx="-4" cy="-104" r="8" fill="none" stroke="#fff" stroke-width="3"/><line x1="2" y1="-98" x2="9" y2="-91" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
-      <rect x="-12" y="-52" width="24" height="34" rx="3" fill="#0a0f1f"/>
-      <rect class="scanb" x="-72" y="-22" width="144" height="2.5" fill="${c}" opacity=".8"/>`;
-    return s;
-  }
-  function launchpad(c) {
-    let s = `<rect x="-78" y="-12" width="156" height="12" rx="2" fill="#3a2a1a" stroke="${c}" stroke-width="1.5"/>
-      <rect x="-66" y="-172" width="22" height="160" fill="none" stroke="${c}" stroke-width="2.5"/>`;
-    for (let y = -172; y < -12; y += 20) s += `<line x1="-66" y1="${y}" x2="-44" y2="${y + 20}" stroke="${c}" stroke-width="1.5" opacity=".7"/>`;
-    s += `<line x1="-44" y1="-120" x2="-4" y2="-120" stroke="${c}" stroke-width="3"/>
-      <g transform="translate(12 0)">
-        <path class="flame" d="M-10,-16 Q0,8 10,-16 Z" fill="#ffd166"/>
-        <path d="M-16,-16 L-16,-128 Q0,-172 16,-128 L16,-16 Z" fill="#e9edf9" stroke="${c}" stroke-width="2"/>
-        <rect x="-16" y="-62" width="32" height="10" fill="${c}"/>
-        <circle cx="0" cy="-106" r="7" fill="#4fb3ff" stroke="#0a0f1f" stroke-width="2"/>
-        <path d="M-16,-42 L-30,-14 L-16,-20 Z M16,-42 L30,-14 L16,-20 Z" fill="${c}"/>
-      </g>`;
-    return s;
-  }
-
-  // ---------- Town layouts (SVG coordinates) ----------
-  const LAYOUT = {
-    d: { w: 1000, h: 600, horizon: 175, charW: 62, bossW: 78, scale: 1, font: 14, courier: 24,
-      trees: [[40, 565], [330, 575], [415, 330], [598, 322], [965, 565], [690, 580], [175, 262], [830, 262]],
-      pm: { b: [500, 430], c: [598, 462] }, crit: { b: [250, 285], c: [352, 302] }, launch: { b: [750, 285], c: [648, 302] },
-      idea: { b: [120, 480], c: [205, 505] }, web: { b: [870, 480], c: [760, 505] } },
-    m: { w: 600, h: 820, horizon: 150, charW: 60, bossW: 74, scale: 0.8, font: 17, courier: 30,
-      trees: [[28, 470], [572, 470], [40, 650], [562, 640]],
-      pm: { b: [300, 575], c: [385, 605] }, crit: { b: [150, 330], c: [238, 350] }, launch: { b: [450, 330], c: [362, 350] },
-      idea: { b: [95, 752], c: [172, 768] }, web: { b: [490, 752], c: [400, 768] } },
+  // ---------- Pixel sprites (12 x 16, drawn from the feet up) ----------
+  const TOP = ["....hhhh....", "...hhhhhh...", "...ssssss...", "...sesses...", "...ssssss...", "....ssss...."];
+  const BODY = ["..bbbbbbbb..", ".bbbbabbbbb.", ".bbbbabbbbb.", ".sbbbabbbbs.", "..bbbbbbbb.."];
+  const LEGS = ["...ll..ll...", "...ll..ll...", "...ll..ll...", "...ll..ll...", "..kkk..kkk.."];
+  const STRIDE = ["...ll..ll...", "..ll....ll..", "..ll....ll..", ".ll......ll.", ".kk......kk."];
+  const ARMS_UP = ["s...ssss...s", "b.bbbbbbbb.b", "bbbbbabbbbbb", ".bbbbabbbbb.", "..bbbabbbb.."];
+  const FRAMES = {
+    stand: [...TOP, ...BODY, ...LEGS],
+    walk: [...TOP, ...BODY, ...STRIDE],
+    work: [...TOP.slice(0, 5), ...ARMS_UP, "..bbbbbbbb..", ...LEGS].slice(0, 16),
+    sleep: [TOP[0], TOP[1], TOP[2], "...ssssss...", TOP[4], TOP[5], ...BODY, ...LEGS],
   };
-  const ORDER = ["crit", "launch", "pm", "idea", "web"]; // back to front
+
+  function drawMap(g, map, pal, ox, oy, flip) {
+    for (let r = 0; r < map.length; r++) {
+      const row = map[r];
+      for (let c = 0; c < row.length; c++) {
+        const col = pal[row[c]];
+        if (!col) continue;
+        g.fillStyle = col;
+        g.fillRect(ox + (flip ? row.length - 1 - c : c), oy + r, 1, 1);
+      }
+    }
+  }
+  const put = (g, col, ox, dx, oy, dy, w, h, flip) => { g.fillStyle = col; g.fillRect(flip ? ox + 12 - dx - w : ox + dx, oy + dy, w, h); };
+
+  // Draw one character with its accessory. (x, y) is the point between its feet.
+  function drawChar(g, a, x, y, frame, flip, tick, working) {
+    const ox = Math.round(x) - 6, oy = Math.round(y) - 16, p = a.pal;
+    if (a.key === "launch") { // jetpack behind
+      put(g, "#8a93b3", ox, -1, oy, 7, 2, 5, flip);
+      if (frame === "walk" || working) put(g, tick % 2 ? "#ffd166" : "#ff6070", ox, -1, oy, 12, 2, 2, flip);
+    }
+    drawMap(g, FRAMES[frame] || FRAMES.stand, p, ox, oy, flip);
+    if (a.key === "pm") drawMap(g, ["g..gg..g", "gggggggg", "grggggrg"], { g: "#ffd166", r: "#ff6070" }, ox + 2, oy - 3, false);
+    if (a.key === "idea") {
+      const lit = working ? (tick % 4 < 2 ? "#fffbd0" : "#ffe066") : "#d9c86a";
+      if (working) { g.fillStyle = "rgba(255,240,150,.45)"; g.fillRect(ox + 4, oy - 7, 5, 5); }
+      drawMap(g, ["yyy", "yyy", ".w."], { y: lit, w: "#9ba6c6" }, ox + 5, oy - 6, false);
+    }
+    if (a.key === "web") {
+      put(g, "#f4b942", ox, 1, oy, 1, 10, 1, flip); // hard hat brim
+      if (working) {
+        if (frame === "work") { put(g, "#8b5a2b", ox, 11, oy, 1, 1, 4, flip); put(g, "#c0c7d8", ox, 10, oy, -1, 3, 2, flip); }
+        else { put(g, "#8b5a2b", ox, 11, oy, 9, 1, 4, flip); put(g, "#c0c7d8", ox, 10, oy, 13, 3, 2, flip); }
+      }
+    }
+    if (a.key === "crit") {
+      [[6, 2], [7, 2], [8, 2], [6, 3], [8, 3], [6, 4], [7, 4], [8, 4]].forEach(([dx, dy]) => put(g, "#f5f5f5", ox, dx, oy, dy, 1, 1, flip));
+      put(g, "#8b5a2b", ox, -1, oy, 8, 3, 4, flip); put(g, "#ffffff", ox, 0, oy, 9, 1, 2, flip);
+    }
+    if (a.key === "launch") { put(g, "#4fb3ff", ox, 3, oy, 2, 6, 2, flip); put(g, "#e9f6ff", ox, 4, oy, 2, 1, 1, flip); }
+  }
+
+  function spriteURL(a, pal) {
+    const c = document.createElement("canvas"); c.width = 16; c.height = 22;
+    const g = c.getContext("2d");
+    drawChar(g, pal ? { ...a, pal } : a, 8, 21, "stand", false, 0, false);
+    return c.toDataURL();
+  }
+  document.querySelectorAll("[data-avatar]").forEach((el) => {
+    const a = byKey[el.dataset.avatar];
+    if (a) el.innerHTML = `<img class="pix" alt="" src="${spriteURL(a)}">`;
+  });
+
+  // ---------- World layouts ----------
+  const LAYOUTS = {
+    wide: { W: 400, H: 240, hz: 44,
+      b: { pm: [200, 150], idea: [40, 128], crit: [110, 100], launch: [300, 100], web: [352, 150] },
+      home: { pm: [214, 160], idea: [56, 132], crit: [128, 106], launch: [280, 106], web: [332, 156] },
+      bank: [140, 158], post: [258, 160], board: [200, 180], pond: [66, 190, 26, 10],
+      road: 208, street: 234, slots: [128, 160, 192, 224, 256, 288, 320, 352], gate: [386, 204],
+      trees: [[12, 70], [84, 64], [160, 58], [246, 60], [344, 60], [392, 74], [16, 160], [102, 148], [248, 126], [388, 126], [104, 228]] },
+    tall: { W: 240, H: 352, hz: 44,
+      b: { pm: [120, 196], idea: [26, 252], crit: [60, 104], launch: [180, 104], web: [196, 262] },
+      home: { pm: [134, 206], idea: [42, 256], crit: [78, 110], launch: [162, 110], web: [176, 268] },
+      bank: [52, 202], post: [178, 206], board: [120, 224], pond: [112, 282, 22, 9],
+      road: 318, street: 344, slots: [16, 46, 76, 106, 136, 166, 196, 226], gate: [226, 300],
+      trees: [[10, 72], [60, 62], [120, 58], [180, 62], [230, 72], [10, 150], [230, 150], [100, 300], [224, 232]] },
+  };
 
   const stage = document.getElementById("stage");
-  const svg = document.getElementById("town");
+  const canvas = document.getElementById("game");
+  const ctx = canvas.getContext("2d");
+  const overlay = document.getElementById("overlay");
   const selectedEl = document.getElementById("selected");
+  const crewEl = document.getElementById("crew");
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  let townLevel = 1, townName = "Rookie", selectedKey = "pm", layoutKey = null;
 
-  function rand(seed) { let x = seed; return () => ((x = (x * 16807) % 2147483647) / 2147483647); }
+  const town = { level: 1, levelName: "Rookie", clients: [], earned: 0, needsYou: false, drafts: false, activity: {} };
+  let L = null, tick = 0, paused = false, selectedKey = "pm", hits = [];
 
-  function plate(a, x, y, f) {
-    const t1 = a.id + (a.master ? " ★" : ""), t2 = a.building;
-    const w = Math.max(t1.length * f * 0.62, t2.length * f * 0.52) + 22;
-    return `<g transform="translate(${x} ${y})"><rect x="${-w / 2}" y="0" width="${w}" height="${f * 2.35}" rx="7" fill="rgba(10,15,31,.88)" stroke="${a.c}" stroke-opacity=".55"/>
-      <text x="0" y="${f * 1.08}" text-anchor="middle" class="sign" font-size="${f}" fill="${a.c}">${esc(t1)}</text>
-      <text x="0" y="${f * 1.98}" text-anchor="middle" font-size="${f * 0.68}" fill="#9ba6c6" letter-spacing="1.5">${esc(t2)}</text></g>`;
+  function rng(seed) { let x = seed; return () => ((x = (x * 16807) % 2147483647) / 2147483647); }
+  const rect = (c, x, y, w, h) => { ctx.fillStyle = c; ctx.fillRect(Math.round(x), Math.round(y), w, h); };
+
+  // ---------- Agent state (drives movement) ----------
+  const actors = AGENTS.map((a) => ({ a, x: 0, y: 0, tx: 0, ty: 0, flip: false, wait: 0, errand: 0, mode: "idle" }));
+  function isWorking(a) {
+    const s = town.activity[a.id];
+    if (!s || s.state !== "working") return false;
+    const since = Date.parse(s.since || "");
+    return !since || Date.now() - since < 3 * 3600 * 1000; // ignore stale "working" flags
+  }
+  function taskOf(a) { const s = town.activity[a.id]; return s && s.task ? String(s.task) : ""; }
+
+  function setLayout() {
+    const key = stage.clientWidth < 600 ? "tall" : "wide";
+    if (L && L.key === key) return;
+    L = { ...LAYOUTS[key], key };
+    canvas.width = L.W; canvas.height = L.H;
+    stage.style.aspectRatio = `${L.W} / ${L.H}`;
+    const r = rng(11);
+    L.flowers = Array.from({ length: key === "wide" ? 70 : 50 }, () => [Math.floor(r() * L.W), L.hz + 6 + Math.floor(r() * (L.H - L.hz - 8)), ["#ffd166", "#ff8fab", "#ffffff", "#b98bff"][Math.floor(r() * 4)]]);
+    L.noise = Array.from({ length: key === "wide" ? 420 : 320 }, () => [Math.floor(r() * L.W), L.hz + Math.floor(r() * (L.H - L.hz)), r() < 0.5]);
+    L.stars = Array.from({ length: 34 }, () => [Math.floor(r() * L.W), Math.floor(r() * (L.hz - 8)), r()]);
+    actors.forEach((ac) => { const [x, y] = L.home[ac.a.key]; ac.x = ac.tx = x; ac.y = ac.ty = y; });
+    buildOverlay();
   }
 
-  function drawTown() {
-    const m = stage.clientWidth < 600;
-    layoutKey = m ? "m" : "d";
-    const L = LAYOUT[layoutKey], W = L.w, H = L.h, hz = L.horizon;
-    svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
-    const r = rand(7);
-    let o = `<defs>
-      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#070b1c"/><stop offset="1" stop-color="#1a1840"/></linearGradient>
-      <linearGradient id="grass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#132341"/><stop offset="1" stop-color="#0c1630"/></linearGradient>
-      <linearGradient id="beamGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff6b8" stop-opacity=".55"/><stop offset="1" stop-color="#fff6b8" stop-opacity="0"/></linearGradient>
-    </defs>
-    <rect width="${W}" height="${hz}" fill="url(#sky)"/>`;
-    for (let i = 0; i < 46; i++) {
-      const x = r() * W, y = r() * (hz - 20), rr = r() * 1.4 + 0.5;
-      o += `<circle class="${i % 3 === 0 ? "twinkle" : ""}" style="animation-delay:${(r() * 3).toFixed(2)}s" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${rr.toFixed(2)}" fill="#e9edf9" opacity="${(0.4 + r() * 0.6).toFixed(2)}"/>`;
-    }
-    o += `<circle cx="${m ? W * 0.52 : W - 150}" cy="66" r="24" fill="#fff3c4"/><circle cx="${(m ? W * 0.52 : W - 150) + 10}" cy="59" r="22" fill="#0b1024"/>
-      <path d="M0,${hz} L0,${hz - 18} Q${W * 0.14},${hz - 58} ${W * 0.3},${hz - 26} T${W * 0.62},${hz - 30} T${W},${hz - 22} L${W},${hz} Z" fill="#141c3a"/>
-      <rect y="${hz}" width="${W}" height="${H - hz}" fill="url(#grass)"/>
-      <text x="16" y="28" class="sign" font-size="${m ? 18 : 13}" fill="#9ba6c6">WEB CREW TOWN · POP. 5</text>`;
-
-    // roads from each building to Boss HQ
-    const hq = L.pm.b;
-    ORDER.filter((k) => k !== "pm").forEach((k) => {
-      const [x1, y1] = L[k].b, [x2, y2] = hq;
-      const d = `M${x1},${y1 + 5} Q${(x1 + x2) / 2},${Math.max(y1, y2) + 36} ${x2},${y2 + 5}`;
-      o += `<path id="road-${k}" d="${d}" fill="none" stroke="#1d2848" stroke-width="${m ? 22 : 18}" stroke-linecap="round"/>
-        <path class="road-line" d="${d}" fill="none" stroke="${byKey[k].c}" stroke-opacity=".55" stroke-width="2"/>`;
-    });
-    L.trees.forEach(([x, y]) => (o += `<rect x="${x - 2}" y="${y - 14}" width="4" height="14" fill="#3a2a1a"/><circle cx="${x}" cy="${y - 22}" r="11" fill="#1c5c43"/><circle cx="${x - 5}" cy="${y - 26}" r="6" fill="#23714f"/>`));
-
-    // couriers walking work between the agents and Boss HQ
-    if (!reduced) {
-      ORDER.filter((k) => k !== "pm").forEach((k, i) => {
-        const a = byKey[k], s = L.courier;
-        o += `<g aria-hidden="true"><svg x="${-s / 2}" y="${-s * 1.18}" width="${s}" height="${s * 1.18}" viewBox="0 -10 120 142">${avatarBody(a, true)}</svg>
-          <rect x="-6" y="${-s * 1.18 - 9}" width="12" height="8" rx="1" fill="#fff"/><path d="M-6,${-s * 1.18 - 9} L0,${-s * 1.18 - 5} L6,${-s * 1.18 - 9}" stroke="#9ba6c6" fill="none"/>
-          <animateMotion dur="11s" begin="${i * 2.6}s" repeatCount="indefinite" keyPoints="0;1;1;0;0" keyTimes="0;0.42;0.5;0.92;1" calcMode="linear"><mpath href="#road-${k}"/></animateMotion></g>`;
-      });
-    }
-
-    // buildings + characters, back to front
-    ORDER.forEach((k) => {
-      const a = byKey[k], P = L[k], [bx, by] = P.b, [cx, cy] = P.c;
-      const inner = k === "pm" ? hqBuilding(townLevel, townName) : k === "idea" ? lighthouse(a.c) : k === "web" ? workshop(a.c) : k === "crit" ? inspection(a.c) : launchpad(a.c);
-      const w = a.master ? L.bossW : L.charW, h = w * (142 / 120);
-      o += `<g class="spot${k === selectedKey ? " on" : ""}" data-key="${k}" tabindex="0" role="button" aria-label="${esc(a.id)}, ${esc(a.building.toLowerCase())}: ${esc(a.tagline)}">
-        <g transform="translate(${bx} ${by}) scale(${L.scale})">${inner}</g>
-        <ellipse class="ring" cx="${cx}" cy="${cy + 2}" rx="${w * 0.62}" ry="9" fill="none" stroke="${a.c}" stroke-width="3"/>
-        <g class="bobber" style="--d:${a.dur}"><svg x="${cx - w / 2}" y="${cy - h}" width="${w}" height="${h}" viewBox="0 -10 120 142" overflow="visible">${avatarBody(a, false)}</svg></g>
-        ${plate(a, cx, cy + 8, L.font)}
-      </g>`;
-    });
-    svg.innerHTML = o;
-    svg.querySelectorAll(".spot").forEach((g) => {
-      g.addEventListener("click", () => select(g.dataset.key));
-      g.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); select(g.dataset.key); } });
-    });
-    if (stage.classList.contains("still") && svg.pauseAnimations) svg.pauseAnimations();
+  function phase() {
+    const h = new Date().getHours();
+    if (h >= 21 || h < 6) return "night";
+    if (h < 8 || h >= 18) return "dusk";
+    return "day";
   }
-  new ResizeObserver(() => { const k = stage.clientWidth < 600 ? "m" : "d"; if (k !== layoutKey) drawTown(); }).observe(stage);
-  drawTown();
-  function setTownLevel(level, name) { if (level !== townLevel || name !== townName) { townLevel = level; townName = name; drawTown(); } }
+
+  // ---------- Scenery ----------
+  function drawSky(ph) {
+    const sky = { day: ["#6ec3ff", "#b9e4ff"], dusk: ["#ff9a76", "#ffd3a1"], night: ["#0b1030", "#1d2250"] }[ph];
+    for (let y = 0; y < L.hz; y++) { const t = y / L.hz; rect(t < 0.5 ? sky[0] : sky[1], 0, y, L.W, 1); }
+    if (ph === "night") L.stars.forEach(([x, y, s]) => { if ((tick + s * 20) % 24 > 3) rect("#e9edf9", x, y, 1, 1); });
+    if (ph === "night") { rect("#fff3c4", L.W - 44, 8, 8, 8); rect("#fff3c4", L.W - 45, 9, 10, 6); rect(sky[0], L.W - 41, 7, 7, 7); }
+    else { rect(ph === "day" ? "#ffe066" : "#ffb347", L.W - 46, 8, 10, 10); rect(ph === "day" ? "#fff3a0" : "#ffd29e", L.W - 45, 9, 8, 8); }
+    // clouds
+    for (let i = 0; i < 3; i++) {
+      const cx = ((tick * 0.15 + i * 150) % (L.W + 60)) - 40, cy = 10 + i * 9;
+      const col = ph === "night" ? "#2d3566" : "#ffffff";
+      rect(col, cx, cy, 22, 4); rect(col, cx + 4, cy - 3, 12, 3); rect(col, cx + 14, cy - 2, 6, 2);
+    }
+    // birds by day
+    if (ph === "day") for (let i = 0; i < 2; i++) { const bx = (tick * 0.8 + i * 210) % (L.W + 40) - 20, by = 20 + i * 6 + (tick % 8 < 4 ? 0 : 1); rect("#2d3566", bx, by, 1, 1); rect("#2d3566", bx + 1, by + 1, 1, 1); rect("#2d3566", bx + 2, by, 1, 1); }
+    // hills
+    for (let x = 0; x < L.W; x++) { const h = 6 + Math.round(4 * Math.sin(x / 23) + 3 * Math.sin(x / 9)); rect(ph === "night" ? "#153322" : "#2e7d4f", x, L.hz - h, 1, h); }
+  }
+
+  function drawGround(ph) {
+    rect(ph === "night" ? "#23512f" : "#4caf50", 0, L.hz, L.W, L.H - L.hz);
+    L.noise.forEach(([x, y, d]) => rect(d ? (ph === "night" ? "#1d4528" : "#43a047") : (ph === "night" ? "#2a5c36" : "#5cbf60"), x, y, 2, 1));
+    L.flowers.forEach(([x, y, c]) => rect(c, x, y, 1, 1));
+    // paths from every building to Boss HQ, and the client road
+    const sand = ph === "night" ? "#8a7048" : "#d8b27a", edge = ph === "night" ? "#6b5636" : "#b8905a";
+    const [hx, hy] = L.b.pm;
+    const path = (x1, y1, x2, y2) => {
+      const xa = Math.min(x1, x2), ya = Math.min(y1, y2);
+      rect(edge, xa - 3, y1 - 3, Math.abs(x2 - x1) + 6, 7); rect(edge, x2 - 3, ya - 3, 7, Math.abs(y2 - y1) + 6);
+      rect(sand, xa - 2, y1 - 2, Math.abs(x2 - x1) + 5, 5); rect(sand, x2 - 2, ya - 2, 5, Math.abs(y2 - y1) + 5);
+    };
+    ["idea", "crit", "launch", "web"].forEach((k) => { const [x, y] = L.b[k]; path(x, y + 2, hx, hy + 2); });
+    path(hx, hy + 2, hx, L.road);
+    rect(edge, 0, L.road - 3, L.W, 7); rect(sand, 0, L.road - 2, L.W, 5);
+    // pond with shimmer and a duck
+    const [px, py, rx, ry] = L.pond;
+    for (let y = -ry; y <= ry; y++) { const w = Math.round(rx * Math.sqrt(1 - (y * y) / (ry * ry))); rect(ph === "night" ? "#1b3f66" : "#3a86c8", px - w, py + y, w * 2, 1); }
+    for (let i = 0; i < 5; i++) { const sx = px - rx + 6 + ((i * 11 + tick) % (rx * 2 - 12)), sy = py - 3 + (i % 3) * 3; if ((tick + i) % 6 < 3) rect("#a8d8ff", sx, sy, 2, 1); }
+    const dx = px - rx + 6 + ((tick * 0.4) % (rx * 2 - 14));
+    rect("#ffd166", dx, py - 2, 4, 2); rect("#ffd166", dx + 3, py - 4, 2, 2); rect("#f28c28", dx + 5, py - 3, 1, 1);
+  }
+
+  function tree(x, y, ph) {
+    rect("#6b4423", x - 1, y - 5, 2, 5);
+    const g1 = ph === "night" ? "#174a2e" : "#2e8b57", g2 = ph === "night" ? "#1f5c38" : "#3fae6b";
+    rect(g1, x - 5, y - 12, 10, 7); rect(g1, x - 4, y - 14, 8, 2); rect(g2, x - 3, y - 13, 4, 3);
+  }
+
+  // ---------- Buildings ----------
+  const windowCol = (ph, lit) => (ph !== "day" && lit ? "#ffe38a" : ph === "day" ? "#9fd3ff" : "#2a2f55");
+  function hq(ph) {
+    const [bx, by] = L.b.pm, floors = Math.min(12, town.level + 2), fh = 10, H = floors * fh;
+    rect("#4b2f8f", bx - 22, by - H, 44, H); rect("#3a2466", bx - 22, by - H, 2, H); rect("#3a2466", bx + 20, by - H, 2, H);
+    for (let f = 0; f < floors; f++) for (let i = 0; i < 4; i++) {
+      if (f === 0 && (i === 1 || i === 2)) continue;
+      rect(windowCol(ph, (f * 3 + i + (tick >> 5)) % 5 !== 0), bx - 17 + i * 10, by - (f + 1) * fh + 3, 5, 4);
+    }
+    rect("#ffd166", bx - 24, by - H - 3, 48, 3);
+    drawMap(ctx, ["g..gg..g", "gggggggg", "grggggrg"], { g: "#ffd166", r: "#ff6070" }, bx - 4, by - H - 6, false);
+    rect("#9ba6c6", bx - 20, by - H - 9, 1, 6); rect(tick % 10 < 5 ? "#ff6070" : "#7a2530", bx - 21, by - H - 11, 3, 2);
+    rect("#1a1426", bx - 4, by - 9, 8, 9); rect("#ffd166", bx - 5, by - 10, 10, 1);
+    return { key: "pm", x: bx - 24, y: by - H - 12, w: 48, h: H + 12, top: by - H - 12 };
+  }
+  function lighthouse(ph, working) {
+    const [bx, by] = L.b.idea;
+    for (let r = 0; r < 54; r++) { const w = Math.round(16 - (r * 6) / 54); rect(Math.floor(r / 9) % 2 ? "#3ddc97" : "#f4f4f4", bx - w / 2, by - r - 1, w, 1); }
+    rect("#1b2a44", bx - 7, by - 56, 14, 2);
+    rect("#1a1426", bx - 5, by - 63, 10, 7);
+    rect(ph !== "day" || working ? (tick % 4 < 2 ? "#fff6b8" : "#ffe066") : "#d9c86a", bx - 2, by - 61, 4, 3);
+    for (let r = 0; r < 5; r++) rect("#3ddc97", bx - 6 + r, by - 64 - r, 12 - r * 2, 1);
+    rect("#1a1426", bx - 2, by - 7, 4, 7);
+    if (ph !== "day" || working) { // sweeping beam
+      const ang = Math.sin(tick / (working ? 6 : 14)) * 0.9 + 0.1;
+      ctx.save(); ctx.globalAlpha = working ? 0.32 : 0.22; ctx.fillStyle = "#fff6b8";
+      ctx.beginPath(); ctx.moveTo(bx, by - 60);
+      ctx.lineTo(bx + Math.cos(ang - 0.12) * 110, by - 60 + Math.sin(ang - 0.12) * 110);
+      ctx.lineTo(bx + Math.cos(ang + 0.12) * 110, by - 60 + Math.sin(ang + 0.12) * 110);
+      ctx.closePath(); ctx.fill(); ctx.restore();
+    }
+    return { key: "idea", x: bx - 9, y: by - 70, w: 18, h: 70, top: by - 70 };
+  }
+  function workshop(ph, working) {
+    const [bx, by] = L.b.web;
+    rect("#23507f", bx - 26, by - 24, 52, 24);
+    for (let i = 0; i < 4; i++) for (let r = 0; r < 7; r++) rect("#4fb3ff", bx - 26 + i * 13, by - 25 - r, 13 - Math.floor((r * 13) / 7), 1);
+    rect("#12263f", bx - 9, by - 15, 18, 15);
+    for (let y = by - 13; y < by; y += 3) rect("#1d3a5c", bx - 8, y, 16, 1);
+    rect(windowCol(ph, true), bx - 22, by - 18, 8, 6); rect(windowCol(ph, working), bx + 14, by - 18, 8, 6);
+    rect("#6b7593", bx + 16, by - 38, 4, 10);
+    if (working) for (let i = 0; i < 4; i++) { const s = (tick + i * 5) % 20; rect("#c9d1e6", bx + 17 + Math.round(Math.sin((tick + i * 7) / 3) * 2), by - 40 - s, 2 + (s > 10), 2); }
+    if (working && tick % 6 < 3) { rect("#ffd166", bx - 12, by - 3, 1, 1); rect("#ff9f43", bx - 14, by - 5, 1, 1); }
+    return { key: "web", x: bx - 26, y: by - 40, w: 52, h: 40, top: by - 34 };
+  }
+  function inspection(ph, working) {
+    const [bx, by] = L.b.crit;
+    rect("#8a8fa3", bx - 24, by - 3, 48, 3);
+    rect("#5a2733", bx - 20, by - 21, 40, 18);
+    [-17, -8, 3, 12].forEach((dx) => rect("#f3e4e6", bx + dx, by - 21, 5, 18));
+    for (let r = 0; r < 9; r++) rect("#ff6070", bx - 22 + r * 2, by - 22 - r, 44 - r * 4, 1);
+    rect("#ffffff", bx - 2, by - 28, 4, 1); rect("#ffffff", bx - 3, by - 27, 1, 3); rect("#ffffff", bx + 2, by - 27, 1, 3); rect("#ffffff", bx - 2, by - 24, 4, 1); rect("#ffffff", bx + 3, by - 24, 1, 1);
+    rect("#1a1426", bx - 3, by - 12, 6, 9);
+    if (working) rect("#ff6070", bx - 20, by - 5 - ((tick * 2) % 16), 40, 1);
+    return { key: "crit", x: bx - 24, y: by - 32, w: 48, h: 32, top: by - 32 };
+  }
+  function launchpad(ph, working) {
+    const [bx, by] = L.b.launch;
+    rect("#6b4a2a", bx - 22, by - 3, 44, 3);
+    rect("#ff9f43", bx - 18, by - 44, 1, 41); rect("#ff9f43", bx - 13, by - 44, 1, 41);
+    for (let y = by - 44; y < by - 3; y += 6) rect("#ff9f43", bx - 18, y, 6, 1);
+    rect("#ff9f43", bx - 12, by - 30, 12, 1);
+    const lift = working ? (tick % 4 < 2 ? 0 : 1) : 0;
+    rect("#f4f4f4", bx + 1, by - 38 - lift, 7, 33);
+    for (let r = 0; r < 5; r++) rect("#f4f4f4", bx + 1 + Math.ceil(r / 2), by - 39 - r - lift, 7 - Math.ceil(r / 2) * 2, 1);
+    rect("#4fb3ff", bx + 3, by - 32 - lift, 3, 3);
+    rect("#ff9f43", bx + 1, by - 20 - lift, 7, 2);
+    rect("#ff9f43", bx - 1, by - 10 - lift, 2, 6); rect("#ff9f43", bx + 8, by - 10 - lift, 2, 6);
+    if (working) { rect(tick % 2 ? "#ffd166" : "#ff6070", bx + 2, by - 5, 5, 2 + (tick % 3)); for (let i = 0; i < 3; i++) rect("#dde3f0", bx - 4 + i * 7 + (tick % 3), by - 4, 4, 2); }
+    return { key: "launch", x: bx - 22, y: by - 46, w: 44, h: 46, top: by - 46 };
+  }
+  function bank(ph) {
+    const [bx, by] = L.bank;
+    rect("#efe3c2", bx - 12, by - 14, 24, 14);
+    for (let r = 0; r < 6; r++) rect("#ffd166", bx - 13 + r * 2, by - 15 - r, 26 - r * 4, 1);
+    [-9, -3, 3, 8].forEach((dx) => rect("#d8c9a0", bx + dx, by - 13, 2, 12));
+    rect("#1a1426", bx - 2, by - 7, 4, 7);
+    const coins = Math.min(28, Math.floor(town.earned / 100));
+    for (let i = 0; i < coins; i++) rect(i % 2 ? "#ffd166" : "#f4b942", bx + 14 + (i % 4) * 3, by - 2 - Math.floor(i / 4) * 2, 3, 2);
+    return { kind: "bank", x: bx - 14, y: by - 22, w: 42, h: 22 };
+  }
+  function post(ph) {
+    const [bx, by] = L.post;
+    rect("#6b4423", bx - 1, by - 4, 2, 4); rect("#d62839", bx - 4, by - 11, 8, 7); rect("#a61e2c", bx - 4, by - 5, 8, 1);
+    if (town.drafts) { rect("#ffd166", bx + 4, by - 13, 1, 5); rect("#ffd166", bx + 4, by - 13, 3, 2); }
+    return { kind: "post", x: bx - 5, y: by - 14, w: 12, h: 14 };
+  }
+  function board(ph) {
+    const [bx, by] = L.board;
+    rect("#6b4423", bx - 8, by - 10, 1, 10); rect("#6b4423", bx + 7, by - 10, 1, 10);
+    rect("#8b5a2b", bx - 9, by - 15, 18, 8);
+    rect("#f4f4f4", bx - 7, by - 14, 4, 5); rect("#f4f4f4", bx - 2, by - 13, 4, 4); rect("#ffd166", bx + 3, by - 14, 4, 5);
+    if (town.needsYou && tick % 8 < 5) { rect("#ff3b3b", bx, by - 23, 2, 5); rect("#ff3b3b", bx, by - 17, 2, 2); }
+    return { kind: "board", x: bx - 10, y: by - 24, w: 20, h: 24 };
+  }
+  const HOUSE_COL = ["#f4a261", "#e9c46a", "#90be6d", "#a3c4f3", "#f28482", "#cdb4db", "#84a59d", "#ffcad4"];
+  function houses(ph) {
+    const out = [];
+    const built = town.clients.filter((c) => ["in_progress", "delivered", "maintenance"].includes(c.stage));
+    L.slots.forEach((x, i) => {
+      const y = L.street, c = built[i];
+      if (!c) { // empty plot for sale
+        rect("#6b4423", x, y - 9, 1, 9); rect("#f4f4f4", x - 4, y - 13, 9, 5); rect("#d62839", x - 3, y - 12, 7, 1); rect("#d62839", x - 3, y - 10, 5, 1);
+        out.push({ kind: "plot", x: x - 6, y: y - 14, w: 14, h: 14 });
+        return;
+      }
+      const col = HOUSE_COL[i % HOUSE_COL.length];
+      if (c.stage === "in_progress") {
+        rect(col, x - 9, y - 7, 18, 7);
+        rect("#8b5a2b", x - 10, y - 18, 1, 18); rect("#8b5a2b", x + 9, y - 18, 1, 18); rect("#8b5a2b", x - 10, y - 12, 20, 1); rect("#8b5a2b", x - 10, y - 18, 20, 1);
+      } else {
+        rect(col, x - 9, y - 12, 18, 12);
+        for (let r = 0; r < 7; r++) rect("#c1453b", x - 10 + r, y - 13 - r, 20 - r * 2, 1);
+        rect("#1a1426", x - 2, y - 6, 4, 6);
+        rect(windowCol(ph, c.stage === "maintenance"), x - 7, y - 10, 3, 3); rect(windowCol(ph, c.stage === "maintenance"), x + 4, y - 10, 3, 3);
+        if (c.stage === "maintenance") {
+          rect("#ffd166", x - 1, y - 22, 2, 2);
+          rect("#6b7593", x + 5, y - 19, 2, 5);
+          if (!reduced) rect("#c9d1e6", x + 5 + ((tick >> 2) % 2), y - 22 - ((tick >> 1) % 4), 2, 2);
+        }
+      }
+      out.push({ kind: "house", client: c, x: x - 11, y: y - 22, w: 22, h: 22 });
+    });
+    return out;
+  }
+
+  // Prospects wait at the town gate; people who replied head for the notice board
+  const VILLAGER_PAL = [
+    { h: "#6b4423", s: "#f1c27d", e: "#1a1426", b: "#e76f51", a: "#264653", l: "#264653", k: "#1a1426" },
+    { h: "#1a1426", s: "#c68642", e: "#1a1426", b: "#2a9d8f", a: "#e9c46a", l: "#3d405b", k: "#1a1426" },
+    { h: "#e9c46a", s: "#ffdbac", e: "#1a1426", b: "#ff5d8f", a: "#ffffff", l: "#5a3d5c", k: "#1a1426" },
+    { h: "#9c6644", s: "#8d5524", e: "#1a1426", b: "#f4a261", a: "#e76f51", l: "#403d39", k: "#1a1426" },
+  ];
+  function villagers() {
+    const out = [];
+    const waiting = town.clients.filter((c) => c.stage === "pitched").slice(0, 5);
+    const replied = town.clients.filter((c) => c.stage === "replied").slice(0, 3);
+    waiting.forEach((c, i) => {
+      const [gx, gy] = L.gate, x = gx - 6 - (i % 3) * 9, y = gy + Math.floor(i / 3) * 10 - 4;
+      drawChar(ctx, { key: "v", pal: VILLAGER_PAL[i % 4] }, x, y, "stand", true, tick, false);
+      if (tick % 20 < 12) { rect("#ffffff", x - 1, y - 23, 3, 5); rect("#1a1426", x, y - 22, 1, 2); rect("#1a1426", x, y - 19, 1, 1); }
+      out.push({ kind: "villager", client: c, x: x - 6, y: y - 24, w: 12, h: 24 });
+    });
+    replied.forEach((c, i) => {
+      const [bx, by] = L.board, x = bx - 16 - i * 9, y = by + 4;
+      drawChar(ctx, { key: "v", pal: VILLAGER_PAL[(i + 2) % 4] }, x, y, tick % 12 < 6 ? "stand" : "walk", false, tick, false);
+      if (tick % 16 < 10) { rect("#ffd166", x, y - 23, 2, 4); rect("#ffd166", x, y - 18, 2, 1); }
+      out.push({ kind: "villager", client: c, x: x - 6, y: y - 24, w: 12, h: 24 });
+    });
+    return out;
+  }
+
+  // ---------- Agent behaviour ----------
+  function stepActors() {
+    const ph = phase();
+    actors.forEach((ac) => {
+      const working = isWorking(ac.a);
+      const [hx, hy] = L.home[ac.a.key];
+      if (reduced) { ac.x = hx; ac.y = hy; ac.mode = working ? "work" : "idle"; return; }
+      const dist = Math.hypot(ac.tx - ac.x, ac.ty - ac.y);
+      if (dist > 0.8) {
+        const sp = working ? 0.9 : 0.5;
+        ac.x += ((ac.tx - ac.x) / dist) * sp; ac.y += ((ac.ty - ac.y) / dist) * sp;
+        ac.flip = ac.tx < ac.x; ac.mode = "walk";
+        return;
+      }
+      if (ac.wait > 0) { ac.wait--; ac.mode = working ? "work" : ph === "night" ? "sleep" : "idle"; return; }
+      if (working) {
+        // work at the building, and now and then carry the work over to Boss HQ
+        if (ac.a.key !== "pm" && ++ac.errand % 3 === 0 && ac.x === ac.tx) {
+          const [px, py] = L.home.pm; ac.tx = px - 10 + Math.random() * 8; ac.ty = py + 4; ac.wait = 10;
+        } else { ac.tx = hx; ac.ty = hy; ac.wait = 40 + Math.random() * 30; }
+      } else if (ph === "night") { ac.tx = hx; ac.ty = hy; ac.wait = 60; }
+      else { ac.tx = hx - 14 + Math.random() * 28; ac.ty = Math.max(L.hz + 20, hy - 6 + Math.random() * 12); ac.wait = 20 + Math.random() * 60; }
+    });
+  }
+
+  // ---------- DOM overlay: name tags, task bubbles, level flag ----------
+  function buildOverlay() {
+    overlay.replaceChildren();
+    actors.forEach((ac) => {
+      ac.tag = document.createElement("span"); ac.tag.className = "tag"; ac.tag.style.setProperty("--c", ac.a.c); ac.tag.textContent = ac.a.id;
+      ac.bub = document.createElement("span"); ac.bub.className = "bub"; ac.bub.hidden = true;
+      overlay.append(ac.tag, ac.bub);
+    });
+    town.lvlTag = document.createElement("span"); town.lvlTag.className = "lvltag"; overlay.append(town.lvlTag);
+  }
+  let flash = null; // a short bubble after a tap
+  function placeOverlay(hqTop) {
+    const pct = (x, y) => `left:${(x / L.W) * 100}%;top:${(y / L.H) * 100}%`;
+    actors.forEach((ac) => {
+      ac.tag.style.cssText = `${pct(ac.x, ac.y)};--c:${ac.a.c}`;
+      ac.tag.classList.toggle("on", ac.a.key === selectedKey);
+      const working = isWorking(ac.a);
+      let text = working ? taskOf(ac.a) || "Working…" : "";
+      if (flash && flash.key === ac.a.key && Date.now() < flash.until) text = flash.text;
+      ac.bub.hidden = !text;
+      if (text) {
+        if (ac.bub.textContent !== text) ac.bub.textContent = text;
+        // keep the bubble inside the town
+        const sw = stage.clientWidth, half = ac.bub.offsetWidth / 2, cx = (ac.x / L.W) * sw;
+        ac.bub.style.cssText = `left:${Math.min(sw - half - 4, Math.max(half + 4, cx))}px;top:${((ac.y - 24) / L.H) * 100}%`;
+      }
+    });
+    town.lvlTag.textContent = `LVL ${town.level} · ${town.levelName}`;
+  }
+
+  // ---------- Frame ----------
+  function draw() {
+    const ph = phase();
+    drawSky(ph);
+    drawGround(ph);
+    L.trees.forEach(([x, y]) => tree(x, y, ph));
+    const w = (k) => isWorking(byKey[k]);
+    hits = [];
+    const bld = [inspection(ph, w("crit")), launchpad(ph, w("launch")), lighthouse(ph, w("idea")), hq(ph), workshop(ph, w("web"))];
+    hits.push(...bld.map((b) => ({ ...b, kind: "agent" })), bank(ph), post(ph), board(ph), ...houses(ph));
+    hits.push(...villagers());
+    [...actors].sort((p, q) => p.y - q.y).forEach((ac) => {
+      const working = isWorking(ac.a);
+      const frame = ac.mode === "walk" ? (tick % 4 < 2 ? "walk" : "stand") : ac.mode === "work" ? (tick % 6 < 3 ? "work" : "stand") : ac.mode === "sleep" ? "sleep" : "stand";
+      if (ac.a.key === selectedKey) { ctx.fillStyle = ac.a.c; ctx.globalAlpha = 0.5; ctx.fillRect(Math.round(ac.x) - 7, Math.round(ac.y) - 1, 14, 2); ctx.globalAlpha = 1; }
+      drawChar(ctx, ac.a, ac.x, ac.y, frame, ac.flip, tick, working);
+      if (ac.mode === "sleep" && tick % 30 < 20) { rect("#e9edf9", ac.x + 5, ac.y - 20 - ((tick >> 2) % 4), 3, 1); rect("#e9edf9", ac.x + 6, ac.y - 19 - ((tick >> 2) % 4), 1, 1); rect("#e9edf9", ac.x + 5, ac.y - 18 - ((tick >> 2) % 4), 3, 1); }
+      hits.push({ kind: "agent", key: ac.a.key, x: ac.x - 7, y: ac.y - 22, w: 14, h: 22, pri: 1 });
+    });
+    if (ph === "night") { ctx.fillStyle = "rgba(10,14,48,.28)"; ctx.fillRect(0, L.hz, L.W, L.H - L.hz); }
+    placeOverlay(bld[3].top);
+  }
+
+  let last = 0;
+  function loop(ts) {
+    if (!paused && ts - last > (reduced ? 1000 : 83)) { last = ts; tick++; stepActors(); draw(); }
+    requestAnimationFrame(loop);
+  }
+
+  // ---------- Input ----------
+  canvas.addEventListener("click", (e) => {
+    const r = canvas.getBoundingClientRect();
+    const x = ((e.clientX - r.left) / r.width) * L.W, y = ((e.clientY - r.top) / r.height) * L.H;
+    const inside = hits.filter((h) => x >= h.x && x <= h.x + h.w && y >= h.y && y <= h.y + h.h).sort((a, b) => (b.pri || 0) - (a.pri || 0));
+    const h = inside[0];
+    if (!h) return;
+    if (h.kind === "agent") { select(h.key); flash = { key: h.key, text: byKey[h.key].tagline, until: Date.now() + 3500 }; return; }
+    if (h.client) return selectInfo(h.client.business || "Client", `${({ pitched: "Pitched · waiting at the town gate", replied: "Replied · heading for the notice board", in_progress: "In progress · house going up", delivered: "Delivered · house built, £595 due", maintenance: "£50 a month client · lights on" })[h.client.stage] || h.client.stage}${h.client.next_action ? " · Next: " + h.client.next_action : ""}`, "#ffd166");
+    if (h.kind === "plot") return selectInfo("Empty plot", "Every client who says yes gets a house on this street. Win a client to build here.", "#ffd166");
+    if (h.kind === "bank") return selectInfo("The bank", `£${town.earned.toLocaleString("en-GB")} earned so far. A coin lands for every £100 you're paid.`, "#ffd166");
+    if (h.kind === "post") return selectInfo("Post office", town.drafts ? "The flag's up: emails are waiting in your Gmail drafts." : "No Gmail drafts waiting.", "#ff6070");
+    if (h.kind === "board") return selectInfo("Notice board", town.needsYou ? "Something needs you today. See the briefing below." : "Nothing needs you right now.", "#ffd166");
+  });
 
   const motion = document.getElementById("motion");
   motion.addEventListener("click", () => {
-    const still = stage.classList.toggle("still");
-    if (svg.pauseAnimations) still ? svg.pauseAnimations() : svg.unpauseAnimations();
-    motion.textContent = still ? "Resume motion" : "Pause motion";
-    motion.setAttribute("aria-pressed", String(still));
+    paused = !paused;
+    motion.textContent = paused ? "Resume" : "Pause";
+    motion.setAttribute("aria-pressed", String(paused));
   });
+
+  // ---------- Crew bar (also the keyboard-friendly way to pick an agent) ----------
+  const crewBtns = {};
+  AGENTS.forEach((a) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.style.setProperty("--c", a.c); b.setAttribute("aria-pressed", "false");
+    b.innerHTML = `<img class="pix" alt="" src="${spriteURL(a)}"><div><b></b><span></span></div>`;
+    b.querySelector("b").textContent = a.id;
+    b.addEventListener("click", () => select(a.key));
+    crewEl.append(b); crewBtns[a.key] = b;
+  });
+  function renderCrew() {
+    const night = phase() === "night";
+    AGENTS.forEach((a) => {
+      const b = crewBtns[a.key], working = isWorking(a);
+      b.classList.toggle("working", working);
+      b.querySelector("span").textContent = working ? `Working: ${taskOf(a) || "on a job"}` : night ? "Asleep" : "Idle";
+      b.setAttribute("aria-label", `${a.id}: ${working ? "working on " + (taskOf(a) || "a job") : night ? "asleep" : "idle"}`);
+    });
+  }
 
   function select(key) {
     selectedKey = key;
     const a = byKey[key];
-    svg.querySelectorAll(".spot").forEach((g) => g.classList.toggle("on", g.dataset.key === key));
+    Object.entries(crewBtns).forEach(([k, b]) => b.setAttribute("aria-pressed", String(k === key)));
     document.querySelectorAll(".card").forEach((c) => c.classList.toggle("on", c.id === "card-" + a.id));
     selectedEl.style.setProperty("--c", a.c);
     selectedEl.innerHTML = `<div><strong></strong><p></p></div><div class="acts"><span class="chip"></span><button class="btn" type="button">Copy</button>${a.url ? `<a href="${a.url}" target="_blank" rel="noopener">Open ${a.id}'s page ↗</a>` : ""}<a href="#card-${a.id}">Full card ↓</a></div>`;
     selectedEl.querySelector("strong").textContent = `${a.id} · ${a.building.toLowerCase()}${a.master ? " · master" : ""}`;
-    selectedEl.querySelector("p").textContent = a.tagline;
+    selectedEl.querySelector("p").textContent = isWorking(a) ? `Working now: ${taskOf(a) || "on a job"}` : a.tagline;
     const chip = selectedEl.querySelector(".chip"); chip.textContent = a.cmd;
     const btn = selectedEl.querySelector("button");
     btn.addEventListener("click", () => copy(a.cmd, btn, chip));
+  }
+  function selectInfo(title, text, color) {
+    selectedEl.style.setProperty("--c", color);
+    selectedEl.innerHTML = `<div><strong></strong><p></p></div>`;
+    selectedEl.querySelector("strong").textContent = title;
+    selectedEl.querySelector("p").textContent = text;
   }
 
   function copy(text, btn, node) {
@@ -838,7 +1117,39 @@ boss: who do I need to chase?</pre>
     btn.addEventListener("click", () => copy(btn.dataset.copyText, btn, btn.previousElementSibling));
   });
 
+  // ---------- Hooks the data feeds call ----------
+  function setTownLevel(level, name) { town.level = level; town.levelName = name; }
+  function applyActivity(doc) {
+    town.activity = (doc && doc.agents) || {};
+    renderCrew();
+    if (selectedKey) select(selectedKey);
+    const busy = AGENTS.filter(isWorking);
+    document.getElementById("nowText").textContent = busy.length
+      ? busy.map((a) => `${a.id}: ${taskOf(a) || "working"}`).join(" · ")
+      : phase() === "night" ? "The crew are asleep. Nobody is working right now." : "Nobody is working right now. Ask boss for something and you'll see them get to work.";
+    document.getElementById("nowDot").classList.toggle("live", busy.length > 0);
+  }
+  function renderLog(snap) {
+    const list = document.getElementById("logList");
+    list.replaceChildren();
+    const docs = snap ? snap.docs.map((d) => d.data()) : [];
+    document.getElementById("logEmpty").hidden = docs.length > 0;
+    docs.forEach((d) => {
+      const a = byId[d.agent];
+      const li = document.createElement("li");
+      const t = document.createElement("time"); t.textContent = d.at ? new Date(d.at).toLocaleString("en-GB", { weekday: "short", hour: "2-digit", minute: "2-digit" }) : "";
+      const who = document.createElement("b"); who.textContent = d.agent || "crew"; who.style.color = a ? a.c : "var(--muted)";
+      const what = document.createElement("span"); what.textContent = d.text || "";
+      li.append(t, who, what); list.append(li);
+    });
+  }
+
+  new ResizeObserver(() => setLayout()).observe(stage);
+  setLayout();
+  renderCrew();
+  applyActivity(null);
   select("pm");
+  requestAnimationFrame(loop);
 
   // ---------- Live pipeline (read-only; Claude writes it after every pipeline change) ----------
   const STAGES = [
@@ -916,6 +1227,7 @@ boss: who do I need to chase?</pre>
 
   function render(doc) {
     clients = Array.isArray(doc && doc.clients) ? doc.clients.filter((c) => c && stageOf[c.stage]) : [];
+    town.clients = clients; town.earned = Math.max(0, Number(doc && doc.earned) || 0);
     updatedEl.textContent = doc && doc.updated ? `Updated ${fmt(doc.updated)}` : "Not synced yet";
     renderLevel(doc, clients);
 
@@ -976,6 +1288,9 @@ boss: who do I need to chase?</pre>
     const grid = document.getElementById("briefSections"), empty = document.getElementById("briefEmpty");
     grid.replaceChildren();
     const sections = b && Array.isArray(b.sections) ? b.sections.filter((x) => x && x.title && Array.isArray(x.items) && x.items.length) : [];
+    const fresh = b && b.date === today;
+    town.needsYou = fresh && sections.some((x) => x.title === "Needs you");
+    town.drafts = fresh && sections.some((x) => x.title === "Gmail drafts waiting");
     if (!b || (!sections.length && !b.headline)) { headEl.hidden = true; empty.hidden = false; whenEl.textContent = "Nothing yet"; return; }
     empty.hidden = true;
     const isToday = b.date === today;
@@ -985,6 +1300,8 @@ boss: who do I need to chase?</pre>
     headEl.hidden = !b.headline; headEl.textContent = b.headline || "";
     const hot = new Set(["Needs you", "Replies", "Send today"]);
     const copyable = new Set(["Send today", "Follow-ups and chasers due", "Replies"]);
+    const notTasks = new Set(["Money", "Research"]); // information, not jobs to tick off
+    ticks.date = b.date || ""; ticks.items = [];
     sections.forEach((sec) => {
       const card = document.createElement("article");
       card.className = "bcard" + (hot.has(sec.title) ? " hot" : "");
@@ -994,7 +1311,16 @@ boss: who do I need to chase?</pre>
         const text = String(item);
         const li = document.createElement("li");
         const span = document.createElement("span"); span.textContent = text;
-        li.append(span);
+        if (notTasks.has(sec.title)) li.append(span);
+        else {
+          const key = tickKey(sec.title, text);
+          const label = document.createElement("label");
+          const box = document.createElement("input"); box.type = "checkbox";
+          box.setAttribute("aria-label", `Done: ${text.slice(0, 80)}`);
+          box.addEventListener("change", () => setTick(key, sec.title, text, box.checked));
+          label.append(box, span); li.append(label); li.className = "task";
+          ticks.items.push({ key, li, box, card });
+        }
         if (copyable.has(sec.title) && text.length > 40) {
           const cut = text.indexOf("): ");
           const toCopy = cut > -1 ? text.slice(cut + 3) : text;
@@ -1007,16 +1333,67 @@ boss: who do I need to chase?</pre>
       card.append(h, ul);
       grid.append(card);
     });
+    applyTicks();
+    watchTicks();
+  }
+
+  // ---------- Ticking off the briefing (saved in briefing_done/<date>, which Claude reads) ----------
+  const ticks = { date: "", items: [], done: {}, db: null, unsub: null, watching: "", queue: Promise.resolve(), exists: false };
+  function tickKey(title, text) {
+    let h = 5381; const str = title + "|" + text;
+    for (let i = 0; i < str.length; i++) h = ((h << 5) + h + str.charCodeAt(i)) >>> 0;
+    return "t" + h.toString(36);
+  }
+  function applyTicks() {
+    const cards = new Map();
+    ticks.items.forEach(({ key, li, box, card }) => {
+      const on = !!(ticks.done[key] && typeof ticks.done[key] === "object");
+      box.checked = on; li.classList.toggle("done", on);
+      const c = cards.get(card) || { n: 0, d: 0 }; c.n++; if (on) c.d++; cards.set(card, c);
+    });
+    cards.forEach((c, card) => card.classList.toggle("all-done", c.n > 0 && c.d === c.n));
+    const n = ticks.items.length, d = ticks.items.filter((t) => t.box.checked).length;
+    const prog = document.getElementById("briefProgress");
+    prog.hidden = n === 0;
+    prog.classList.toggle("complete", n > 0 && d === n);
+    document.getElementById("briefCount").textContent = n && d === n ? `All ${n} done. Nice work.` : `${d} of ${n} done`;
+    document.getElementById("briefFill").style.width = n ? `${Math.round((d / n) * 100)}%` : "0";
+  }
+  function watchTicks() {
+    if (!ticks.db || !ticks.date || ticks.watching === ticks.date) return;
+    if (ticks.unsub) ticks.unsub();
+    ticks.watching = ticks.date; ticks.done = {}; ticks.exists = false;
+    ticks.unsub = ticks.db.doc("briefing_done/" + ticks.date).onSnapshot(
+      (snap) => { ticks.exists = snap.exists; ticks.done = (snap.exists && snap.data().done) || {}; applyTicks(); },
+      () => {}
+    );
+  }
+  function setTick(key, section, text, on) {
+    const value = on ? { section, text, at: new Date().toISOString() } : false, before = ticks.done[key] || false;
+    ticks.done = { ...ticks.done, [key]: value }; applyTicks();
+    if (!ticks.db || !ticks.date) return;
+    const ref = ticks.db.doc("briefing_done/" + ticks.date), date = ticks.date;
+    // one write at a time to this doc
+    ticks.queue = ticks.queue.then(async () => {
+      if (ticks.exists) await ref.update({ done: { [key]: value } });
+      else { await ref.set({ date, done: { [key]: value } }); ticks.exists = true; }
+    }).catch(() => {
+      ticks.done = { ...ticks.done, [key]: before }; applyTicks();
+      document.getElementById("briefCount").textContent = "Couldn't save that tick. Try again.";
+    });
   }
   renderBriefing(null);
 
   (async () => {
     const db = typeof claude !== "undefined" && claude.use ? await claude.use("db") : null;
     if (!db) { updatedEl.textContent = "Open this page in Claude to see your live pipeline"; document.getElementById("briefWhen").textContent = "Open this page in Claude to see today's briefing"; return; }
+    ticks.db = db; watchTicks();
     db.doc("briefing/today").onSnapshot(
       (snap) => renderBriefing(snap.exists ? snap.data() : null),
       () => { document.getElementById("briefWhen").textContent = "Couldn't load the briefing. Reload the page to try again"; }
     );
+    db.doc("activity/now").onSnapshot((snap) => applyActivity(snap.exists ? snap.data() : null), () => {});
+    db.collection("activity_log").orderBy("at", "desc").limit(8).onSnapshot((snap) => renderLog(snap), () => {});
     db.doc("pipeline/current").onSnapshot(
       (snap) => render(snap.exists ? snap.data() : null),
       () => { updatedEl.textContent = "Couldn't load the pipeline. Reload the page to try again"; }
