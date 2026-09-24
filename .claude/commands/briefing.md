@@ -14,4 +14,5 @@ Give Sonny today's briefing.
    - **Follow-ups and chasers due**
    - **Money:** owed, due this week, and level progress
    - **Coming up this week**
-5. If anything changed, update `briefings/<date>.md` and the HQ page briefing (`ArtifactData` `set`, collection `briefing`, doc id `today`) so the page matches.
+5. Leave out anything Sonny has already ticked off on the HQ page (`briefing_done/<date>`, see "Briefing ticks" in `CLAUDE.md`). If you rewrite today's briefing, keep the wording of items he hasn't ticked exactly the same, so their tick boxes stay matched.
+6. If anything changed, update `briefings/<date>.md` and the HQ page briefing (`ArtifactData` `set`, collection `briefing`, doc id `today`) so the page matches.
