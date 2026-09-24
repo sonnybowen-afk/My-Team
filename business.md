@@ -69,7 +69,7 @@ A big review count can be a private signal of demand, but **never mention review
   - checks Gmail for replies
 - **Leads per day:** 8 (two batches of 4).
 - **What to research:** rotate the three target groups: tradesmen, then beauty, then housing developers. Start with Shrewsbury, then nearby Shropshire towns (Telford, Wellington, Oswestry, Ludlow, Bridgnorth, Market Drayton, Whitchurch, Newport, Church Stretton), then wider England. Never repeat a town and trade searched in the last 30 days (check `leads/`).
-- **Auto-send cold emails: OFF.** While off, email pitches, follow-ups and chasers are saved as Gmail drafts for Sonny to send. Only Sonny can switch this on, by saying so.
+- **Auto-send cold emails: ON** (Sonny switched it on 2026-09-24). The automated runs may send cold email pitches and one follow-up, but only within the rules below. Everything else (emails to sole traders or partnerships, chasers to clients, replies) is still saved as a Gmail draft for Sonny. Only Sonny can switch this off, by saying so.
 - **Rules if auto-send is ON:**
   - Email only **limited companies and LLPs**, confirmed from the business's own details or Companies House. Never email sole traders or partnerships: UK PECR rules need their prior consent. Their pitches stay as Gmail drafts.
   - Every email says who Sonny is and ends with: "If you'd rather not hear from me, just reply 'no thanks' and I won't email again."

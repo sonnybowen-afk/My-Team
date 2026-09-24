@@ -19,7 +19,7 @@ The work is done by five subagents in `.claude/agents/`. **boss is the master**:
 ## Repository structure
 
 - `.claude/agents/`: the five subagents
-- `.claude/commands/`: slash commands that chain them (`/boss`, `/briefing`, `/daily-run`, `/find-leads`, `/build-site`, `/review`, `/pipeline`, `/status`, `/email-drafts`, `/train`)
+- `.claude/commands/`: slash commands that chain them (`/boss`, `/briefing`, `/daily-run`, `/reply-check`, `/find-leads`, `/build-site`, `/review`, `/pipeline`, `/status`, `/email-drafts`, `/train`)
 - `business.md`: the user's name, area, pricing, what the monthly fee covers, and payment terms. Every agent reads this.
 - `playbook.md`: what the team has learned: Sonny's preferences, pitches that got replies, and client feedback. The agents read it, boss adds real results, and `/train` adds lessons.
 - `templates/site-template.html`: the house site template. Every client site starts as a copy of it.
@@ -62,7 +62,7 @@ node scripts/screenshot.mjs sites/<slug>/index.html   # screenshots + layout che
 - Messages must sound like a real person texting: short, casual, no AI or sales-template phrasing.
 - **Sending:** texts, WhatsApps and DMs are always sent by Sonny himself. Emails are saved as Gmail drafts (`create_draft`). The only exception is when "Auto-send cold emails" is ON in `business.md`: the automated run may then send, but only within the rules listed there. Never send replies to clients automatically, and never contact anyone in `clients/do-not-contact.md`.
 - **Briefings:** when Sonny says "briefing", "morning briefing" or "what do I need to know today", follow `.claude/commands/briefing.md`.
-- **Daily automation:** a scheduled Routine runs `.claude/commands/daily-run.md` every morning.
+- **Daily automation:** a scheduled Routine runs `.claude/commands/daily-run.md` every morning at 7am UK time, and another runs `.claude/commands/reply-check.md` at 9am, 12pm, 3pm and 6pm UK time.
 - Don't automate Instagram or LinkedIn messages. The user sends DMs by hand.
 - Always run messages and sites past `critique` before calling them done.
 - Keep `clients/pipeline.md` updated through `boss`, not by hand-editing in other workflows.
