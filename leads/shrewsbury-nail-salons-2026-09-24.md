@@ -4,7 +4,7 @@
 - **Follow-ups due:** 2026-09-28
 - **Pipeline / earlier leads skipped:** 0 (pipeline empty, no earlier leads files)
 - **Do-not-contact skipped:** 0 (list empty)
-- **Status:** drafts only, need to go through `critique` before sending. Texts, WhatsApps and DMs are sent by Sonny by hand. The Snailz email goes in as a Gmail draft (auto-send is OFF).
+- **Status:** checked by `critique` 2026-09-24, fixes applied. Ready to send once the checks under "Before sending" are done. Texts, WhatsApps and DMs are sent by Sonny by hand. The Snailz email goes in as a Gmail draft (auto-send is OFF).
 
 ## Research limits (read this first)
 
@@ -41,10 +41,16 @@ William Nails (williamnails.co.uk), Aimee Sutton / Beautiful by Aimee (own booki
 
 ## Messages
 
+Checked by `critique` on 2026-09-24: 16 messages, 7 passed, 9 fixed (fixes applied below). No lead dropped.
+
 ### 1. Ivy's Nails Shrewsbury (WhatsApp: 07564 658888)
 
-**First message**
-> Hi Ivy's, I'm Sonny, a web designer based in Shrewsbury. Since you take walk-ins, a simple site with your prices, hours and the St Mary's Street address would let people check before popping in. £595 to build it and then £50 a month after that. This +66 number is my WhatsApp (calls on 07944 539622). Want to see an example?
+**First message (WhatsApp)**
+> Hi Ivy's Nails, my name's Sonny and I'm a web designer in Shrewsbury. As you take walk-ins, a simple site with your prices and hours would let people check before popping in. £595 to build, then £50 a month. This +66 number is my WhatsApp, calls on 07944 539622. Want to see an example?
+> Sonny
+
+**First message (SMS version, if 07564 658888 isn't on WhatsApp)**
+> Hi Ivy's Nails, my name's Sonny and I'm a web designer in Shrewsbury. As you take walk-ins, a simple site with your prices and hours would let people check before popping in. £595 to build, then £50 a month. Want to see an example?
 > Sonny
 
 **Follow-up (2026-09-28)**
@@ -71,11 +77,11 @@ William Nails (williamnails.co.uk), Aimee Sutton / Beautiful by Aimee (own booki
 ### 4. The Nail Nook & Co (Instagram DM: @thenailnookco)
 
 **First message**
-> Hiya Nail Nook team, Sonny here from Shrewsbury. With a few of you working out of Wyle Cop, a simple site could show every tech's treatments and booking links on one page. £595 to build it and then £50 a month to keep it going. Fancy seeing an example?
+> Hiya Nail Nook team, I make websites for small businesses round Shrewsbury. With a few techs working out of Wyle Cop, a simple site could show everyone's treatments and booking links on one page. £595 to build, then £50 a month to keep it going. Fancy seeing an example?
 > Sonny
 
 **Follow-up (2026-09-28)**
-> Hiya, just checking this didn't get buried in your DMs. Totally fine if it's a no. Sonny
+> Hiya, popping back on this in case a site for the Nail Nook is any use. Totally fine if it's a no. Sonny
 
 ### 5. Libby Whitfield Nails (Instagram DM: @libbywhitfieldnails)
 
@@ -84,21 +90,21 @@ William Nails (williamnails.co.uk), Aimee Sutton / Beautiful by Aimee (own booki
 > Sonny
 
 **Follow-up (2026-09-28)**
-> Hi Libby, just making sure you saw my message about a site. No worries either way. Sonny
+> Hi Libby, did you get a chance to see my message about a site? No worries either way. Sonny
 
 ### 6. Creator Nails (Instagram DM: @creatornails_shrewsbury)
 
 **First message**
-> Hi Creator Nails, I'm Sonny and I build websites here in Shrewsbury. Different listings show different opening hours for Mardol, so a simple site with your hours, menu and prices would give people one place to check. £595 to build and then £50 a month. Shall I send an example?
+> Hi Creator Nails, a couple of listings online show different opening hours for Mardol, so people can't be sure when to come in. I'm Sonny, a Shrewsbury web designer, and a simple site would give them one place to check. £595 to build, then £50 a month. Shall I send an example?
 > Sonny
 
 **Follow-up (2026-09-28)**
-> Hi, just checking my message about a website reached you. No pressure, Sonny
+> Hi Creator Nails, it's Sonny again about the website idea. Happy to leave it if you're not interested.
 
 ### 7. Perfect 10 Nails Shrewsbury (Instagram DM: @perfect10nailsshrewsbury)
 
 **First message**
-> Hiya Perfect 10, it's Sonny, a Shrewsbury web designer. People looking you up on Wyle Cop can't really see prices without ringing, so I could make a simple site with your treatments, prices and hours. £595 to build it and then £50 a month. Can I send you an example?
+> Hiya Perfect 10, it's Sonny, a Shrewsbury web designer. Unless I've missed it, people can't see your prices without ringing the salon, so I could make a simple site with your treatment menu and prices on it. £595 to build and then £50 a month. Can I send you an example?
 > Sonny
 
 **Follow-up (2026-09-28)**
@@ -106,15 +112,15 @@ William Nails (williamnails.co.uk), Aimee Sutton / Beautiful by Aimee (own booki
 
 ### 8. Snailz (Email: SnailzOfficial@gmail.com)
 
-**First message**
+**First message** (saved as a Gmail draft)
 
-Subject: website for snailz?
+Subject: Website for Snailz?
 
 > Hi Snailz,
 >
-> I'm Sonny, a web designer based in Shrewsbury. With nail appointments and academy training both on the go, a simple site could put your treatments, course info, booking link and location in one place, so people aren't piecing it together from Instagram.
+> Sonny Bowen here, I'm a web designer in Shrewsbury. With nail appointments and academy courses both on the go, a simple site could put your treatments and course info in one place, along with your booking link and where to find you, so people don't have to piece it together from Instagram.
 >
-> It'd be £595 to build and then £50 a month to keep it running, which covers hosting, the domain and small updates like prices or new course dates.
+> It'd be £595 to build and then £50 a month to keep it running. That covers hosting, the domain and small updates when you need them, like new prices or photos.
 >
 > There's an example of a beauty site here: https://sonnybowen-afk.github.io/Revly/annie/
 >
@@ -125,9 +131,17 @@ Subject: website for snailz?
 
 **Follow-up (2026-09-28)**
 
-Subject: Re: website for snailz?
+Subject: Re: Website for Snailz?
 
-> Hi again, just checking my email about a website for Snailz reached you. No worries if the timing's wrong. Sonny
+> Hi Snailz, following up on my email below about a website. No worries if the timing's wrong.
+>
+> Sonny
+
+### Before sending (from critique)
+- **All 8:** open each profile and drop any lead with no post in roughly the last week.
+- **Ivy's and Jenny's:** check the number on the business's own profile first. If Ivy's isn't on WhatsApp, use the SMS version.
+- **Creator Nails:** check at least two listings really show different hours before sending.
+- **Perfect 10:** check the IG highlights for a price list. If there is one, the hook is wrong and needs a new angle.
 
 ---
 
