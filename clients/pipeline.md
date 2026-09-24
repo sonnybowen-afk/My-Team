@@ -1,10 +1,11 @@
 # Client Pipeline
 
-_Last updated: 2026-09-23_
+_Last updated: 2026-09-24_
 
 ## Pitched
 | Business | Contact | Channel | Pitched on | Follow-ups sent | Follow-up due | Notes |
 |----------|---------|---------|------------|-----------------|---------------|-------|
+| Snailz | SnailzOfficial@gmail.com | Email | 2026-09-24 | 0 | 2026-09-28 | Nail tech + academy, Shrewsbury. Follow-up in leads/shrewsbury-nail-salons-2026-09-24.md |
 
 ## Replied
 | Business | Contact | Replied on | Next step | Follow-up due | Notes |
